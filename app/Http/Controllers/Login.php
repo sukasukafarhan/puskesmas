@@ -81,7 +81,6 @@ class Login extends Controller
                 ->where('role_id', '=', $cek[0]->role_id)
                 ->get();
             $name_role = $role[0]->role;
-
             $data = [
                 'username' => $cek[0]->username,
                 'nama' => $cek[0]->full_name,
@@ -102,7 +101,4 @@ class Login extends Controller
         Session::flush();
         return redirect('/login');
     }
-
-
-
 }

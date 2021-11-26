@@ -54,7 +54,7 @@
                                         <button type="button" onclick="location.href='/daftarantrian/layani/{{$a->id_antrian}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
                                             Layani
                                         </button>
-                                        <button type="button" onclick="location.href='/daftarantrian/panggil/{{$a->id_antrian}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                        <button type="button" onclick="panggil({{$a->id_antrian}},{{$no}});" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Panggil" id="panggil">
                                             Panggil
                                         </button>
                                         <button type="button" class="btn btn-danger" onclick="location.href='/daftarantrian/hapus/{{$a->id_antrian}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
@@ -87,3 +87,45 @@
             Content body end
         ***********************************-->
 @include('template.footer')
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    })
+
+    function panggil(a , b) {
+        var synth = window.speechSynthesis;
+        var text = ('Nomor Antrian A'+b+', Silakan masuk ke poli umum');
+        var voices = synth.getVoices();
+        console.log(voices);
+        var utterThis = new SpeechSynthesisUtterance(text);
+        utterThis.voice = chooseVoice();
+        synth.speak(utterThis);
+        var id = a;
+        $.ajax({
+                type:'GET',
+                url: "{{ url('/daftarantrian/panggil')}}"+'/'+id,               
+                success: function( data ) {
+                    console.log(data);
+                }  
+            });
+        }
+    function chooseVoice(){
+            const voiceIndex = 14;
+            return speechSynthesis.getVoices()[voiceIndex];
+    }
+  
+    //     $('body').on('click', '#edit-post', function () {
+    //   var post_id = $(this).data('id');
+    //   $.get('ajax-posts/'+post_id+'/edit', function (data) {
+    //      $('#postCrudModal').html("Edit post");
+    //       $('#btn-save').val("edit-post");
+    //       $('#ajax-crud-modal').modal('show');
+    //       $('#post_id').val(data.id);
+    //       $('#title').val(data.title);
+    //       $('#body').val(data.body);  
+    //   })
+</script>

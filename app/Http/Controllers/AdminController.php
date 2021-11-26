@@ -5,17 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Tbl_data_obat;
+use Session;
 class AdminController extends Controller
 {
     //
    
     public function index()
     {
-        $judul = 'PELAYANAN PASIEN';
-        date_default_timezone_set('Asia/jakarta');
-        $tanggal=date('Y-m-d');
+        if(!Session::get('user_data')){
+            return redirect('/login');
+        }else{
+            $judul = 'PELAYANAN PASIEN';
+            date_default_timezone_set('Asia/jakarta');
+            $tanggal=date('Y-m-d');
         
-        return view('admin/v_dasboard',['judul' => $judul]);
+            return view('admin/v_dasboard',['judul' => $judul]);
+            // $judul = 'Antrian Pendaftaran';
+            // date_default_timezone_set('Asia/jakarta');
+            // $tanggal=date('Y-m-d');
+            // $status='masuk';
+            // $antrian = DB::select("SELECT tbl_antri_pendaftaran.id_antrian,tbl_antri_pendaftaran.no_antrian,tbl_poli.kode_poli, tbl_antri_pendaftaran.status,tbl_antri_pendaftaran.id_poli,tbl_poli.nama_poli FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' && tbl_antri_pendaftaran.status!='hapus' ");
+            // return view('pendaftaran/v_pendaftaran',['antrian' => $antrian, 'judul' => $judul]);
+        }
+    
     }
 
     public function showjamkes()

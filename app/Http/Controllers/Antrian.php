@@ -31,7 +31,6 @@ class Antrian extends Controller
         // $antrian = DB::select("SELECT COUNT(tbl_antri_pendaftaran.no_antrian) as no_antrian, tbl_poli.kode_poli, tbl_poli.nama_poli FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' GROUP by tbl_antri_pendaftaran.id_poli");
         return view('antrian/v_dashboardantrian',['judul' => $judul ]);
     }
-
     public function antrian($id_poli)
     {
         date_default_timezone_set('Asia/jakarta');
@@ -49,7 +48,4 @@ class Antrian extends Controller
                                              ]);
         return redirect('/');
     }
-    
-
-
 }

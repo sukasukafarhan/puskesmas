@@ -242,13 +242,17 @@ class PendaftaranController extends Controller
     }
 
     public function panggil($no){
+        
         $data_pendaftaran =  DB::select("select *  from tbl_antri_pendaftaran where id_antrian='".$no."'");
+        $id_poli = $data_pendaftaran[0]->id_poli;
+        $poli = DB::select("select * from tbl_poli where id='".$id_poli."'");
+        $nama_poli = $poli[0]->nama_poli;
         if($data_pendaftaran[0]->no_antrian <= 10){
-            $text="00";
+            $text="nol nol";
         }else{
-            $text="0";
+            $text="nol";
         }
-        $final =  "A ".$text." ".$data_pendaftaran[0]->no_antrian;
+        $final =  "Nomor Antrian A ".$text." ".$data_pendaftaran[0]->no_antrian.", silakan menuju".$nama_poli;
         $voice = $this->speech([
                                   'key' => 'c823c2295d1b4f9484beb29fcdab3cf2',
                                   'hl' => 'id-id',
@@ -262,7 +266,7 @@ class PendaftaranController extends Controller
                               ]);
 
         echo '<audio src="' . $voice['response'] . '" autoplay="autoplay"></audio>';
-        sleep(1);
+        sleep(10);
         return redirect ('/daftarantrian');
     }
 

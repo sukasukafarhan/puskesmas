@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Session;
 class KasirController extends Controller
 {
     //
    
     public function index()
     {
-        $judul = 'PELAYANAN PASIEN';
-        date_default_timezone_set('Asia/jakarta');
-        $tanggal=date('Y-m-d');
-        
-        return view('kasir/v_daftarantriankasir',['judul' => $judul]);
+        if(!Session::get('user_data')){
+            return redirect('/login');
+        }else{
+            $judul = 'PELAYANAN PASIEN';
+            date_default_timezone_set('Asia/jakarta');
+            $tanggal=date('Y-m-d');
+            
+            return view('kasir/v_daftarantriankasir',['judul' => $judul]);
+        }
     }
     public function showpelayanankasir()
     {

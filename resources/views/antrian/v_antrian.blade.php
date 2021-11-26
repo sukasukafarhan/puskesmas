@@ -11,7 +11,6 @@
     <!-- Custom Stylesheet -->
     <link href="/template/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="/template/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -48,32 +47,25 @@
                 <div class="col-3"> </div>
             </div>
             <div class="row justify-content-center h-100">
-
-
-
                 <table class="table table-striped table-bordered table-hover">
                     @foreach($poli as $b)
-
                         <div class="col-lg-3 ">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="text-center">
                                         <span class="display-5"><i class="icon-user gradient-2-text"></i></span>
                                         <h2 class="mt-0">{{$b->nama_poli}}</h2>
-                                        <a href="/getantrian/{{$b->id}}" class="btn gradient-1 btn-lg border-0 btn-rounded px-5">Pilih</a>
+                                        <a href="/getantrian/{{$b->id}}" class="btn gradient-1 btn-lg border-0 btn-rounded px-5" onclick="printDiv('DivIdToPrint');">Pilih</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     @endforeach
-
-
                     <div class="container-fluid h-50">
                         <div class="row h-90">
                             <div class="col-3"> </div>
                         </div>
-                        <div class="row justify-content-center h-100">
+                        <div class="row justify-content-center h-100"  >
                             <table class="table table-striped table-bordered table-hover">
                                 @foreach($antrian as $a)
                                     <div class="col-lg-3 col-sm-6">
@@ -89,6 +81,25 @@
                                                             00
                                                         @endif
                                                         {{$a->no_antrian}}
+                                                    </h2>
+                                                    <p class="text-white mb-0">{{ date('l, d F Y')}}</p>
+                                                </div>
+                                                <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                                            </div>
+                                        </div>
+                                        <!-- print -->
+                                        <div class="card gradient-4" id="DivIdToPrint" style="display:none">
+                                            <div class="card-body">
+                                                <h3 class="card-title text-white">Antrian {{$a->nama_poli}}</h3>
+                                                <div class="d-inline-block">
+                                                    <h2 class="text-white">{{$a->kode_poli}}
+                                                        @if($a->no_antrian >= 10)
+                                                            0
+                                                        @endif
+                                                        @if($a->no_antrian <= 10)
+                                                            00
+                                                        @endif
+                                                        {{$a->no_antrian+1}}
                                                     </h2>
                                                     <p class="text-white mb-0">{{ date('l, d F Y')}}</p>
                                                 </div>
@@ -125,7 +136,33 @@ Scripts
 <script src="/template/plugins/tables/js/jquery.dataTables.min.js"></script>
 <script src="/template/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
 <script src="/template/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+<script>
+    function printDiv(DivIdToPrint) 
+    {
+        var divToPrint=document.getElementById('DivIdToPrint').innerHTML; 
+        // var css = '@page { size: A7; }',
+        //     head = document.head || document.getElementsByTagName('head')[0],
+        //     style = document.createElement('style');
 
+        // style.type = 'text/css';
+        // style.media = 'print';
+
+        // if (style.styleSheet){
+        //     style.styleSheet.cssText = css;
+        // } else {
+        //     style.appendChild(document.createTextNode(css));
+        // }
+        // head.appendChild(style);
+        
+        document.body.innerHTML = divToPrint;
+        window.print('height=400,width=600');
+        // var newWin=window.open('','Print-Window');
+        //     newWin.document.open();
+        //     newWin.document.write('<html><body onload="window.print()">'+DivIdToPrint.innerHTML+'</body></html>');
+        //     newWin.document.close();
+        //     setTimeout(function(){newWin.close();},10);
+    }
+</script>
 </body>
 
 </html>

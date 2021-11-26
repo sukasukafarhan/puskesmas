@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Session;
 use App\Tbl_data_obat;
 class FarmasiController extends Controller
 {
@@ -11,11 +11,15 @@ class FarmasiController extends Controller
    
     public function index()
     {
-        $judul = 'PELAYANAN PASIEN';
-        date_default_timezone_set('Asia/jakarta');
-        $tanggal=date('Y-m-d');
-        
-        return view('farmasi/pelayanan/v_daftar_data_farmasi');
+        if(!Session::get('user_data')){
+            return redirect('/login');
+        }else{
+            $judul = 'PELAYANAN PASIEN';
+            date_default_timezone_set('Asia/jakarta');
+            $tanggal=date('Y-m-d');
+            
+            return view('farmasi/pelayanan/v_daftar_data_farmasi');
+        }
     }
     public function pelayanan()
     {

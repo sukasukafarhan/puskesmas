@@ -18,6 +18,8 @@
 <!--**********************************
         Scripts
     ***********************************-->
+
+    
 <script src="/template/plugins/common/common.min.js"></script>
 <script src="/template/js/custom.min.js"></script>
 <script src="/template/js/settings.js"></script>
