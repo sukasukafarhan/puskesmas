@@ -23,7 +23,7 @@ class LaboratoriumController extends Controller
         if(!Session::get('user_data')){
             return redirect('/login');
         }else{
-            $judul = 'Antrian Pendaftaran';
+            $judul = 'Antrian Laboratorium';
             date_default_timezone_set('Asia/jakarta');
             $tanggal=date('Y-m-d');
             $status='masuk';

@@ -45,6 +45,7 @@ class Antrian extends Controller
                                                  'no_antrian' => $jumlah_antrian,
                                                  'status' => "masuk",
                                                  'tanggal_daftar' => $tanggal,
+                                                 'urutan' => $jumlah_antrian,
                                              ]);
         return redirect('/');
     }

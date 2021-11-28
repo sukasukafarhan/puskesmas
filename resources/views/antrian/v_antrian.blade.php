@@ -67,7 +67,7 @@
                         </div>
                         <div class="row justify-content-center h-100"  >
                             <table class="table table-striped table-bordered table-hover">
-                                @foreach($antrian as $a)
+                                @forelse($antrian as $a)
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="card gradient-4">
                                             <div class="card-body">
@@ -87,7 +87,6 @@
                                                 <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <!-- print -->
                                         <div class="card gradient-4" id="DivIdToPrint" style="display:none">
                                             <div class="card-body">
                                                 <h3 class="card-title text-white">Antrian {{$a->nama_poli}}</h3>
@@ -106,8 +105,20 @@
                                                 <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                                             </div>
                                         </div>
+                                        @empty
+                                        <div class="card gradient-4" id="DivIdToPrint" style="display:none">
+                                            <div class="card-body">
+                                                <h3 class="card-title text-white">Antrian Poli Umum</h3>
+                                                <div class="d-inline-block">
+                                                    <h2 class="text-white">A001</h2>
+                                                    <p class="text-white mb-0">{{ date('l, d F Y')}}</p>
+                                                </div>
+                                                <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                                            </div>
+                                        </div>
+                                        <!-- print -->
                                     </div>
-                                @endforeach
+                                @endforelse
                             </table>
                         </div>
                         <div class="row h-50">
@@ -140,20 +151,6 @@ Scripts
     function printDiv(DivIdToPrint) 
     {
         var divToPrint=document.getElementById('DivIdToPrint').innerHTML; 
-        // var css = '@page { size: A7; }',
-        //     head = document.head || document.getElementsByTagName('head')[0],
-        //     style = document.createElement('style');
-
-        // style.type = 'text/css';
-        // style.media = 'print';
-
-        // if (style.styleSheet){
-        //     style.styleSheet.cssText = css;
-        // } else {
-        //     style.appendChild(document.createTextNode(css));
-        // }
-        // head.appendChild(style);
-        
         document.body.innerHTML = divToPrint;
         window.print('height=400,width=600');
         // var newWin=window.open('','Print-Window');

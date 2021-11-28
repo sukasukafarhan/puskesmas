@@ -27,15 +27,124 @@ class PendaftaranController extends Controller
             date_default_timezone_set('Asia/jakarta');
             $tanggal=date('Y-m-d');
             $status='masuk';
-            $antrian = DB::select("SELECT tbl_antri_pendaftaran.id_antrian,tbl_antri_pendaftaran.no_antrian,tbl_poli.kode_poli, tbl_antri_pendaftaran.status,tbl_antri_pendaftaran.id_poli,tbl_poli.nama_poli FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' && tbl_antri_pendaftaran.status!='hapus' ");
+            $antrian = DB::select("SELECT tbl_antri_pendaftaran.id_antrian,tbl_antri_pendaftaran.no_antrian,tbl_poli.kode_poli, tbl_antri_pendaftaran.status,tbl_antri_pendaftaran.id_poli,tbl_poli.nama_poli,tbl_antri_pendaftaran.urutan FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' && tbl_antri_pendaftaran.status!='hapus' ");
             return view('pendaftaran/v_pendaftaran',['antrian' => $antrian, 'judul' => $judul]);
         }
     }
 
     public function lewati($id)
     {
-        $antrian = DB::select("UPDATE tbl_antri_pendaftaran set status='lewati' where id_antrian=".$id."");
-        return redirect('/daftarantrian');
+        date_default_timezone_set('Asia/jakarta');
+        $tanggal=date('Y-m-d');
+        $datas = DB::table("tbl_antri_pendaftaran")
+                ->whereDate('tanggal_daftar', '=', now())->get();
+        $count = DB::table("tbl_antri_pendaftaran")
+                ->whereDate('tanggal_daftar', '=', now())->count();
+        $data = DB::select("select * from tbl_antri_pendaftaran where id_antrian=".$id."");        
+        // print_r($data);
+        $id1 = $id+1;
+        $id2 = $id+2;
+        $temp_id  = 99999997;
+        $temp_id1 = 99999998;
+        $temp_id2 = 99999999;
+        $id_akhir = $id+2;
+        $id1_akhir = $id;
+        $id2_akhir = $id1;
+        $urutan_awal = $data[0]->urutan;
+        $urutan_akhir = $urutan_awal+2;
+        if($count>3 && $urutan_akhir<$count){ 
+            // $id1 = $id+1;
+            // $id2 = $id+2;
+            // $urutan_awal = $data[0]->urutan;
+            // $urutan_akhir = $urutan_awal[0]+3;
+            $data1 = $datas[$urutan_awal+1];
+            $data2 = $datas[$urutan_awal+2];
+            $urutan_akhir1 = $data1->urutan-2;
+            $urutan_akhir2 = $data2->urutan-2;      
+            $antrian = DB::select("UPDATE tbl_antri_pendaftaran set status='lewati' where id_antrian=".$id."");
+            $updatedata =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir where id_antrian=".$id."");
+            $updatedata1 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir1 where id_antrian=".$id1."");
+            $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
+            
+            $updateid =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id where id_antrian=".$id."");
+            $updateid1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id1 where id_antrian=".$id1."");
+            $updateid2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id2 where id_antrian=".$id2."");
+            
+            $updateidakhir =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id_akhir where id_antrian=".$temp_id."");
+            $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
+            $updateidakhir2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id2_akhir where id_antrian=".$temp_id2."");            
+            
+            
+            // $antrian = DB::select("UPDATE tbl_antri_pendaftaran set status='lewati' where id_antrian=".$id."");
+            // return redirect('/daftarantrian');
+            return response()->json([
+                'success' => true,
+                'message' => 'Pasien dilewati',
+            ]);
+        }
+        elseif($count>3 && $urutan_akhir==$count){
+            $urutan_akhir=$count;
+            $urutan_akhir1 = $count-2;
+            $urutan_akhir2 = $count-1;   
+            // echo( $urutan_akhir2);
+            // echo("\n");
+            // echo( $urutan_akhir2);   
+            $antrian = DB::select("UPDATE tbl_antri_pendaftaran set status='lewati' where id_antrian=".$id."");
+            $updatedata =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir where id_antrian=".$id."");
+            $updatedata1 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir1 where id_antrian=".$id1."");
+            $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
+            
+            $updateid =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id where id_antrian=".$id."");
+            $updateid1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id1 where id_antrian=".$id1."");
+            $updateid2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id2 where id_antrian=".$id2."");
+            
+            $updateidakhir =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id_akhir where id_antrian=".$temp_id."");
+            $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
+            $updateidakhir2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id2_akhir where id_antrian=".$temp_id2."");            
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Pasien dilewati aa',
+            ]);
+        }
+        elseif($count>3 && $urutan_akhir==$count+1){
+            $urutan_akhir=$count;
+            $urutan_akhir1 = $urutan_awal;
+            // $urutan_akhir2 = $count-1;   
+            // echo( $urutan_akhir2);
+            // echo("\n");
+            // echo( $urutan_akhir2);   
+            $antrian = DB::select("UPDATE tbl_antri_pendaftaran set status='lewati' where id_antrian=".$id."");
+            $updatedata =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir where id_antrian=".$id."");
+            $updatedata1 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir1 where id_antrian=".$id1."");
+            
+            $updateid =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id where id_antrian=".$id."");
+            $updateid1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id1 where id_antrian=".$id1."");
+            $updateid2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $temp_id2 where id_antrian=".$id2."");
+            
+            $updateidakhir =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id_akhir where id_antrian=".$temp_id."");
+            $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
+            $updateidakhir2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id2_akhir where id_antrian=".$temp_id2."");            
+            
+            // $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
+            return response()->json([
+                'success' => true,
+                'message' => 'Pasien dilewati bb',
+            ]);
+        }
+        elseif($data[0]->urutan==$count){
+            return response()->json([
+                'success' => true,
+                'message' => 'Pasien ini berada di nomor terakhir',
+            ]);
+        }
+        // $data1 = $data[0];
+        // $antrian = DB::select("UPDATE tbl_antri_pendaftaran set status='lewati' where id_antrian=".$id."");
+        // $updatedata1 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir where id_antrian=".$id."");
+        // $updatedata1 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir1 where id_antrian=".$id1."");
+        // $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
+        // // $antrian = DB::select("UPDATE tbl_antri_pendaftaran set status='lewati' where id_antrian=".$id."");
+        // return redirect('/daftarantrian');
     }
 
     public function hapus($id)
