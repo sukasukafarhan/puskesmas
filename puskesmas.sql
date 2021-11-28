@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2021 at 09:10 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.3.31
+-- Generation Time: Nov 28, 2021 at 03:18 AM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `puskesmas_laravel2`
+-- Database: `puskesmas`
 --
 
 -- --------------------------------------------------------
@@ -137,7 +137,8 @@ INSERT INTO `tbl_antrian_poli_umums` (`id_antrian`, `no_antrian`, `no_rm`, `wakt
 (14, 'A 00 2', '10.A0001.3', '12:32:07', 'Masuk', 'Poli Umum', '2021-11-12', '2021-11-12 12:32:07'),
 (15, 'A 00 1', '10.T0001.1', '14:32:08', 'Masuk', 'Poli Umum', '2021-11-16', '2021-11-16 14:32:08'),
 (16, 'A 00 2', '10.A0001.3', '14:32:22', 'Masuk', 'Poli Umum', '2021-11-16', '2021-11-16 14:32:22'),
-(17, 'A 00 1', '10.A0001.3', '01:09:35', 'Masuk', 'Poli Umum', '2021-11-17', '2021-11-17 01:09:35');
+(17, 'A 00 1', '10.A0001.3', '01:09:35', 'Masuk', 'Poli Umum', '2021-11-17', '2021-11-17 01:09:35'),
+(18, 'A 00 3', '10.A0001.3', '09:12:03', 'Masuk', 'Poli Umum', '2021-11-28', '2021-11-28 09:12:03');
 
 -- --------------------------------------------------------
 
@@ -150,70 +151,20 @@ CREATE TABLE `tbl_antri_pendaftaran` (
   `no_antrian` varchar(255) NOT NULL,
   `id_poli` int(11) NOT NULL,
   `tanggal_daftar` date NOT NULL,
-  `status` varchar(255) NOT NULL
+  `status` varchar(255) NOT NULL,
+  `urutan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_antri_pendaftaran`
 --
 
-INSERT INTO `tbl_antri_pendaftaran` (`id_antrian`, `no_antrian`, `id_poli`, `tanggal_daftar`, `status`) VALUES
-(1, '1', 1, '2021-09-02', 'hapus'),
-(2, '1', 2, '2021-09-02', 'masuk'),
-(3, '2', 1, '2021-09-02', 'masuk'),
-(4, '3', 1, '2021-09-02', 'masuk'),
-(5, '4', 1, '2021-09-02', 'masuk'),
-(6, '5', 1, '2021-09-02', 'masuk'),
-(7, '6', 1, '2021-09-02', 'masuk'),
-(8, '2', 2, '2021-09-02', 'masuk'),
-(9, '1', 1, '2021-09-03', 'masuk'),
-(10, '1', 2, '2021-09-03', 'masuk'),
-(11, '1', 1, '2021-09-16', 'masuk'),
-(12, '1', 2, '2021-09-16', 'masuk'),
-(13, '1', 1, '2021-10-31', 'hapus'),
-(14, '1', 2, '2021-10-31', 'hapus'),
-(15, '2', 1, '2021-10-31', 'hapus'),
-(16, '3', 1, '2021-10-31', 'hapus'),
-(17, '4', 1, '2021-10-31', 'masuk'),
-(18, '5', 1, '2021-10-31', 'hapus'),
-(19, '1', 1, '2021-11-01', 'hapus'),
-(20, '2', 1, '2021-11-01', 'masuk'),
-(21, '1', 1, '2021-11-02', 'hapus'),
-(22, '2', 1, '2021-11-02', 'masuk'),
-(23, '1', 1, '2021-11-03', 'hapus'),
-(24, '2', 1, '2021-11-03', 'masuk'),
-(25, '1', 1, '2021-11-04', 'masuk'),
-(26, '1', 1, '2021-11-06', 'hapus'),
-(27, '2', 1, '2021-11-06', 'masuk'),
-(28, '3', 1, '2021-11-06', 'masuk'),
-(29, '1', 1, '2021-11-07', 'hapus'),
-(30, '2', 1, '2021-11-07', 'hapus'),
-(31, '3', 1, '2021-11-07', 'hapus'),
-(32, '4', 1, '2021-11-07', 'hapus'),
-(33, '5', 1, '2021-11-07', 'hapus'),
-(34, '6', 1, '2021-11-07', 'hapus'),
-(35, '7', 1, '2021-11-07', 'hapus'),
-(36, '8', 1, '2021-11-07', 'hapus'),
-(37, '1', 1, '2021-11-08', 'hapus'),
-(38, '2', 1, '2021-11-08', 'hapus'),
-(39, '3', 1, '2021-11-08', 'hapus'),
-(40, '1', 1, '2021-11-09', 'hapus'),
-(41, '2', 1, '2021-11-09', 'hapus'),
-(42, '3', 1, '2021-11-09', 'masuk'),
-(43, '4', 1, '2021-11-09', 'masuk'),
-(44, '5', 1, '2021-11-09', 'masuk'),
-(45, '1', 1, '2021-11-12', 'hapus'),
-(46, '2', 1, '2021-11-12', 'hapus'),
-(47, '3', 1, '2021-11-12', 'masuk'),
-(48, '4', 1, '2021-11-12', 'masuk'),
-(49, '1', 1, '2021-11-15', 'masuk'),
-(50, '2', 1, '2021-11-15', 'masuk'),
-(51, '1', 1, '2021-11-16', 'hapus'),
-(52, '2', 1, '2021-11-16', 'hapus'),
-(53, '3', 1, '2021-11-16', 'masuk'),
-(54, '4', 1, '2021-11-16', 'masuk'),
-(55, '1', 1, '2021-11-17', 'hapus'),
-(56, '2', 1, '2021-11-17', 'masuk');
+INSERT INTO `tbl_antri_pendaftaran` (`id_antrian`, `no_antrian`, `id_poli`, `tanggal_daftar`, `status`, `urutan`) VALUES
+(138, '3', 1, '2021-11-28', 'hapus', 1),
+(139, '1', 1, '2021-11-28', 'lewati', 2),
+(140, '2', 1, '2021-11-28', 'lewati', 3),
+(141, '5', 1, '2021-11-28', 'lewati', 4),
+(143, '4', 1, '2021-11-28', 'lewati', 5);
 
 -- --------------------------------------------------------
 
@@ -276,9 +227,7 @@ CREATE TABLE `tbl_datapasiens` (
 --
 
 INSERT INTO `tbl_datapasiens` (`id`, `nama`, `jenis_kelamin`, `nama_kk`, `no_index`, `alamat`, `pekerjaan`, `tanggal_lahir`, `umur`, `jenis_asuransi`, `no_asuransi`, `agama`, `telp`, `silsilah`, `no_rm`, `updated_at`, `created_at`) VALUES
-(3, 'a', 'Laki-laki', 'a', '10.A0001', 'a', '-', '2021-09-02', 0, 'Umum', '-', 'islam', '039539593052', 'Lainnya', '10.A0001.3', '2021-11-05 20:42:41', '2021-11-05 20:42:41'),
-(2, 'machi', 'Perempuan', 'b', '10.B0003', 'b', '-', '2021-11-01', 0, 'Umum', '-', 'islam', '081337712252', 'Lainnya', '10.B0003.3', '2021-11-05 19:53:30', '2021-11-05 19:53:30'),
-(1, 'Luwie Hartiarsa', 'Laki-laki', 'test', '10.T0001', 'ssfjsdjfh', 'Wiraswasta', '1994-01-07', 27, 'BPJS', '-', 'ISLAM', '085746400457', 'Kepala Keluarga', '10.T0001.1', '2021-09-16 15:02:28', '2021-09-16 15:02:28');
+(4, 'abdullah nama ayahnya', 'Laki-laki', 'abdullah', '10.A0001', 'malang', 'pedagang', '2008-02-06', 13, 'BPJS', '12345', 'islam', '081235444555', 'Lainnya', '10.A0001.3', '2021-11-28 02:11:52', '2021-11-28 02:11:52');
 
 -- --------------------------------------------------------
 
@@ -412,17 +361,7 @@ CREATE TABLE `tbl_ffs` (
 --
 
 INSERT INTO `tbl_ffs` (`nama_kk`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `telp`, `foto_KK`, `no_index`, `updated_at`, `created_at`) VALUES
-('HOI', 'HOI', 'DESA', 'DESA', 'SDKJFLSDKJF', '082126212', NULL, '10-H0001', '2021-09-16 14:30:25', '2021-09-16 14:30:25'),
-('a', 'a', 'a', 'a', 'a', 'a', NULL, '10.A0001', '2021-09-02 17:38:11', '2021-09-02 17:38:11'),
-('a', 'a', 'a', 'a', 'a', '1', NULL, '10.A0002', '2021-09-02 17:48:45', '2021-09-02 17:48:45'),
-('a', 'a', 'a', 'a', 'a', '081337712212', NULL, '10.A0003', '2021-11-05 20:37:20', '2021-11-05 20:37:20'),
-('a', 'a', 'a', 'a', 'a', '089879787666', NULL, '10.A0004', '2021-11-05 20:40:47', '2021-11-05 20:40:47'),
-('b', 'b', 'b', 'b', 'b', '1', NULL, '10.B0001', '2021-09-02 17:39:37', '2021-09-02 17:39:37'),
-('b', 'b', 'b', 'b', 'b', '1', NULL, '10.B0002', '2021-09-02 17:49:35', '2021-09-02 17:49:35'),
-('b', 'b', 'b', 'b', 'b', '1', NULL, '10.B0003', '2021-09-02 17:50:08', '2021-09-02 17:50:08'),
-('s', 's', 's', 's', 's', '0898797865', NULL, '10.S0001', '2021-11-05 19:43:58', '2021-11-05 19:43:58'),
-('test', 'ssfjsdjfh', 'test', 'sdfkljslkdfj', 'sdkfjsdlkf', '121414', NULL, '10.T0001', '2021-09-16 13:23:12', '2021-09-16 13:23:12'),
-('z', 'z', 'zz', 'z', 'z', '081337712222', NULL, '10.Z0001', '2021-11-05 20:41:09', '2021-11-05 20:41:09');
+('abdullah', 'malang', 'smaan', 'klojen', 'malang', '084555555555', NULL, '10.A0001', '2021-11-28 02:09:07', '2021-11-28 02:09:07');
 
 -- --------------------------------------------------------
 
@@ -609,7 +548,8 @@ INSERT INTO `tbl_pendaftarans` (`no_antrian`, `nama`, `no_rm`, `tanggal`, `tipe_
 ('A 00 2', 'a', '10.A0001.3', '2021-11-12', 'Baru', 'Poli Umum', '12:32:07', '2021-11-12 12:32:07', '2021-11-12 12:32:07'),
 ('A 00 1', 'Luwie Hartiarsa', '10.T0001.1', '2021-11-16', 'Baru', 'Poli Umum', '14:32:08', '2021-11-16 14:32:08', '2021-11-16 14:32:08'),
 ('A 00 2', 'a', '10.A0001.3', '2021-11-16', 'Baru', 'Poli Umum', '14:32:22', '2021-11-16 14:32:22', '2021-11-16 14:32:22'),
-('A 00 1', 'a', '10.A0001.3', '2021-11-17', 'Baru', 'Poli Umum', '01:09:35', '2021-11-17 01:09:36', '2021-11-17 01:09:36');
+('A 00 1', 'a', '10.A0001.3', '2021-11-17', 'Baru', 'Poli Umum', '01:09:35', '2021-11-17 01:09:36', '2021-11-17 01:09:36'),
+('A 00 3', 'abdullah nama ayahnya', '10.A0001.3', '2021-11-28', 'Baru', 'Poli Umum', '09:12:03', '2021-11-28 09:12:03', '2021-11-28 09:12:03');
 
 -- --------------------------------------------------------
 
@@ -1081,19 +1021,19 @@ ALTER TABLE `tbl_anamnesa_rm`
 -- AUTO_INCREMENT for table `tbl_antrian_poli_umums`
 --
 ALTER TABLE `tbl_antrian_poli_umums`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tbl_antri_pendaftaran`
 --
 ALTER TABLE `tbl_antri_pendaftaran`
-  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 
 --
 -- AUTO_INCREMENT for table `tbl_datapasiens`
 --
 ALTER TABLE `tbl_datapasiens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_data_icdx`
