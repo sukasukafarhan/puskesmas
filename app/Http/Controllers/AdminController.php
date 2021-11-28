@@ -9,7 +9,6 @@ use Session;
 class AdminController extends Controller
 {
     //
-   
     public function index()
     {
         if(!Session::get('user_data')){
