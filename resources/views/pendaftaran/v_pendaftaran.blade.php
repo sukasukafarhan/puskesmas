@@ -101,7 +101,7 @@
             var voices = speechSynthesis.getVoices();
             console.log(voices);
             if (voices.length !== 0) {
-                var msg = new SpeechSynthesisUtterance('Nomor Antrian A'+ b +', Silakan masuk ke poli umum');
+                var msg = new SpeechSynthesisUtterance('Nomor Antrian A'+ b +', Silakan masuk ke antrian pendaftaran');
                 msg.rate = 0.9;
                 msg.voice = voices[14];
                 speechSynthesis.speak(msg);
