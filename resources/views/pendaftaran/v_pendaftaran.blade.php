@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <!-- <h4 class="card-title">Data Table</h4> -->
-                    <div class="table-responsive">
+                    <div class="table-responsive" id = "tabel_antrian">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
                             <tr>
@@ -74,7 +74,6 @@
                             <tbody>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -87,6 +86,18 @@
             Content body end
         ***********************************-->
 @include('template.footer')
+
+<script
+    src="https://code.jquery.com/jquery-2.2.4.js"
+    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+    window.Echo.channel('EveryoneChannel')
+    .listen('.EveryoneMessage', function (e) {
+    location.reload();
+    })
+</script>
 <script>
     $(document).ready(function () {
         $.ajaxSetup({
@@ -95,11 +106,11 @@
             }
         });
     })
-
+    
     function panggil(a , b) {
         var timer = setInterval(function() {
             var voices = speechSynthesis.getVoices();
-            console.log(voices);
+            // console.log(voices);
             if (voices.length !== 0) {
                 var msg = new SpeechSynthesisUtterance('Nomor Antrian A'+ b +', Silakan masuk ke antrian pendaftaran');
                 msg.rate = 0.9;

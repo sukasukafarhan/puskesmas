@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'b3720a0605d72813122037a570935e6a6a97977f',
+        'reference' => '5a87d7b39112109b1329e77157027ae79af092f4',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -346,7 +346,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'b3720a0605d72813122037a570935e6a6a97977f',
+            'reference' => '5a87d7b39112109b1329e77157027ae79af092f4',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -568,6 +568,15 @@
             'reference' => 'c25f79895d27b6ecd5abfa63de1606b786a461a3',
             'dev_requirement' => true,
         ),
+        'predis/predis' => array(
+            'pretty_version' => 'v1.1.9',
+            'version' => '1.1.9.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../predis/predis',
+            'aliases' => array(),
+            'reference' => 'c50c3393bb9f47fa012d0cdfb727a266b0818259',
+            'dev_requirement' => false,
+        ),
         'psr/container' => array(
             'pretty_version' => '1.0.0',
             'version' => '1.0.0.0',
@@ -595,8 +604,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
-                1 => '1.0.0',
+                0 => '1.0.0',
+                1 => '1.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -1030,6 +1039,15 @@
             'aliases' => array(),
             'reference' => 'bafc69caeb4d49c39fd0779086c03a3738cbb389',
             'dev_requirement' => true,
+        ),
+        'wisembly/elephant.io' => array(
+            'pretty_version' => 'v3.3.1',
+            'version' => '3.3.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../wisembly/elephant.io',
+            'aliases' => array(),
+            'reference' => '9d56f409fe231a906af87005f83a135565632d3f',
+            'dev_requirement' => false,
         ),
     ),
 );

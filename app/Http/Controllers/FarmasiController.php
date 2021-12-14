@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use Illuminate\Support\Facades\DB;
 use App\Tbl_data_obat;
+use App\Tbl_stok_obat;
 class FarmasiController extends Controller
 {
     //
@@ -66,16 +68,18 @@ class FarmasiController extends Controller
         $judul = 'PELAYANAN PASIEN';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        // $dataobat = DB::select("SELECT * FROM tbl_data_obats");
-        return view('farmasi/kelolaobat/v_tabel_obat',['judul' => $judul]);
+        $dataobat = DB::select("SELECT * FROM tbl_data_obat");
+        return view('farmasi/kelolaobat/v_tabel_obat',['dataobat' => $dataobat,'judul' => $judul]);
     }
     public function showstokobat()
     {
         $judul = 'PELAYANAN PASIEN';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        
-        return view('farmasi/kelolaobat/v_tabel_stok_obat',['judul' => $judul]);
+        $data = DB::select("SELECT * FROM tbl_data_obat JOIN tbl_data_stock_obat on tbl_data_stock_obat.id_obat=tbl_data_obat.id_obat");
+        $dataobat = DB::select("SELECT * FROM tbl_data_obat");
+        $stokobat = DB::select("SELECT * FROM tbl_data_stock_obat");
+        return view('farmasi/kelolaobat/v_tabel_stok_obat',['data' => $data,'dataobat' => $dataobat,'stokobat' => $stokobat,'judul' => $judul]);
     }
     public function storedataobat(Request $request)
     {
@@ -83,8 +87,23 @@ class FarmasiController extends Controller
         $tbl_data_obat= new Tbl_data_obat;
         $tbl_data_obat->nama_obat = $request->nama_obat;
         $tbl_data_obat->satuan= $request->satuan;
+        $tbl_data_obat->jenis_obat= $request->jenis_obat;
+        $tbl_data_obat->harga= $request->harga;
         $tbl_data_obat->save();
         return  redirect ('/tabelobat');
+    }
+    public function storestockobat(Request $request)
+    {
+        date_default_timezone_set('Asia/jakarta');
+        $tanggal=date('Y-m-d');
+        
+        $tbl_stok_obat= new Tbl_stok_obat;
+        $tbl_stok_obat->id_obat = $request->id_obat;
+        $tbl_stok_obat->jumlah_penerimaan = $request->stok_obat;
+        $tbl_stok_obat->tanggal_masuk= $tanggal;
+        $tbl_stok_obat->tanggal_kadaluarsa= $request->tanggal_kadaluarsa;
+        $tbl_stok_obat->save();
+        return  redirect ('/stokobat');
     }
 
     public function showlaporanlidi()

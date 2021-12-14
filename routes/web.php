@@ -1,10 +1,13 @@
 <?php
-
+use App\Http\Controllers\EventController;
 
 
 Route::get('/','Antrian@index');
 Route::get('/getantrian/{id}','Antrian@antrian');
 Route::get('/jumlahantrian','Antrian@showjumlahantrian');
+// Route::get('/update-antrian-pendaftaran', function () {
+//     return view('antrian/v_updateantrian');
+// });
 
 Route::get('/login','Login@index');
 Route::get('/logout','Login@logout');
@@ -35,11 +38,13 @@ Route::post('/datapasienrm/createfamily','PendaftaranController@tambahFF');
 Route::post('/datapasienrm/createpasien','PendaftaranController@tambahpasien');
 
 
-
 Route::get('/perawatumum','PerawatUmumController@index');
-Route::get('/poliumum/lewati/{id}','PendaftaranController@lewati');
-Route::get('/poliumum/hapus/{id}','PendaftaranController@hapus');
-Route::get('/poliumum/panggil/{id}','PendaftaranController@panggil');
+// Route::get('/poliumum/lewati/{id}','PendaftaranController@lewati');
+// Route::get('/poliumum/hapus/{id}','PendaftaranController@hapus');
+// Route::get('/poliumum/panggil/{id}','PendaftaranController@panggil');
+Route::get('/poliumum/lewati/{id}','PerawatUmumController@lewati');
+Route::get('/poliumum/hapus/{id}','PerawatUmumController@hapus');
+Route::get('/poliumum/panggil/{id}','PerawatUmumController@panggil');
 Route::get('/poliumum/layani/{id}/{id2}','PerawatUmumController@layani');
 Route::post('/poliumumperawat','PerawatUmumController@storeperawat');
 Route::get('/historyperawat','PerawatUmumController@history');
@@ -55,10 +60,18 @@ Route::get('/laboratlaporanlab','LaboratoriumController@dataLaporanLab');
 Route::get('/laborathistory','LaboratoriumController@history');
 
 
-Route::get('/pelayanandokter','DokterController@index');
+Route::get('/pelayanandokter/{id}','DokterController@index');
+Route::post('/saveanamnesa','DokterController@storeanamnesa');
+Route::post('/savepemeriksaan','DokterController@storepemeriksaan');
+Route::post('/dokteraddobat','DokterController@tambahObat');
+Route::post('/savediagnosa','DokterController@storediagnosa');
+Route::post('/savetindakan','DokterController@storetindakan');
+Route::get('/pelayanandokter/hapustindakan/{id1}/{id2}','DokterController@hapustindakan');
+Route::get('/pelayanandokter/hapus/{id1}/{id2}','DokterController@hapusdiagnosa');
 Route::get('/daftarantriandokter','DokterController@showantriandokter');
 Route::get('/dataicdx','DokterController@showicdx');
-
+Route::post('/saveicdx','DokterController@storeicdx');
+Route::get('/dataicdx/hapus/{id}','DokterController@hapus');
 
 Route::get('/farmasi','FarmasiController@index');
 Route::get('/showantrianfarmasi','FarmasiController@showantrian');
@@ -68,6 +81,7 @@ Route::get('/pelayanan','FarmasiController@showpelayanan');
 Route::get('/tabelobat','FarmasiController@showobat');
 Route::get('/stokobat','FarmasiController@showstokobat');
 Route::post('/tabelobat/tambahdataobat','FarmasiController@storedataobat');
+Route::post('/tabelobat/tambahstokobat','FarmasiController@storestockobat');
 Route::get('/laporanlidi','FarmasiController@showlaporanlidi');
 Route::get('/laporanlplpo','FarmasiController@showlaporanlplpo');
 Route::get('/laporanstock','FarmasiController@showlaporanstok');

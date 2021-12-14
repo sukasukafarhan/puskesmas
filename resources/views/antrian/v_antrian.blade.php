@@ -152,7 +152,7 @@ Scripts
     {
         var divToPrint=document.getElementById('DivIdToPrint').innerHTML; 
         document.body.innerHTML = divToPrint;
-        window.print('height=400,width=600');
+        window.print('width=48');
         // var newWin=window.open('','Print-Window');
         //     newWin.document.open();
         //     newWin.document.write('<html><body onload="window.print()">'+DivIdToPrint.innerHTML+'</body></html>');

@@ -18,27 +18,28 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
-
                                 <tr>
                                     <th class="text-center">No.</th>
-                                    <th>ID</th>
+                                    <!-- <th>ID</th> -->
                                     <th>Kode ICD-X</th>
                                     <th>Nama Diagnosa</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach($data as $datas)
                                 <tr>
-                                    <td class=" text-center"> </td>
-                                    <td class=" text-center"> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class=" text-center">{{$datas->id}}</td>
+                                    <!-- <td class=" text-center"> </td> -->
+                                    <td>{{$datas->icd_x}} </td>
+                                    <td> {{$datas->nama_diagnosa}}</td>
                                     <td><span>
-                                        <button type="button" class="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Hapus">
-                                            <i class="fa fa-delete"></i>
-                                        </button>
+                                    <button type="button" class="btn btn-danger" onclick="location.href='/dataicdx/hapus/{{$datas->id}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                Hapus
+                                            </button>
                                     </td>
                                 </tr>
+                            @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
@@ -71,8 +72,9 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-          <form class="form-horizontal" enctype="multipart/form-data" method="post" action=" ">
-                <div class="modal-body">
+          <form class="form-horizontal" enctype="multipart/form-data" method="post" action="/saveicdx/" method="post">
+          @csrf     
+            <div class="modal-body">
                     <!-- Modal body text goes here. -->
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label" for="icdx">Kode ICD-X </label>

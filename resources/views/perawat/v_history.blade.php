@@ -35,19 +35,28 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $a= 1;
+                                @endphp
+                                @foreach($history as $histories)
+                                <!-- $a=1; -->
                                 <tr>
-                                  
-                                    <td class=" text-center"> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class=" text-center"> {{$a}}</td>
+                                    <td> {{$histories->no_antrian}} </td>
+                                    <td> {{$histories->nama}} </td>
+                                    <td> {{$histories->created_at}} </td>
+                                    <td> {{$histories->jenis_kelamin}} </td>
+                                    <td> {{$histories->no_rm}} </td>
+                                    <td> {{$histories->tanggal_lahir}} </td>
+                                    <td> {{$histories->jenis_asuransi}} </td>
+                                    <td> {{$histories->no_asuransi}}</td>
+                                    <td> {{$histories->status}}</td>
                                 </tr>
+                                @php
+                                $a++;
+                                @endphp
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>

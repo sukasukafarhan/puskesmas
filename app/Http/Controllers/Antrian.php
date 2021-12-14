@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+// use Event;
+use App\Events\EveryoneEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version2X;
+
 
 class Antrian extends Controller
 {
@@ -24,12 +30,13 @@ class Antrian extends Controller
     }
     public function showjumlahantrian()
     {
-        $judul = 'Jumlah  Antrian';
+        $judul = 'Jumlah Antrian';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
+
         // $poli = DB::select("select * from tbl_poli");
-        // $antrian = DB::select("SELECT COUNT(tbl_antri_pendaftaran.no_antrian) as no_antrian, tbl_poli.kode_poli, tbl_poli.nama_poli FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' GROUP by tbl_antri_pendaftaran.id_poli");
-        return view('antrian/v_dashboardantrian',['judul' => $judul ]);
+        $antrian = DB::select("SELECT COUNT(tbl_antri_pendaftaran.no_antrian) as no_antrian, tbl_poli.kode_poli, tbl_poli.nama_poli FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' GROUP by tbl_antri_pendaftaran.id_poli");
+        return view('antrian/v_dashboardantrian',['antrian' => $antrian, 'judul' => $judul]);
     }
     public function antrian($id_poli)
     {
@@ -47,6 +54,16 @@ class Antrian extends Controller
                                                  'tanggal_daftar' => $tanggal,
                                                  'urutan' => $jumlah_antrian,
                                              ]);
+
+        //setelah simpan data disini, daftarantrian cek db apakah ada yg baru dengan count data dan cek last id
+        broadcast(new EveryoneEvent());
         return redirect('/');
+        // $version = new Version2X("http://127.0.0.1:7000");
+        // $client = new Client($version);
+        // $client->initialize();
+        // $client->emit('send data', ['antrian_baru' => 1]);
+        // $client->close();                                     
+
+        // return redirect('/');
     }
 }

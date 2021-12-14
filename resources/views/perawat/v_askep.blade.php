@@ -19,23 +19,25 @@
                             <div>
                                 <h4 class="text-muted mb-4">Data Pasien</h4>
                             </div>
-                            <ul class="card-profile__info">
-                                <li class="mb-1"><strong class="text-dark mr-4">No. Pendaftaran</strong> <span> </span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Tanggal</strong> <span>tanggal, jam </span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">No RM</strong> <span>  </span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Nama Lengkap</strong> <span> </span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Tanggal Lahir</strong> <span> </span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span> </span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Status Pasien</strong> <span> </span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span>nama KK</span> </li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Pekerjaan</strong> <span> </span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span> </span></li>
-                            </ul>
+                            @foreach($data as $datas)
+                                <ul class="card-profile__info">
+                                    <li class="mb-1"><strong class="text-dark mr-4">No. Pendaftaran</strong> <span>{{$datas->no_antrian}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Tanggal</strong> <span>{{$datas->updated_at}} </span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">No RM</strong> <span>{{$datas->no_rm}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Nama Lengkap</strong> <span>{{$datas->nama}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Tanggal Lahir</strong> <span>{{$datas->tanggal_lahir}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span>{{$datas->umur}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Status Pasien</strong> <span>{{$datas->status}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span>{{$datas->nama_kk}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Pekerjaan</strong> <span>{{$datas->pekerjaan}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span>{{$datas->poli_asal}}</span></li>
+                                </ul>
+                             @endforeach
                         </div>
                   
                 </div>
             </div>
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-body">
                     <div class="row mb-5">
                         <div>
@@ -49,10 +51,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="col-lg-12 col-xl-9">
             <form class="ui form" action="/poliumumperawat/" method="post">
+            @csrf
+            <input type="hidden" value="{{$data[0]->id_antrian}}" name="id_antrian" class="form-control">
+            <input type="hidden" value="{{$data[0]->no_rm}}" name="no_rm" class="form-control">
+            <input type="hidden" value="{{$data[0]->waktu_mulai}}" name="waktu_mulai" class="form-control">
+            
+            <input type="hidden" value="perawat umum" name="penanggungjawab" class="form-control">
             <div class="card">
                 <!-- <section> -->
                 <div class="card-body">
@@ -96,7 +104,7 @@
                                 <div class="col-lg-6">
                                     <label>TB</label>
                                     <div class="input-group">
-                                        <input type="text" id="tb" name="tb" value=" " class="form-control" placeholder="Tinggi Badan" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" id="tb" name="tb" value=" " class="form-control" placeholder="Tinggi Badan" required ><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">cm</a>
                                             </span></span>
                                     </div>

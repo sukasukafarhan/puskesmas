@@ -33,22 +33,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no = 1; ?>
+                                @foreach($data as $datas)
                                 <tr>
-                                            <td class=" text-center"></td>
-                                             <td class=" text-center"></td>
-                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span>
-                                                    <button type="button" class="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Buka">
-                                                        <i class="fa fa-folder"></i>
-                                                    </button>
-                                            </td>
+                                    <td class=" text-center">{{$no}}</td>
+                                    <td class=" text-center">{{$datas->id_obat}}</td>
+                                    <td>{{$datas->nama_obat}}</td>
+                                    <td>{{$datas->jenis_obat}}</td>
+                                    <td>{{$datas->jumlah_penerimaan}}</td>
+                                    <td>{{$datas->tanggal_masuk}}</td>
+                                    <td>{{$datas->tanggal_kadaluarsa}}</td>
+                                    <td><span>
+                                        <button type="button" class="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Buka">
+                                        <i class="fa fa-folder"></i>
+                                        </button>
+                                    </td>
                                 </tr>
-                            
-
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
@@ -84,19 +86,20 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="">
+            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="/tabelobat/tambahstokobat">
+                @csrf
                 <div class="modal-body">
                     <!-- Modal body text goes here. -->
                      <div class="form-group row">
-                     <label class="col-lg-4 col-form-label">Nama Obat</label>
-                               <div class="col-lg-6">
-                                    <select id="inputState" name="id_obat" class="form-control" required autofocuse>
-                                        <option selected="selected">Choose...</option>
-                                        
-                                            <option value=""></option>
-                                      
-                                    </select>
-                                      </div>
+                        <label class="col-lg-4 col-form-label">Nama Obat</label>
+                        <div class="col-lg-6">
+                            <select class="form-control" id="id_obat" name="id_obat">
+                                <option readonly>Please select</option>
+                                @foreach($dataobat as $dataobats)
+                                <option value="{{$dataobats->id_obat}}">{{$dataobats->nama_obat}}</option>
+                                 @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label">Jumlah Obat</label>

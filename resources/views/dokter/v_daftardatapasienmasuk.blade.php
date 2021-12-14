@@ -19,7 +19,6 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
-
                                 <tr>
                                     <th class="text-center">Waktu</th>
                                     <th>no RM </th>
@@ -33,29 +32,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach($antrian as $a)
                                 <tr>
-                        
-                                    <td class=" text-center"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class=" text-center">{{$a->waktu}}</td>
+                                    <td>{{$a->no_rm}}</td>
+                                    <td>{{$a->rpk}}</td>
+                                    <td>{{$a->rps}}</td>
+                                    <td>{{$a->rpd}}</td>
+                                    <td>{{$a->tb}}</td>
+                                    <td>{{$a->bb}}</td>
+                                    <td>{{$a->status}}</td>
                                     <td>
-
-                                                     
-                                                <!-- <span class="label label-success"></span> -->
-                                                <!-- </td> -->
-                                                
-                                                <!-- <span class="label label-warning"></span> -->
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-light"  onclick="location.href='/pelayanandokter'" data-toggle="tooltip" data-placement="top" title="Open">
+                                        <button type="button" class="btn btn-light"  onclick="location.href='/pelayanandokter/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Open">
                                             <i class="fa fa-folder"></i>
                                         </button>
                                     </td>            
                                 </tr>
+                            @endforeach
                             </tbody>               
                         </table>
                     </div>

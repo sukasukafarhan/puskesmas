@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\EveryoneEvent;
+use App\Events\PanggilPendaftaranEvent;
+use App\Tbl_RekamMedis;
 use App\Tbl_ff;
 use App\Tbl_datapasien;
 use App\Tbl_pendaftaran;
@@ -23,12 +26,19 @@ class PendaftaranController extends Controller
         if(!Session::get('user_data')){
             return redirect('/login');
         }else{
-            $judul = 'Antrian Pendaftaran';
-            date_default_timezone_set('Asia/jakarta');
-            $tanggal=date('Y-m-d');
-            $status='masuk';
-            $antrian = DB::select("SELECT tbl_antri_pendaftaran.id_antrian,tbl_antri_pendaftaran.no_antrian,tbl_poli.kode_poli, tbl_antri_pendaftaran.status,tbl_antri_pendaftaran.id_poli,tbl_poli.nama_poli,tbl_antri_pendaftaran.urutan FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' && tbl_antri_pendaftaran.status!='hapus' ");
-            return view('pendaftaran/v_pendaftaran',['antrian' => $antrian, 'judul' => $judul]);
+            $value = session('user_data')[0]['role'];
+            if($value == "Pendaftaran"){
+                $judul = 'Antrian Pendaftaran';
+                date_default_timezone_set('Asia/jakarta');
+                $tanggal=date('Y-m-d');
+                $status='masuk';
+                $antrian = DB::select("SELECT tbl_antri_pendaftaran.id_antrian,tbl_antri_pendaftaran.no_antrian,tbl_poli.kode_poli, tbl_antri_pendaftaran.status,tbl_antri_pendaftaran.id_poli,tbl_poli.nama_poli,tbl_antri_pendaftaran.urutan FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' && tbl_antri_pendaftaran.status!='hapus' ");
+                return view('pendaftaran/v_pendaftaran',['antrian' => $antrian, 'judul' => $judul]);
+        
+            }
+            else{
+                return redirect('/login');
+            }
         }
     }
 
@@ -268,6 +278,9 @@ class PendaftaranController extends Controller
 
     public function storepasien(Request $request)
     {
+        date_default_timezone_set('Asia/jakarta');
+        $tanggal=date('Y-m-d');
+        $waktu=date("h:i:s:");
 
         $index = $request->seg2;
         $silsilah=$request->silsilah;
@@ -299,6 +312,14 @@ class PendaftaranController extends Controller
         $Tbl_datapasien->silsilah=$request->silsilah;
         $Tbl_datapasien->no_rm=$no_rm;
         $Tbl_datapasien->save();
+
+        $Tbl_rekammedis = new Tbl_RekamMedis;
+        $Tbl_rekammedis->tanggal_kunjungan = $tanggal;
+        $Tbl_rekammedis->waktu_mulai = $waktu;
+        $Tbl_rekammedis->waktu_selesai = $waktu;
+        $Tbl_rekammedis->perawat_penanggung_jawab = session('user_data')[0]['nama'];
+        $Tbl_rekammedis->no_rm=$no_rm;
+        $Tbl_rekammedis->save();
 
         return redirect ('/datapasien/'.$request->seg1."/".$request->seg2);
     }
@@ -374,17 +395,25 @@ class PendaftaranController extends Controller
         $Tbl_pendaftaran->poli_yang_dituju="Poli Umum";
         $Tbl_pendaftaran->waktu_pelayanan=$waktu;
 
+
         $Tbl_antrian_poli_umum = new Tbl_antrian_poli_umum();
+        $tanggal=date('Y-m-d');
+        $cek = $Tbl_antrian_poli_umum
+            // ->where('id_poli', '=', $id_poli)
+            ->where('created_at', '=', $tanggal)
+            ->count();
+        $jumlah_antrian = $cek + 1;
         $Tbl_antrian_poli_umum->no_antrian=$request->noantrian;
         $Tbl_antrian_poli_umum->no_antrian=$request->noantrian;
         $Tbl_antrian_poli_umum->no_rm=$request->no_rm;
         $Tbl_antrian_poli_umum->waktu=$waktu;
         $Tbl_antrian_poli_umum->status="Masuk";
         $Tbl_antrian_poli_umum->poli_asal="Poli Umum";
+        $Tbl_antrian_poli_umum->urutan = $jumlah_antrian;
         $Tbl_antrian_poli_umum->save();
         $Tbl_pendaftaran->save();
-       
 
+        broadcast(new EveryoneEvent());
         $this->hapus($request->id_antrian);
 
         return redirect ('/daftarantrian');
@@ -393,40 +422,41 @@ class PendaftaranController extends Controller
     public function history()
     {
         $judul = 'Daftar Pelayanan Pasien';
-       
-        return view('pendaftaran/v_history', ['judul' => $judul]);
+        $history = $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm");
+        // print_r($history);
+        return view('pendaftaran/v_history', ['history'=>$history, 'judul' => $judul]);
     }
 
     public function panggil($no){
         
         $data_pendaftaran =  DB::select("select *  from tbl_antri_pendaftaran where id_antrian='".$no."'");
-        $id_poli = $data_pendaftaran[0]->id_poli;
-        $poli = DB::select("select * from tbl_poli where id='".$id_poli."'");
-        $nama_poli = $poli[0]->nama_poli;
-        if($data_pendaftaran[0]->no_antrian <= 10){
-            $text="nol nol";
-        }else{
-            $text="nol";
-        }
-        $final =  "Nomor Antrian A ".$text." ".$data_pendaftaran[0]->no_antrian.", silakan menuju".$nama_poli;
-        $voice = $this->speech([
-                                  'key' => 'c823c2295d1b4f9484beb29fcdab3cf2',
-                                  'hl' => 'id-id',
-                                  'v' => 'Intan',
-                                  'src' => $final,
-                                  'r' => '0',
-                                  'c' => 'mp3',
-                                  'f' => '44khz_16bit_stereo',
-                                  'ssml' => 'false',
-                                  'b64' => 'true'
-                              ]);
-
-        echo '<audio src="' . $voice['response'] . '" autoplay="autoplay"></audio>';
-        sleep(10);
-        return redirect ('/daftarantrian');
+        // $id_poli = $data_pendaftaran[0]->id_poli;
+        // $poli = DB::select("select * from tbl_poli where id='".$id_poli."'");
+        // $nama_poli = $poli[0]->nama_poli;
+        $data_pendaftaran[0]->nama_poli = "Pendaftaran";
+        // if($data_pendaftaran[0]->no_antrian <= 10){
+        //     $text="nol nol";
+        // }else{
+        //     $text="nol";
+        // }
+        // $final =  "Nomor Antrian A ".$text." ".$data_pendaftaran[0]->no_antrian.", silakan menuju".$nama_poli;
+        // $voice = $this->speech([
+        //                           'key' => 'c823c2295d1b4f9484beb29fcdab3cf2',
+        //                           'hl' => 'id-id',
+        //                           'v' => 'Intan',
+        //                           'src' => $final,
+        //                           'r' => '0',
+        //                           'c' => 'mp3',
+        //                           'f' => '44khz_16bit_stereo',
+        //                           'ssml' => 'false',
+        //                           'b64' => 'true'
+        //                       ]);
+        print_r($data_pendaftaran);
+        broadcast(new PanggilPendaftaranEvent($data_pendaftaran));
+        // echo '<audio src="' . $voice['response'] . '" autoplay="autoplay"></audio>';
+        // sleep(10);
+        // return redirect ('/daftarantrian');
     }
-
-
 
     public function speech($settings) {
         $this->_validate($settings);

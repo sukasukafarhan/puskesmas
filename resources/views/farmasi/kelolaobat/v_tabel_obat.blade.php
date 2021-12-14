@@ -27,11 +27,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $no = 1; ?>
+                                @foreach($dataobat as $dataobats)
                                 <tr>
-                                    <td class=" text-center"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class=" text-center">{{$no}}</td>
+                                    <td>{{$dataobats->nama_obat}}</td>
+                                    <td>{{$dataobats->jenis_obat}}</td>
+                                    <td>{{$dataobats->harga}}</td>
                                     <td>
                                         <span>
                                             <button type="button" class="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Buka">
@@ -40,6 +42,8 @@
                                         </span>
                                     </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
@@ -86,10 +90,23 @@
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label" for="jenis_obat">Jenis Obat</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" id="satuan" name="satuan" placeholder="Jenis Obat">
+                            <input type="text" class="form-control" id="jenis_obat" name="jenis_obat" placeholder="Jenis Obat">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" for="satuan">Satuan</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="satuan" name="satuan" placeholder="Satuan Obat">
                         </div>
                     </div>
                     
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" for="harga">Harga (Rp.)</label>
+                        <div class="col-lg-6">
+                            <input type="number" class="form-control" id="harga" name="harga" placeholder="Harga Obat">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     </br>
