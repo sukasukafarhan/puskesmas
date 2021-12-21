@@ -71,7 +71,7 @@
                         <div class="form-group row col-md-6">
                             <label class="col-sm-4 col-form-label">No. Asuransi</label>
                             <div class="col-sm-6">
-                                <input type="text" name="no_asuransi" class="form-control" placeholder="Nomor Asuransi" value="{{ $data['data_pasien'][0]->jenis_asuransi }}">
+                                <input type="text" name="no_asuransi" class="form-control" placeholder="Nomor Asuransi" value="{{ $data['data_pasien'][0]->no_asuransi }}">
                             </div>
                             <!-- <div class="col-sm-2">
                             <button type="" class="btn btn-dark">Cek</button>

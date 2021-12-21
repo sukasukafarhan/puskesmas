@@ -31,30 +31,37 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach($antrian as $a)
                                 <tr>
-                                            <td class=" text-center"> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
+                                            <td class=" text-center">{{$a->no_antrian}}</td>
+                                            <td>{{$a->nama}} </td>
+                                            <td>{{$a->jenis_kelamin}} </td>
+                                            <td>{{$a->no_rm}} </td>
+                                            <td>{{$a->umur}} </td>
+                                            <td>{{$a->jenis_asuransi}} </td>
+                                            <td>{{$a->poli_asal}} </td>
                                             <td><span>
-                                            <button type="button" onclick="location.href=' '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                            <button type="button" onclick="location.href='laboratpelayanan/{{$a->id_pemeriksaan}}/{{$a->no_rm}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
                                             Layani
                                             </button>
-                                            <button type="button" onclick="location.href=' '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
-                                                Panggil
+                                            <button type="button" onclick="panggil({{$a->id_antrian}},{{$a->urutan}});" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Panggil" id="panggil">
+                                            Panggil
                                             </button>
-                                            <button type="button" class="btn btn-danger" onclick="location.href=' '" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                            <!-- <button type="button" onclick="location.href='/daftarantrian/panggil/{{$a->id_antrian}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                                Panggil
+                                            </button> -->
+                                            <button type="button" class="btn btn-danger" onclick="location.href='/poliumum/hapus/{{$a->id_antrian}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
                                                 Hapus
                                             </button>
-                                            <button type="button" class="btn btn-warning"  onclick="location.href=' '" data-toggle="tooltip" data-placement="top" title="Lewati">
-                                                Lewati
+                                            <button type="button" class="btn btn-warning"  onclick="lewati({{$a->id_antrian}},{{$a->urutan}});"  data-toggle="tooltip" data-placement="top" title="Lewati">
+                                            Lewati
                                             </button>
+                                            <!-- <button type="button" class="btn btn-warning"  onclick="location.href='/daftarantrian/lewati/{{$a->id_antrian}}'" data-toggle="tooltip" data-placement="top" title="Lewati">
+                                                Lewati
+                                            </button> -->
                                             </td>
                                 </tr>
+                                @endforeach
                             </tbody>   
                         </table>
                     </div>

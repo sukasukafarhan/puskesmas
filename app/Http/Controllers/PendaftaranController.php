@@ -359,12 +359,14 @@ class PendaftaranController extends Controller
 
     public function pendaftaran_pasien($id,$id2)
     {
+       
         $judul = 'Pendaftaran Pasien';
         // $this->load->model("M_familyfolder");
+        // $cekpasien = DB::select("select *  from tbl_datapasiens where no_index='".$id2."'");
         $data['no_rm']=$id2;
         $data['cek']=DB::select("select count(*) as total from tbl_asuhan_keperawatan where no_rm='".$id2."'")[0]->total;
 
-        $data['data_pasien'] = DB::select("select *  from tbl_datapasiens where no_index='".$id2."'");
+        $data['data_pasien'] = DB::select("select *  from tbl_datapasiens where no_rm='".$id2."'");
         $data_pendaftaran =  DB::select("select *  from tbl_antri_pendaftaran where id_antrian='".$id."'");
         if($data_pendaftaran[0]->no_antrian <= 10){
             $text="00";

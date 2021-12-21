@@ -31,7 +31,7 @@ class PerawatUmumController extends Controller
                 date_default_timezone_set('Asia/jakarta');
                 $tanggal=date('Y-m-d');
                 $status='masuk';
-                $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.created_at='".$tanggal."' && tbl_antrian_poli_umums.status!='hapus' ");
+                $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.created_at='".$tanggal."' && tbl_antrian_poli_umums.status='Masuk' OR tbl_antrian_poli_umums.status='Lewati'");
                 return view('perawat/v_antrianpoliumum',['antrian' => $antrian, 'judul' => $judul]);
             // }
             // else{
@@ -213,6 +213,12 @@ class PerawatUmumController extends Controller
         return redirect('/perawatumum');
     }
 
+    public function proses($id)
+    {
+        $antrian = DB::select("UPDATE tbl_antrian_poli_umums set status='proses' where id_antrian=".$id."");
+        return redirect('/perawatumum');
+    }
+
     public function storeperawat(Request $request)
     {
         date_default_timezone_set('Asia/jakarta');
@@ -244,7 +250,7 @@ class PerawatUmumController extends Controller
         $Tbl_asuhanperawatan->penanggungjawab=session('user_data')[0]['nama'];
         $Tbl_asuhanperawatan->save();
         
-        $this->hapus($request->id_antrian);
+        $this->proses($request->id_antrian);
         return redirect ('/perawatumum');
     }
 

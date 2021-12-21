@@ -28,28 +28,31 @@
                             </tr>
                             </thead>
                             <tbody>
-                          
+                                <?php $no = 1; ?>
+                                @foreach($jenis as $jenis)
                                 <tr>
-                                    <td class="text-center" style="width: 1px;"> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class="text-center" style="width: 1px;"> {{$no}}</td>
+                                    <td> {{$jenis->id_jenis_pemeriksaan}}</td>
+                                    <td> {{$jenis->jenis_pemeriksaan}}</td>
                                     <td><span>
-                                        <button type="button" onclick="location.href='/laboratdatajenisdokter'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                        <button type="button" onclick="location.href='/laboratdatajenisdokter/{{$jenis->id_jenis_pemeriksaan}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
                                             Data Pelayanan Dokter
                                             </button>
                                         </span>
                                         <span>
-                                        <button type="button" onclick="location.href='/laboratdataujilab'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                        <button type="button" onclick="location.href='/laboratdataujilab/{{$jenis->id_jenis_pemeriksaan}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
                                             Data Pelayanan 
                                             </button>
                                         </span>
                                         <span>
-                                        <button type="button" onclick="location.href=' '" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Layani">
-                                            Hapus
-                                            </button>
+                                        <button type="button" class="btn btn-danger" onclick="location.href='/laborat/deletedatajenislab/{{$jenis->id_jenis_pemeriksaan}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                Hapus
+                                        </button>
                                         </span>
                                     </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                         </table>
 

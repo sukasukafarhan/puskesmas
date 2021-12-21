@@ -47,10 +47,10 @@
                         </div>
                         <div class="col-12 text-center">
                             <div class="btn-group-vertical">
-                                <button class="btn btn-secondary mb-2 px-4">Riwayat Rekam Medis</button>
-                                <button class="btn btn-secondary mb-2 px-4">Riwayat Pemeriksaan</button>
+                                <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalRM">Riwayat Rekam Medis</button>
+                                <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalPemeriksaan">Riwayat Pemeriksaan</button>
                                 <button class="btn btn-secondary mb-2 px-4">Hasil Lab</button>
-                                
+                                <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalAskep">Askep Pasien</button>
                             </div>
                         </div>
                     </div>
@@ -246,6 +246,7 @@
                                         <tr>
                                             <th>No.</th>
                                             <th>Tindakan</th>
+                                            <th>Perawat</th>
                                             <th>Keterangan</th>
                                             <th>Action</th>
                                         </tr>
@@ -256,6 +257,7 @@
                                         <tr>
                                             <td>{{$no}}</td>
                                             <td>{{$tindakans_rm->tindakan}}</td>
+                                            <td>{{$tindakans_rm->perawat}}</td>
                                             <td>{{$tindakans_rm->keterangan}}</td>
                                             <td>
                                                 <button type="button" class="btn btn-danger" onclick="location.href='/pelayanandokter/hapustindakan/{{$tindakans_rm->no_rm}}/{{$tindakans_rm->id_tindakan}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
@@ -295,18 +297,23 @@
                             </thead>
                            
                             <tbody>
+                            <?php $no=1;?>
+                                @foreach($dataobatpasien as $dataobatpasiens)
                                 <tr>
-                                    <td></td>
-                                    <td></td>   
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>                          
-                                    <td><button type="button" class="btn btn-light" data-toggle="tooltip" data-target="#modal_hapus" title="Hapus">
-                                        <i class="fa fa-trash color-danger"></i>
+                                    <td>{{$no}}</td>
+                                    <td>{{$dataobatpasiens->jenis_resep}}</td>   
+                                    <td>{{$dataobatpasiens->nama_obat}}</td>
+                                    <td>{{$dataobatpasiens->jumlah}}</td>
+                                    <td>{{$dataobatpasiens->signa}}</td>
+                                    <td>{{$dataobatpasiens->aturan_pakai}}</td>
+                                    <td>                          
+                                        <button type="button" class="btn btn-danger" onclick="location.href='/pelayanandokter/hapusresep/{{$data[0]->no_rm}}/{{$dataobatpasiens->id}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                        Hapus
                                         </button>
                                     </td>
                                 </tr>
+                                <?php $no++;?>
+                                @endforeach
                             <!-- </tbody>
                                     <thead>
                                         <tr>
@@ -349,8 +356,10 @@
 
                     <h4 class="card-title">Lainnya</h4>
                     <div class="basic-form">
-                        <form method="post" action="">
-
+                        <form method="post" action="/savepenyuluhan">
+                        @csrf
+                            <input type="hidden" value="{{$data[0]->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
+                            <input type="hidden" value="{{$data[0]->no_rm}}" name="no_rm" class="form-control">
                             <div class="form-group">
                                 <label>Penyuluhan/Edukasi</label>
                                 <textarea class="form-control h-150px" name="lainnya" rows="6" id="comment"></textarea>
@@ -440,67 +449,6 @@
     </div>
 </div>
  
-<!-- <div class="modal" id="modal_hapus" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <h5 class="modal-title">Tambah Diagnosa</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
-            </div>
-            <form class="form-horizontal" method="post" action="">
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="icdx">ICD-X </label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="icdx" name="icdx" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="diagnosa">Diagnosa </label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="diagnosa" name="diagnosa" placeholder="">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="jenis">Jenis
-                            <!-- <span class="text-danger">*</span> -->
-                        <!-- </label>
-                        <div class="col-lg-6">
-                            <select class="form-control" id="jenis" name="jenis">
-                                <option value="">Please select</option>
-                                <option value="Primer">Primer</option>
-                                <option value="Sekunder">Sekunder</option>
-                                <option value="Komplikasi">Komplikasi</option>
-                            </select>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="kasus">Kasus -->
-                            <!-- <span class="text-danger">*</span> -->
-                        <!-- </label>
-                        <div class="col-lg-6">
-                            <select class="form-control" id="kasus" name="kasus">
-                                <option value="">Please select</option>
-                                <option value="Baru">Baru</option>
-                                <option value="Lama">Lama</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    </br>
-                    <input type="hidden" name="id_pesan">
-                    <button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Batal</button>
-                    <button class="btn btn-primary btn-sm">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> --> 
 
 <div class="modal" id="basicModal1" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -536,6 +484,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" for="perawat">Panggil Perawat </label>
+                        <div class="col-lg-6">
+                            <select class="form-control" id="perawat" name="perawat">
+                                <option readonly>Please select</option>
+                                @foreach($perawat as $perawats)
+                                <option value="{{$perawats->full_name}}">{{$perawats->full_name}}</option>
+                                @endforeach
+                            </select>
+                            <!-- <input type="text" class="form-control" id="tindakan" name="tindakan" placeholder="Masukkan tindakan"> -->
+                        </div>
+                    </div>
                 <div class="modal-footer">
                     </br>
                     <input type="hidden" name="id_pesan">
@@ -547,28 +507,7 @@
     </div>
 </div>
 
-             
-<!-- <div class="modal fade" id="modal_hapus" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 class="modal-title" id="myModalLabel">Hapus Produk</h3>
-            </div> -->
-          <!--   <form class="form-horizontal" method="post" action="C_Dokter/hapusProduk?id="> 
-                <div class="modal-body"> -->
-                  <!--   <p>Anda yakin mau menghapus <b></b></p>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="kode_barang" value="">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Batal</button>
-                    <button class="btn btn-danger">Hapus</button>
-                </div> -->
-            <!-- </form> -->
-           <!--  </div>
-            </div>
-        </div> -->
-
+ 
 
 <div class="modal" id="basicModal2" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -579,18 +518,22 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form class="form-horizontal" method="post" action="">
-                 
+            <form class="form-horizontal" method="post" action="/savepermintaanlab">
+            @csrf
+            <input type="hidden" value="{{$data[0]->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
+            <input type="hidden" value="{{$data[0]->no_rm}}" name="no_rm" class="form-control">
                 <div class="modal-body">
                     <!-- Modal body text goes here. -->
                     <div class="form-group row">
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <h4></h4>
                             <div class="col-lg-6">
-                             <label class="form-check-label">
-
-                                    <input type="checkbox" class="form-check-input" name="nama_pemeriksaan[]" value="" ></label>
+                             <!-- <label class="form-check-label"> -->
+                                @foreach($laborat as $datalaborats)
+                                    <input type="checkbox" class="form-check-input" name="id_laborat[]" value="{{$datalaborats->id_data_laborat_dokter }}" ><label for="id_pemeriksaan[]">{{$datalaborats->nama }}</label><br>
+                                <!-- </label> -->
+                                @endforeach
                         </div>
                     </div>
                     </div>
@@ -603,7 +546,142 @@
                     <button class="btn btn-default btn-md" data-dismiss="modal" aria-hidden="true">Batal</button>
                     <button class="btn btn-primary btn-md">Simpan</button>
                 </div>
-    </form>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalRM" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Data Rekam Medis</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>RPK</th>
+                            <th>RPS</th>
+                            <th>RPD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1;?>
+                        @foreach($anamnesa as $anamnesas)
+                        <tr>
+                            <td>{{$no}}</td>
+                            <td>{{$anamnesas->rpk}}</td>   
+                            <td>{{$anamnesas->rps}}</td>
+                            <td>{{$anamnesas->rpd}}</td>
+                        </tr>
+                        <?php $no++;?>
+                        @endforeach
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-xl" id="modalAskep" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Data Asuhan Keperawatan</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered zero-configuration">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>RPK</th>
+                            <th>RPS</th>
+                            <th>RPD</th>
+                            <th>NB Subjective</th>
+                            <th>NB Objective</th>
+                            <th>tb</th>
+                            <th>bb</th>
+                            <th>IMT</th>
+                            <th>Suhu</th>
+                            <th>RR</th>
+                            <th>Sistol</th>
+                            <th>Diastol</th>
+                            <th>Analisis</th>
+                            <th>Planning</th>
+                            <th>Penanggung Jawab</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1;?>
+                        @foreach($askep as $askeps)
+                        <tr>
+                            <td>{{$no}}</td>
+                            <td>{{$askeps->rpk}}</td>   
+                            <td>{{$askeps->rps}}</td>
+                            <td>{{$askeps->rpd}}</td>
+                            <td>{{$askeps->nb_subjective}}</td>   
+                            <td>{{$askeps->nb_object}}</td>
+                            <td>{{$askeps->tb}}</td>
+                            <td>{{$askeps->bb}}</td>   
+                            <td>{{$askeps->imt}}</td>
+                            <td>{{$askeps->suhu}}</td>
+                            <td>{{$askeps->rr}}<span>/Menit</span></td>   
+                            <td>{{$askeps->sistol}}</td>
+                            <td>{{$askeps->diastol}}</td>
+                            <td>{{$askeps->nb_assessment}}</td>   
+                            <td>{{$askeps->nb_plan}}</td>
+                            <td>{{$askeps->penanggungjawab}}</td>
+                        </tr>
+                        <?php $no++;?>
+                        @endforeach
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalPemeriksaan" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Riwayat Pemeriksaan</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>TB</th>
+                            <th>BB</th>
+                            <th>Sistol</th>
+                            <th>Diastol</th>
+                            <th>IMT</th>
+                            <th>Suhu</th>
+                            <th>RR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1;?>
+                        @foreach($pemeriksaan as $pemeriksaans)
+                        <tr>
+                            <td>{{$no}}</td>
+                            <td>{{$pemeriksaans->tinggi_badan}}</td>   
+                            <td>{{$pemeriksaans->berat_badan}}</td>
+                            <td>{{$pemeriksaans->sistol}}</td>
+                            <td>{{$pemeriksaans->diastol}}</td>   
+                            <td>{{$pemeriksaans->imt}}</td>
+                            <td>{{$pemeriksaans->suhu}}</td>
+                            <td>{{$pemeriksaans->rr}}<span> /Menit</span></td>
+                        </tr>
+                        <?php $no++;?>
+                        @endforeach
+                    </table>
+            </div>
         </div>
     </div>
 </div>

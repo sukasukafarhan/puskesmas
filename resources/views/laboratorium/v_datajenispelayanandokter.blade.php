@@ -22,26 +22,31 @@
 
                             <tr>
                                 <th class="text-center">No.</th>
+                                <th>Nama Pemeriksaan</th>
                                 <th>Jenis Pemeriksaan</th>
                                 <th>Tarif</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            
+                                <?php $no=1; ?>
+                                @foreach($data as $datas)
                                 <tr>
-                                    <td class="text-center" style="width: 1px;"> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class="text-center" style="width: 1px;">{{$no}} </td>
+                                    <td> {{$datas->nama}}</td>
+                                    <td> {{$datas->jenis}}</td>
+                                    <td> {{$datas->tarif}}</td>
                                     <td>
                                         <span>
-                                            <button type="button" class="btn btn-light" onclick="location.href=' '" data-toggle="tooltip" data-placement="top" title="Hapus">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                        <button type="button" class="btn btn-danger" onclick="location.href='/laborat/deletepelayanandokter/{{$datajenis[0]->id_jenis_pemeriksaan}}/{{$datas->id_data_laborat_dokter}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                Hapus
+                                        </button>
                                         </span>
                                         
                                     </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach;
                             </tbody>
                         </table>
 
@@ -65,26 +70,29 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="">
+            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="/savepelayanandokter">
+                @csrf
+                <input type="hidden" value="{{$datajenis[0]->id_jenis_pemeriksaan}}" name="id_jenis" class="form-control">
                 <div class="modal-body">
                     <!-- Modal body text goes here. -->
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label">Kode</label>
                         <div class="col-lg-6">
-                            <input readonly type="text" class="form-control" name="kode" value=" " placeholder="Kode" required autofocuse>
+                            <?php $jdata = count($data)?>
+                            <input readonly type="text" class="form-control" name="kode" value="{{$jdata}}" placeholder="Kode" required autofocuse>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label">Nama Jenis Pemeriksaan Lab</label>
                         <div class="col-lg-6">
-                            <input readonly type="text" class="form-control" name="jenis_lab" value=" " placeholder="Jenis Pemeriksaan Lab" required autofocuse>
+                            <input readonly type="text" class="form-control" name="jenis_lab" value="{{$datajenis[0]->jenis_pemeriksaan}} " placeholder="Jenis Pemeriksaan Lab" required autofocuse>
                     </div>
                     </div>
                     <div class="form-group row">
                         
                         <label class="col-lg-4 col-form-label">Nama Jenis Pemeriksaan</label>
                         <div class="col-lg-6">
-                            <input type="text" name="jenis_pemeriksaan_dokter" id="inputNamaKK" class="form-control" placeholder="Nama Jenis Pemeriksaan" required autofocuse>
+                            <input type="text" name="jenis_pemeriksaan_dokter" id="jenis_pemeriksaan_dokter" class="form-control" placeholder="Nama Jenis Pemeriksaan" required autofocuse>
                         </div>
                     </div>
                     <div class="form-group row">

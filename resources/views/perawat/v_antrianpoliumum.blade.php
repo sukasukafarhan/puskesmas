@@ -30,8 +30,8 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach($antrian as $a)
                                 <tr>
-                                @foreach($antrian as $a)
                                             <td class=" text-center">{{$a->no_antrian}}</td>
                                             <td>{{$a->nama}} </td>
                                             <td>{{$a->jenis_kelamin}} </td>

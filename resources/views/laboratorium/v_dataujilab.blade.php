@@ -24,17 +24,20 @@
                                 <th class="text-center">No.</th>
                                 <th>Nama Pemeriksaan</th>
                                 <th>Nilai Normal</th>
+                                <th>Tarif</th>
                                 <th>Satuan</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            
+                                <?php $no = 1; ?>
+                                @foreach($data as $datas)
                                 <tr>
-                                    <td class="text-center" style="width: 1px;"> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class="text-center" style="width: 1px;">{{$no}} </td>
+                                    <td> {{$datas->nama_pemeriksaan}}</td>
+                                    <td> {{$datas->nilai_normal}}</td>
+                                    <td> {{$datas->tarif_pemeriksaan}}</td>
+                                    <td> {{$datas->satuan}}</td>
                                     <td>
                                         <span>
                                             <button type="button" class="btn btn-light" onclick="location.href=' '" data-toggle="tooltip" data-placement="top" title="Hapus">
@@ -44,6 +47,8 @@
                                         
                                     </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                         </table>
 

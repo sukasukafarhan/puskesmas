@@ -27,7 +27,7 @@
                                     <th>rpd</th>
                                     <th>tb</th>
                                     <th>bb</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -41,7 +41,7 @@
                                     <td>{{$a->rpd}}</td>
                                     <td>{{$a->tb}}</td>
                                     <td>{{$a->bb}}</td>
-                                    <td>{{$a->status}}</td>
+                                    <!-- <td>{{$a->status}}</td> -->
                                     <td>
                                         <button type="button" class="btn btn-light"  onclick="location.href='/pelayanandokter/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Open">
                                             <i class="fa fa-folder"></i>

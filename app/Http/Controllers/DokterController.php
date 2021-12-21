@@ -12,6 +12,9 @@ use App\Tbl_diagnosa;
 use App\Tbl_tindakan;
 use App\Tbl_resep_obat;
 use App\Tbl_resep_obats;
+use App\Tbl_RekamMedis;
+use App\Tbl_penyuluhan;
+use App\Tbl_permintaan_lab;
 use Session;
 use Illuminate\Support\Facades\DB;
 class DokterController extends Controller
@@ -34,6 +37,7 @@ class DokterController extends Controller
             $Tbl_resep_obats->id_resep=$lastindex;
             $Tbl_resep_obats->nama_obat=$request->nama_obat[$i];
             $Tbl_resep_obats->jumlah=$request->jk[$i];
+            $Tbl_resep_obats->status="tersedia";
             $Tbl_resep_obats->save();
             // dd($request->jumlah[$i]);
         }
@@ -49,21 +53,28 @@ class DokterController extends Controller
             $judul = 'PELAYANAN PASIEN';
             date_default_timezone_set('Asia/jakarta');
             $tanggal=date('Y-m-d h:i:s');
-            $data = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."'"); 
+            $data = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."'"); //perlu cek id_pemeriksaan
+            $askep = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."'");
+            // $data = DB::select("SELECT * FROM tbl_asuhan_keperawatan JOIN tbl_rekam_medis on tbl_asuhan_keperawatan.no_rm=tbl_rekam_medis.no_rm where tbl_asuhan_keperawatan.id_pemeriksaan=tbl_rekam_medis.id_pemeriksaan");
+            $anamnesa = DB::select("select * from tbl_anamnesa_rm where no_rm='".$id."'");
+            $pemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."'");
             $poli_asal = DB::select("select poli_asal from tbl_antrian_poli_umums where no_rm='".$id."'"); 
             $pasien = DB::select("select * from tbl_datapasiens where no_rm='".$id."'"); 
-            $diagnosa = DB::select("select * from tbl_diagnosa_rm where no_rm='".$id."' && status!='hapus'"); 
+            $diagnosa = DB::select("select * from tbl_diagnosa_rm where no_rm='".$id."' && status!='hapus'");  //perlu cek id_pemeriksaan
             $tindakan = DB::select("select * from tbl_data_tindakan "); 
             $tindakan_rm = DB::select("select * from tbl_tindakan_rm where no_rm='".$id."' && status!='hapus'"); 
             $dataobat = DB::select("SELECT * FROM tbl_data_obat JOIN tbl_data_stock_obat on tbl_data_stock_obat.id_obat=tbl_data_obat.id_obat where tbl_data_stock_obat.jumlah_penerimaan!=0");
             $pasien[0]->poli_asal = $poli_asal[0]->poli_asal;
             $pasien[0]->tanggal = $tanggal;
             $pasien[0]->id_pemeriksaan = $data[0]->id_pemeriksaan;
+            $dataobatpasien = DB::select("SELECT * FROM tbl_resep_obat JOIN tbl_resep_obats on tbl_resep_obat.id_resep=tbl_resep_obats.id_resep where tbl_resep_obats.status!='hapus'");
+            $dataperawat = DB::select("select * from tbl_pengguna where role_id=4");
+            $datalaborat = DB::select("select * from tbl_data_laborat_dokter");
             // $data[0]->waktu = $waktu;
-            // print_r($data);
+            // print_r($dataobatpasien);
             // // if(isset($diagnosa)){
             // print_r($diagnosa);
-            return view('dokter/v_pelayanan',['dataobat' => $dataobat,'tindakan_rm' => $tindakan_rm, 'tindakan'=> $tindakan, 'diagnosa' => $diagnosa,'pasien' => $pasien, 'data' => $data, 'judul' => $judul]);
+            return view('dokter/v_pelayanan',['laborat'=>$datalaborat,'perawat'=>$dataperawat,'askep'=>$askep,'anamnesa'=>$anamnesa, 'pemeriksaan'=>$pemeriksaan, 'dataobatpasien' => $dataobatpasien,'dataobat' => $dataobat,'tindakan_rm' => $tindakan_rm, 'tindakan'=> $tindakan, 'diagnosa' => $diagnosa,'pasien' => $pasien, 'data' => $data, 'judul' => $judul]);
             // }else{
             //     return view('dokter/v_pelayanan',['pasien' => $pasien, 'data' => $data, 'judul' => $judul]);
             // }
@@ -75,13 +86,14 @@ class DokterController extends Controller
         $judul = 'PELAYANAN PASIEN';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        $antrian = DB::select("select * from tbl_asuhan_keperawatan");     
+        //ganti ke antrian dokter
+        $antrian = DB::select("SELECT * FROM tbl_asuhan_keperawatan JOIN tbl_antrian_poli_umums on tbl_asuhan_keperawatan.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.status!='selesai' AND tbl_asuhan_keperawatan.tanggal='".$tanggal."'");
         $waktu=date('h:i:s');
         $jdata = count($antrian);
         $i=0;
         for($a=0; $a<$jdata; $a++){
             $antrian[$a]->waktu = $waktu;
-            $antrian[$a]->status = "Masuk";
+            // $antrian[$a]->status = "Masuk";
         }
         // print_r($antrian);
         
@@ -93,15 +105,19 @@ class DokterController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $data = DB::select("select * from tbl_data_icdx where status!='hapus'");  
-        if(isset($data)){
-            print_r($data);
-        }
+        
         return view('dokter/v_tabel_diagnosis',['data'=>$data,'judul' => $judul]);
     }
     public function hapus($id)
     {
         $antrian = DB::select("UPDATE tbl_data_icdx set status='hapus' where id=".$id."");
         return redirect ('/dataicdx');
+    }
+
+    public function hapusresep($id1,$id2)
+    {
+        $antrian = DB::select("UPDATE tbl_resep_obats set status='hapus' where id=".$id2."");
+        return redirect ('/pelayanandokter/'.$id1);
     }
 
     public function hapusdiagnosa($id1,$id2)
@@ -132,6 +148,46 @@ class DokterController extends Controller
         return redirect ('/dataicdx');
     }
 
+    public function storepenyuluhan(Request $request)
+    {
+        $Tbl_penyuluhan = new Tbl_penyuluhan;
+        $Tbl_penyuluhan->isi_penyuluhan=$request->lainnya;
+        $Tbl_penyuluhan->no_rm=$request->no_rm;
+        $Tbl_penyuluhan->id_pemeriksaan=$request->id_pemeriksaan;
+        $Tbl_penyuluhan->save();
+        // dd($request);
+
+        $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='selesai' where no_rm='".$request->no_rm."'");
+
+        return redirect ('/daftarantriandokter');
+    }
+
+    public function storepermintaanlab(Request $request)
+    {
+        date_default_timezone_set('Asia/jakarta');
+        $tanggal=date('Y-m-d');
+        $waktu=date("h:i:s");
+        
+        for($i =0 ; $i<count($request->id_laborat); $i++){
+            $Tbl_permintaan_lab = new Tbl_permintaan_lab;
+            $Tbl_permintaan_lab->id_data_laborat_dokter=$request->id_laborat[$i];
+            $Tbl_permintaan_lab->status_permintaan="Baru";
+            $Tbl_permintaan_lab->id_pemeriksaan=$request->id_pemeriksaan;
+            $Tbl_permintaan_lab->tanggal=$tanggal;
+            $Tbl_permintaan_lab->waktu=$waktu;
+            $Tbl_permintaan_lab->dokter_penanggungjawab=session('user_data')[0]['nama'];
+            
+            $Tbl_permintaan_lab->save();
+        }
+       
+        
+        // dd($request);
+
+        // $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='proses' where no_rm='".$request->no_rm."'");
+
+        return redirect ('/pelayanandokter/'.$request->no_rm);
+    }
+
     public function storeanamnesa(Request $request)
     {
         date_default_timezone_set('Asia/jakarta');
@@ -145,7 +201,13 @@ class DokterController extends Controller
         $Tbl_anamnesa->rpd=$request->rpd;
         $Tbl_anamnesa->rpk=$request->rpk;
         $Tbl_anamnesa->rps=$request->rps;
+        $Tbl_anamnesa->no_rm=$request->no_rm;
         $Tbl_anamnesa->save();
+
+        $updatedokter = DB::select("UPDATE tbl_rekam_medis set dokter_penanggung_jawab ='".session('user_data')[0]['nama']."' where id_pemeriksaan=".$request->id_pemeriksaan."");
+        // $Tbl_rekammedis = new Tbl_RekamMedis;
+        // $Tbl_rekammedis->dokter_penanggung_jawab = session('user_data')[0]['nama'];
+        // $Tbl_rekammedis->save();
         
         return redirect ('/pelayanandokter/'.$request->no_rm);
     }
@@ -164,7 +226,9 @@ class DokterController extends Controller
         $Tbl_tindakan->keterangan=$request->keterangan;
         $Tbl_tindakan->waktu_tindakan=$waktu;
         $Tbl_tindakan->status="Masuk";
-        $Tbl_tindakan->penanggung_jawab=session('user_data')[0]['nama'];;
+        $Tbl_tindakan->penanggung_jawab=session('user_data')[0]['nama'];
+        $Tbl_tindakan->no_rm = $request->no_rm;
+        $Tbl_tindakan->perawat = $request->perawat;
         $Tbl_tindakan->save();
         
         return redirect ('/pelayanandokter/'.$request->no_rm);
@@ -187,6 +251,7 @@ class DokterController extends Controller
         $Tbl_pemeriksaan->suhu=$request->suhu;
         $Tbl_pemeriksaan->rr=$request->nafas;
         $Tbl_pemeriksaan->diastol=$request->diastol;
+        $Tbl_pemeriksaan->no_rm=$request->no_rm;
         
         $Tbl_pemeriksaan->save();
         

@@ -49,7 +49,7 @@
                                     <td>{{$a->jenis_asuransi}}</td>
                                     <td class="justify-center" style="width: 150px">
                                     <span>
-                                            <button type="button" class="btn btn-light" onclick="location.href='/pendaftaranpasien/{{ Request::segment(2) }}/{{Request::segment(3)}}'" data-toggle="tooltip" data-placement="top" title="Buka">
+                                            <button type="button" class="btn btn-light" onclick="location.href='/pendaftaranpasien/{{ Request::segment(2) }}/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Buka">
                                                 <i class="fa fa-check-circle"></i>
                                             </button>
                                     </span>

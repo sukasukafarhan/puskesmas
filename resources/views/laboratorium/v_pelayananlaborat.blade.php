@@ -20,16 +20,16 @@
                             <h4 class="text-muted mb-4">Data Pasien</h4>
                         </div>
                         <ul class="card-profile__info">
-                            <li class="mb-1"><strong class="text-dark mr-4">No. Pendaftaran</strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Tanggal</strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4"></strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4"></strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4"></strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4"></strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4"></strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span></span> </li>
-                            <li class="mb-1"><strong class="text-dark mr-4"></strong> <span> </span> </li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span> </span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">No. Pendaftaran</strong> <span>{{$pasien[0]->no_antrian}} </span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">Tanggal</strong> <span> {{$pasien[0]->tanggal}}</span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">Nama</strong> <span>{{$pasien[0]->nama}} </span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">No RM</strong> <span> {{$pasien[0]->no_rm}}</span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">TanggalLahir</strong> <span> {{$pasien[0]->tanggal_lahir}}</span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span> {{$pasien[0]->umur}}</span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">Asuransi</strong> <span>{{$pasien[0]->jenis_asuransi}} </span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span>{{$pasien[0]->nama_kk}}</span> </li>
+                            <!-- <li class="mb-1"><strong class="text-dark mr-4"></strong> <span> </span> </li> -->
+                            <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span> {{$pasien[0]->poli_asal}}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -67,7 +67,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no=1;?>
+                                @foreach($permintaan as $permintaans)
+                                    <tr>
+                                        <td>{{$no}}</td>
+                                        <td>{{$permintaans->jenis}}</td>
+                                        <td>{{$permintaans->nama}}</td>
+                                    </tr>
+                                    <?php $no++; ?>
+                                @endforeach
+                            </tbody>
                         </table>
+                        <h5>Dokter Penanggung Jawab :</h5><span>{{$permintaan[0]->dokter_penanggungjawab}}</span>
                     </div>
                 </div>
             </div>
@@ -90,6 +101,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!-- @foreach() -->
                                     <th class="card-title mt-3">Hematologi</th>
                                     <td>
 
