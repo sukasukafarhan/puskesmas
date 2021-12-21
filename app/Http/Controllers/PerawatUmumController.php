@@ -225,7 +225,7 @@ class PerawatUmumController extends Controller
         $tanggal=date('Y-m-d');
         $waktu=date("H:i:s");
         
-        $data_rm = DB::select("select * from tbl_rekam_medis where no_rm='".$request->no_rm."'");  
+        $data_rm = DB::select("select * from tbl_rekam_medis where no_rm='".$request->no_rm."' and tanggal_kunjungan='".$tanggal. "'");  
 
         $Tbl_asuhanperawatan = new Tbl_asuhan_keperawatan;
         $Tbl_asuhanperawatan->id_pemeriksaan=$data_rm[0]->id_pemeriksaan;

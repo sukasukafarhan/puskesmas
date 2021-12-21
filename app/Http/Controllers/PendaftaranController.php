@@ -415,6 +415,14 @@ class PendaftaranController extends Controller
         $Tbl_antrian_poli_umum->save();
         $Tbl_pendaftaran->save();
 
+        $Tbl_rekammedis = new Tbl_RekamMedis;
+        $Tbl_rekammedis->tanggal_kunjungan = $tanggal;
+        $Tbl_rekammedis->waktu_mulai = $waktu;
+        $Tbl_rekammedis->waktu_selesai = $waktu;
+        $Tbl_rekammedis->perawat_penanggung_jawab = session('user_data')[0]['nama'];
+        $Tbl_rekammedis->no_rm=$request->no_rm;
+        $Tbl_rekammedis->save();
+
         broadcast(new EveryoneEvent());
         $this->hapus($request->id_antrian);
 

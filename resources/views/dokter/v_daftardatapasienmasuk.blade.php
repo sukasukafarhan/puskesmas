@@ -43,7 +43,7 @@
                                     <td>{{$a->bb}}</td>
                                     <!-- <td>{{$a->status}}</td> -->
                                     <td>
-                                        <button type="button" class="btn btn-light"  onclick="location.href='/pelayanandokter/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Open">
+                                        <button type="button" class="btn btn-light"  onclick="location.href='/pelayanandokter/{{$a->no_rm}}/{{$a->id_pemeriksaan}}'" data-toggle="tooltip" data-placement="top" title="Open">
                                             <i class="fa fa-folder"></i>
                                         </button>
                                     </td>            

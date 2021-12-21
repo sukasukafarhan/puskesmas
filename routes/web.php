@@ -62,7 +62,7 @@ Route::post('/savepelayanandokter','LaboratoriumController@storepelayanandokter'
 Route::get('/laborat/deletepelayanandokter/{id1}/{id2}','LaboratoriumController@deletepelayanandokter');
 Route::get('/laborat/deletedatajenislab/{id}','LaboratoriumController@deletedatajenislab');
 
-Route::get('/pelayanandokter/{id}','DokterController@index');
+Route::get('/pelayanandokter/{id1}/{id2}','DokterController@index');
 Route::post('/saveanamnesa','DokterController@storeanamnesa');
 Route::post('/savepemeriksaan','DokterController@storepemeriksaan');
 Route::post('/savepermintaanlab','DokterController@storepermintaanlab');
@@ -70,9 +70,9 @@ Route::post('/dokteraddobat','DokterController@tambahObat');
 Route::post('/savediagnosa','DokterController@storediagnosa');
 Route::post('/savetindakan','DokterController@storetindakan');
 Route::post('/savepenyuluhan','DokterController@storepenyuluhan');
-Route::get('/pelayanandokter/hapustindakan/{id1}/{id2}','DokterController@hapustindakan');
-Route::get('/pelayanandokter/hapus/{id1}/{id2}','DokterController@hapusdiagnosa');
-Route::get('/pelayanandokter/hapusresep/{id1}/{id2}','DokterController@hapusresep');
+Route::get('/pelayanandokter/hapustindakan/{id1}/{id2}/{id3}','DokterController@hapustindakan');
+Route::get('/pelayanandokter/hapus/{id1}/{id2}/{id3}','DokterController@hapusdiagnosa');
+Route::get('/pelayanandokter/hapusresep/{id1}/{id2}/{id3}','DokterController@hapusresep');
 Route::get('/daftarantriandokter','DokterController@showantriandokter');
 Route::get('/dataicdx','DokterController@showicdx');
 Route::post('/saveicdx','DokterController@storeicdx');

@@ -28,7 +28,6 @@
                             <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span> {{$pasien[0]->umur}}</span></li>
                             <li class="mb-1"><strong class="text-dark mr-4">Asuransi</strong> <span>{{$pasien[0]->jenis_asuransi}} </span></li>
                             <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span>{{$pasien[0]->nama_kk}}</span> </li>
-                            <!-- <li class="mb-1"><strong class="text-dark mr-4"></strong> <span> </span> </li> -->
                             <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span> {{$pasien[0]->poli_asal}}</span></li>
                         </ul>
                     </div>
@@ -101,7 +100,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- @foreach() -->
                                     <th class="card-title mt-3">Hematologi</th>
                                     <td>
 

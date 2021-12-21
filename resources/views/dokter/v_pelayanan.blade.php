@@ -220,7 +220,7 @@
                                             <td> {{$diagnosas->jenis}} </td>
                                             <td> {{$diagnosas->kasus}} </td>
                                             <td><span>
-                                                <button type="button" class="btn btn-danger" onclick="location.href='/pelayanandokter/hapus/{{$diagnosas->no_rm}}/{{$diagnosas->id_diagnosa}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                <button type="button" class="btn btn-danger" onclick="location.href='/pelayanandokter/hapus/{{$diagnosas->no_rm}}/{{$data[0]->id_pemeriksaan}}/{{$diagnosas->id_diagnosa}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
                                                             Hapus
                                                 </button>
                                             </td>
@@ -260,7 +260,7 @@
                                             <td>{{$tindakans_rm->perawat}}</td>
                                             <td>{{$tindakans_rm->keterangan}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-danger" onclick="location.href='/pelayanandokter/hapustindakan/{{$tindakans_rm->no_rm}}/{{$tindakans_rm->id_tindakan}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                <button type="button" class="btn btn-danger" onclick="location.href='/pelayanandokter/hapustindakan/{{$tindakans_rm->no_rm}}/{{$data[0]->id_pemeriksaan}}/{{$tindakans_rm->id_tindakan}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
                                                             Hapus
                                                 </button>
                                             </td>
@@ -307,7 +307,7 @@
                                     <td>{{$dataobatpasiens->signa}}</td>
                                     <td>{{$dataobatpasiens->aturan_pakai}}</td>
                                     <td>                          
-                                        <button type="button" class="btn btn-danger" onclick="location.href='/pelayanandokter/hapusresep/{{$data[0]->no_rm}}/{{$dataobatpasiens->id}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                        <button type="button" class="btn btn-danger" onclick="location.href='/pelayanandokter/hapusresep/{{$data[0]->no_rm}}/{{$data[0]->id_pemeriksaan}}/{{$dataobatpasiens->id}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
                                         Hapus
                                         </button>
                                     </td>
