@@ -59,6 +59,7 @@ Route::get('/laboratdataujilab/{id}','LaboratoriumController@dataUjiLab');
 Route::get('/laboratlaporanlab','LaboratoriumController@dataLaporanLab');
 Route::get('/laborathistory','LaboratoriumController@history');
 Route::post('/savepelayanandokter','LaboratoriumController@storepelayanandokter');
+Route::post('/savehasillab','LaboratoriumController@storehasillab');
 Route::get('/laborat/deletepelayanandokter/{id1}/{id2}','LaboratoriumController@deletepelayanandokter');
 Route::get('/laborat/deletedatajenislab/{id}','LaboratoriumController@deletedatajenislab');
 

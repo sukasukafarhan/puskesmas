@@ -7,6 +7,7 @@ use App\Tbl_datapasien;
 use App\Tbl_pendaftaran;
 use App\Tbl_antrian_poli_umum;
 use App\Tbl_data_laborat_dokter;
+use App\Tbl_hasillab;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Http\Request;
@@ -55,9 +56,10 @@ class LaboratoriumController extends Controller
         $pasien = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.no_rm='".$id2."' && tbl_antrian_poli_umums.status='proses'");
         $pasien[0]->tanggal = $tanggal;
         // print_r($pasien);
-        $permintaan = DB::select("SELECT * FROM tbl_permintaanlab JOIN tbl_data_laborat_dokter where id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter");
-        // $pasien ;
-        // print_r($permintaan);
+        $permintaan = DB::select("SELECT * FROM tbl_permintaanlab JOIN tbl_data_laborat_dokter where id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter");
+        // $permintaan2 = DB::select("SELECT a.id_jenis_pemeriksaan, a.jenis_pemeriksaan, a.nama_pemeriksaan, a.nilai_nominal, a.satuan FROM tbl_nama_pemeriksaan a, tbl_permintaanlab b WHERE a.nama_pemeriksaan = b.");
+        // $permintaan =  DB::select("SELECT * FROM tbl_permintaanlab, tbl_data_laborat_dokter, tbl_jenis_pemeriksaan where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter");
+        print_r($permintaan);
         return view('laboratorium/v_pelayananlaborat', ['permintaan'=>$permintaan, 'pasien'=>$pasien, 'judul'=> $judul]);
     }
     
@@ -68,8 +70,9 @@ class LaboratoriumController extends Controller
         $tanggal=date('Y-m-d');
         $datajenis = DB::select("select * from tbl_jenis_pemeriksaan where id_jenis_pemeriksaan=".$id.""); 
         // print_r($datajenis);
+        $datanama = DB::select("select * from tbl_nama_pemeriksaan where id_jenis_pemeriksaan=".$id."");
         $data = DB::select("select * from tbl_data_laborat_dokter where jenis='".$datajenis[0]->jenis_pemeriksaan."'");
-        return view('laboratorium/v_datajenispelayanandokter',[ 'datajenis'=>$datajenis, 'data'=>$data, 'judul' => $judul]);
+        return view('laboratorium/v_datajenispelayanandokter',[ 'datanama'=>$datanama,'datajenis'=>$datajenis, 'data'=>$data, 'judul' => $judul]);
     }
 
     public function dataJenisPelayananLab()
@@ -114,9 +117,28 @@ class LaboratoriumController extends Controller
         $Tbl_data_laborat_dokter->nama=$request->jenis_pemeriksaan_dokter;
         $Tbl_data_laborat_dokter->jenis=$request->jenis_lab;
         $Tbl_data_laborat_dokter->tarif=$request->tarif;
+        $Tbl_data_laborat_dokter->nilai_normal=$request->nilai_normal;
+        $Tbl_data_laborat_dokter->satuan=$request->satuan;
         $Tbl_data_laborat_dokter->save();
         // dd($request);
         return redirect ('/laboratdatajenisdokter/'.$request->id_jenis);
+    }
+
+    public function storehasillab(Request $request)
+    {
+        $countdata = count($request->hasil);
+        for($i = 0; $i<$countdata; $i++){
+            $Tbl_hasillab = new Tbl_hasillab;
+            $Tbl_hasillab->id_pemeriksaan=$request->id_pemeriksaan;
+            $Tbl_hasillab->id_nama_pemeriksaan=$request->id_nama[$i];
+            $Tbl_hasillab->id_jenis_pemeriksaan=$request->id_jenis[$i];
+            $Tbl_hasillab->hasil_pemeriksaan_lab=$request->hasil[$i];
+            $Tbl_hasillab->penanggung_jawab=session('user_data')[0]['nama'];
+            $Tbl_hasillab->save();
+        }
+        
+        // dd($request);
+        return redirect ('/laborat');
     }
 
     public function deletepelayanandokter($id1, $id2)

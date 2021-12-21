@@ -99,15 +99,66 @@
 
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <th class="card-title mt-3">Hematologi</th>
+                                <tbody>                                    
+                                    <!-- <th class="card-title mt-3">Hematologi</th> -->
                                     <td>
-
-                                        <div class="form-check ">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" value="">HB</label>
-                                        </div><br>
-                                        <div class="form-check ">
+                                    <form action="/savehasillab" method="post">
+                                        @csrf  
+                                        <input type="hidden" value="{{$permintaan[0]->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
+                                        @foreach($permintaan as $permintaans)
+                                            <h4>{{$permintaans->jenis}} - {{$permintaans->nama}}</h4>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Jenis</label>
+                                                        <input type="text" value="{{$permintaans->jenis}}" name="jenis[]" class="form-control" required disabled> 
+                                                        <input type="hidden" value="{{$permintaans->id_jenis}}" name="id_jenis[]" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Nama</label>
+                                                        <input type="text" name="nama[]" value="{{$permintaans->nama}}" class="form-control" required disabled>
+                                                        <input type="hidden" value="{{$permintaans->id_nama}}" name="id_nama[]" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Nilai Normal</label>
+                                                        <input type="text" name="nilai_normal[]" value="{{$permintaans->nilai_normal}}" class="form-control" required disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Satuan</label>
+                                                        <input type="text" name="satuan[]" value="{{$permintaans->satuan}}" class="form-control" required disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Hasil Lab</label>
+                                                        <input type="text" name="hasil[]"  class="form-control" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <!-- <div class="form-check ">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" name="chk[]" id="chk[]" value="{{$permintaans->nama}}">{{$permintaans->nama}}</label>
+                                            </div><br> -->
+                                        @endforeach
+                                        <button type="submit" class="btn btn-primary mt-5">Proses</button>
+                                    </form>  
+                                    </td>
+                                    </tbody>
+                                </table>
+                            <!-- <button type="button" class="btn btn-primary "> Proses</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+                                        <!-- <div class="form-check ">
                                             <label class="form-check-label">
                                                 <input type="checkbox" class="form-check-input" value="">LECO</label>
                                         </div><br>
@@ -122,9 +173,9 @@
                                         <div class="form-check ">
                                             <label class="form-check-label">
                                                 <input type="checkbox" class="form-check-input" value="">HCT</label>
-                                        </div>
-                                    </td>
-                                    <th class="card-title mt-3">Hitung Jenis</th>
+                                        </div> -->
+                                    
+                                    <!-- <th class="card-title mt-3">Hitung Jenis</th>
                                     <td>
                                         <div class="form-check disabled">
                                             <label class="form-check-label">
@@ -151,17 +202,8 @@
                                                 <input type="checkbox" class="form-check-input" value="">Monosit</label>
                                         </div><br>
 
-                                    </td>
-                                </tbody>
-                            </table>
-                            <button type="button" class="btn btn-primary "> Proses
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+                                    </td> -->
+                                
         <!-- #/ container -->
     </div>
 </div>

@@ -72,6 +72,7 @@
             </div>
             <form class="form-horizontal" enctype="multipart/form-data" method="post" action="/savepelayanandokter">
                 @csrf
+                
                 <input type="hidden" value="{{$datajenis[0]->id_jenis_pemeriksaan}}" name="id_jenis" class="form-control">
                 <div class="modal-body">
                     <!-- Modal body text goes here. -->
@@ -90,18 +91,34 @@
                     </div>
                     <div class="form-group row">
                         
-                        <label class="col-lg-4 col-form-label">Nama Jenis Pemeriksaan</label>
+                        <label class="col-lg-4 col-form-label">Nama Pemeriksaan</label>
                         <div class="col-lg-6">
-                            <input type="text" name="jenis_pemeriksaan_dokter" id="jenis_pemeriksaan_dokter" class="form-control" placeholder="Nama Jenis Pemeriksaan" required autofocuse>
+                            <select class="form-control" id="jenis_pemeriksaan_dokter" name="jenis_pemeriksaan_dokter">
+                                    <option readonly>Please select</option>
+                                    @foreach($datanama as $datanamas)
+                                    <option value="{{$datanamas->nama_pemeriksaan}}">{{$datanamas->nama_pemeriksaan}}</option>
+                                    @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        
                         <label class="col-lg-4 col-form-label">Tarif</label>
                         <div class="col-lg-6">
                             <input type="text" name="tarif" id="tarif" class="form-control" placeholder="Tarif" required autofocuse>
                         </div>
                     </div>
+                    <!-- <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Nilai Normal</label>
+                        <div class="col-lg-6">
+                            <input type="text" name="nilai_normal" id="nilai_normal" class="form-control" placeholder="Nilai Normal" required autofocuse>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Satuan</label>
+                        <div class="col-lg-6">
+                            <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Satuan" required autofocuse>
+                        </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     </br>
