@@ -550,7 +550,40 @@
         </div>
     </div>
 </div>
-
+<div class="modal" id="modalRM" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Data Rekam Medis</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>RPK</th>
+                            <th>RPS</th>
+                            <th>RPD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1;?>
+                        @foreach($anamnesa as $anamnesas)
+                        <tr>
+                            <td>{{$no}}</td>
+                            <td>{{$anamnesas->rpk}}</td>   
+                            <td>{{$anamnesas->rps}}</td>
+                            <td>{{$anamnesas->rpd}}</td>
+                        </tr>
+                        <?php $no++;?>
+                        @endforeach
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal" id="modalHasilLab" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
