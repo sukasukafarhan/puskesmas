@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2021 at 01:11 PM
+-- Generation Time: Dec 22, 2021 at 03:01 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -80,15 +80,21 @@ CREATE TABLE `tbl_anamnesa_rm` (
   `id_pemeriksaan` int(255) NOT NULL,
   `rpd` varchar(255) NOT NULL,
   `rpk` varchar(255) NOT NULL,
-  `rps` varchar(255) NOT NULL
+  `rps` varchar(255) NOT NULL,
+  `no_rm` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_anamnesa_rm`
 --
 
-INSERT INTO `tbl_anamnesa_rm` (`id_anamnesa`, `id_pemeriksaan`, `rpd`, `rpk`, `rps`) VALUES
-(1, 4, 'asma', 'asma', 'asma');
+INSERT INTO `tbl_anamnesa_rm` (`id_anamnesa`, `id_pemeriksaan`, `rpd`, `rpk`, `rps`, `no_rm`) VALUES
+(5, 4, 'asma', 'asma', 'asma', ''),
+(6, 4, 'asma', 'asma', 'asma', ''),
+(7, 9, 'kanker hati', 'nyeri pinggang', 'asma', '10.N0001.2'),
+(10, 10, 'asma', 'nyeri pinggang', 'kanker hati', '10.L0001.5'),
+(11, 9, 'asma', 'nyeri pinggang', 'kanker hati', '10.N0001.2'),
+(12, 11, 'asma', 'batuk', 'batuk', '10.S0001.1');
 
 -- --------------------------------------------------------
 
@@ -153,8 +159,17 @@ INSERT INTO `tbl_antrian_poli_umums` (`id_antrian`, `no_antrian`, `no_rm`, `wakt
 (22, 'A 00 2', '10.A0001.3', '08:03:14', 'Masuk', 'Poli Umum', 2, '2021-12-09', '2021-12-09 08:03:14'),
 (23, 'A 00 1', '10.H0001.1', '09:10:05', 'Masuk', 'Poli Umum', 1, '2021-12-11', '2021-12-11 09:10:06'),
 (24, 'A 00 1', '10.H0001.1', '10:23:05', 'Masuk', 'Poli Umum', 1, '2021-12-12', '2021-12-12 10:23:06'),
-(25, 'A 00 3', '10.A0001.2', '21:17:26', 'hapus', 'Poli Umum', 2, '2021-12-12', '2021-12-12 21:17:26'),
-(26, 'A 00 1', '10.S0001.1', '08:22:23', 'Masuk', 'Poli Umum', 1, '2021-12-13', '2021-12-13 08:22:23');
+(25, 'A 00 3', '10.A0001.2', '21:17:26', 'selesai', 'Poli Umum', 2, '2021-12-12', '2021-12-12 21:17:26'),
+(26, 'A 00 1', '10.S0001.1', '08:22:23', 'Masuk', 'Poli Umum', 1, '2021-12-13', '2021-12-13 08:22:23'),
+(27, 'A 00 1', '10.L0001.1', '09:31:21', 'selesai', 'Poli Umum', 1, '2021-12-16', '2021-12-16 09:31:21'),
+(28, 'A 00 2', '10.L0001.1', '20:05:29', 'hapus', 'Poli Umum', 2, '2021-12-16', '2021-12-16 20:05:30'),
+(29, 'A 00 3', '10.N0001.2', '20:32:27', 'hapus', 'Poli Umum', 3, '2021-12-16', '2021-12-16 20:32:27'),
+(30, 'A 00 1', '10.L0001.1', '06:16:14', 'hapus', 'Poli Umum', 1, '2021-12-19', '2021-12-19 06:16:14'),
+(31, 'A 00 2', '10.L0001.5', '06:38:31', 'proses', 'Poli Umum', 2, '2021-12-19', '2021-12-19 06:38:31'),
+(32, 'A 00 1', '10.N0001.2', '13:56:11', 'proses', 'Poli Umum', 1, '2021-12-21', '2021-12-21 13:56:12'),
+(33, 'A 00 2', '10.N0001.2', '14:31:44', 'hapus', 'Poli Umum', 2, '2021-12-21', '2021-12-21 14:31:44'),
+(34, 'A 00 3', '10.S0001.1', '14:45:25', 'proses', 'Poli Umum', 3, '2021-12-21', '2021-12-21 14:45:25'),
+(35, 'A 00 1', '10.K0001.1', '07:52:36', 'proses', 'Poli Umum', 1, '2021-12-22', '2021-12-22 07:52:36');
 
 -- --------------------------------------------------------
 
@@ -222,7 +237,17 @@ INSERT INTO `tbl_antri_pendaftaran` (`id_antrian`, `no_antrian`, `id_poli`, `tan
 (100000046, '1', 1, '2021-12-12', 'hapus', 1),
 (100000047, '2', 1, '2021-12-12', 'masuk', 2),
 (100000048, '3', 1, '2021-12-12', 'hapus', 3),
-(100000049, '1', 1, '2021-12-13', 'hapus', 1);
+(100000049, '1', 1, '2021-12-13', 'hapus', 1),
+(100000050, '1', 1, '2021-12-16', 'hapus', 1),
+(100000051, '2', 1, '2021-12-16', 'hapus', 2),
+(100000052, '3', 1, '2021-12-16', 'hapus', 3),
+(100000053, '1', 1, '2021-12-19', 'hapus', 1),
+(100000054, '2', 1, '2021-12-19', 'hapus', 2),
+(100000055, '3', 1, '2021-12-19', 'masuk', 3),
+(100000056, '1', 1, '2021-12-21', 'hapus', 1),
+(100000057, '2', 1, '2021-12-21', 'hapus', 2),
+(100000058, '3', 1, '2021-12-21', 'hapus', 3),
+(100000059, '1', 1, '2021-12-22', 'hapus', 1);
 
 -- --------------------------------------------------------
 
@@ -259,7 +284,13 @@ CREATE TABLE `tbl_asuhan_keperawatan` (
 --
 
 INSERT INTO `tbl_asuhan_keperawatan` (`id_askep`, `id_pemeriksaan`, `no_rm`, `tanggal`, `jam_mulai`, `rpd`, `rpk`, `rps`, `nb_subjective`, `tb`, `bb`, `imt`, `suhu`, `rr`, `sistol`, `diastol`, `nb_object`, `nb_assessment`, `nb_plan`, `waktu_selesai`, `penanggungjawab`) VALUES
-(0, 4, '10.A0001.2', '2021-12-12', '0000-00-00 00:00:00', 'asma', 'asma', 'asma', 'subjective', 150, 50, 22.2, 35, 60, 90, 120, 'objective', 'Analysis', 'Planning', '0000-00-00 00:00:00', 'hihi');
+(1, 4, '10.A0001.2', '2021-12-12', '0000-00-00 00:00:00', 'asma', 'asma', 'asma', 'subjective', 150, 50, 22.2, 35, 60, 90, 120, 'objective', 'Analysis', 'Planning', '0000-00-00 00:00:00', 'hihi'),
+(2, 7, '10.L0001.1', '2021-12-16', '0000-00-00 00:00:00', 'kanker hati', 'kanker hati', 'kanker hati', 'subjective lisa', 150, 50, 22.2, 35, 60, 90, 120, 'objective lisa', 'Analysis lisa', 'Planning lisa', '0000-00-00 00:00:00', 'Yulia Rahayu Putri'),
+(3, 7, '10.L0001.1', '2021-12-16', '2020-10-11 00:00:00', 'nyeri pinggang', 'nyeri pinggang', 'nyeri pinggang', 'subjective', 150, 50, 22.2, 35, 60, 90, 120, 'objective', 'Analysis', 'Planning', '2020-12-17 00:00:00', 'hihi'),
+(4, 9, '10.N0001.2', '2021-12-16', '0000-00-00 00:00:00', 'kanker hati', 'nyeri pinggang', 'asma', 'subjective nurfarida', 150, 50, 22.2, 35, 60, 90, 120, 'objective nurfarida', 'Analysis nurfarida', 'Planning nurfarida', '0000-00-00 00:00:00', 'hihi'),
+(5, 10, '10.L0001.5', '2021-12-19', '0000-00-00 00:00:00', 'asma', 'nyeri pinggang', 'kanker hati', 'subjective bambang', 150, 50, 22.2, 35, 60, 90, 120, 'objective bambang', 'Analysis bambang', 'Planning bambang', '0000-00-00 00:00:00', 'Yulia Rahayu Putri'),
+(8, 11, '10.S0001.1', '2021-12-21', '0000-00-00 00:00:00', 'asma', 'batuk', 'batuk', 'subjective sulaiman', 150, 50, 22.2, 35, 60, 90, 120, 'objective sulaiman', 'Analysis sulaiman', 'Planning sulaiman', '2015-06-01 00:00:00', 'hihi'),
+(9, 12, '10.K0001.1', '2021-12-22', '0000-00-00 00:00:00', 'sakit kepala', 'sakit kepala', 'sakit kepala', 'subjective koko', 150, 50, 22.2, 35, 60, 90, 120, 'objective koko', 'Analysis koko', 'Planning koko', '0000-00-00 00:00:00', 'hihi');
 
 -- --------------------------------------------------------
 
@@ -301,6 +332,11 @@ INSERT INTO `tbl_datapasiens` (`id`, `nama`, `jenis_kelamin`, `nama_kk`, `no_ind
 (10, 'jimin', 'Laki-laki', 'abdullah', '10.A0001', 'malang', 'guru', '2005-06-15', 16, 'Umum', '12345', 'islam', '081235444566', 'Lainnya', '10.A0001.8', '2021-12-12 21:01:58', '2021-12-12 21:01:58'),
 (11, 'jeje', 'Perempuan', 'abdullah', '10.A0001', 'malang', 'pedagang', '1998-12-12', 23, 'Umum', '1111', 'islam', '081235444555', 'Lainnya', '10.A0001.9', '2021-12-12 21:04:48', '2021-12-12 21:04:48'),
 (5, 'hamid rusdi', 'Laki-laki', 'hamid', '10.H0001', 'samaan', 'guru', '1996-02-08', 25, 'BPJS', '123457', 'islam', '081235444', 'Kepala Keluarga', '10.H0001.1', '2021-12-08 14:31:41', '2021-12-08 14:31:41'),
+(18, 'koko ari', 'Laki-laki', 'koko', '10.K0001', 'klojen, malang', 'guru', '1985-01-02', 36, 'BPJS', '12345', 'islam', '081235444555', 'Kepala Keluarga', '10.K0001.1', '2021-12-22 07:36:29', '2021-12-22 07:36:29'),
+(14, 'lisa yulianti', 'Perempuan', 'lisa yulianti', '10.L0001', 'klojen, malang', 'marketing', '1989-08-18', 32, 'Umum', '0000', 'islam', '081235444555', 'Kepala Keluarga', '10.L0001.1', '2021-12-16 09:30:58', '2021-12-16 09:30:58'),
+(15, 'alisa', 'Perempuan', 'lisa yulianti', '10.L0001', 'klojen, malang', 'guru', '1998-02-01', 23, 'Umum', '111222', 'islam', '081235444566', 'Lainnya', '10.L0001.4', '2021-12-16 20:03:15', '2021-12-16 20:03:15'),
+(17, 'bambang', 'Perempuan', 'lisa yulianti', '10.L0001', 'klojen, malang', 'pedagang', '1990-12-01', 31, 'Umum', '00000', 'islam', '081235444566', 'Lainnya', '10.L0001.5', '2021-12-19 06:12:46', '2021-12-19 06:12:46'),
+(16, 'nurfarida', 'Perempuan', 'nandar', '10.N0001', 'mojolangu, lowokwaru, malang', 'pedagang', '1997-02-04', 24, 'Umum', '1111', 'islam', '081235444555', 'Ibu', '10.N0001.2', '2021-12-16 20:20:51', '2021-12-16 20:20:51'),
 (13, 'sulaiman', 'Laki-laki', 'sulaiman', '10.S0001', 'klojen, malang', 'pedagang', '1969-12-23', 51, 'Umum', '12345', 'islam', '081222333444', 'Kepala Keluarga', '10.S0001.1', '2021-12-13 08:21:37', '2021-12-13 08:21:37');
 
 -- --------------------------------------------------------
@@ -333,16 +369,20 @@ CREATE TABLE `tbl_data_laborat_dokter` (
   `id_data_laborat_dokter` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `jenis` varchar(255) NOT NULL,
-  `tarif` int(11) NOT NULL
+  `tarif` int(11) NOT NULL,
+  `id_jenis` int(11) NOT NULL,
+  `nilai_normal` varchar(250) NOT NULL,
+  `satuan` varchar(250) NOT NULL,
+  `id_nama` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_data_laborat_dokter`
 --
 
-INSERT INTO `tbl_data_laborat_dokter` (`id_data_laborat_dokter`, `nama`, `jenis`, `tarif`) VALUES
-(1, 'HB', 'Hematologi', 0),
-(2, '3 Parameter', 'Urin', 0);
+INSERT INTO `tbl_data_laborat_dokter` (`id_data_laborat_dokter`, `nama`, `jenis`, `tarif`, `id_jenis`, `nilai_normal`, `satuan`, `id_nama`) VALUES
+(1, 'HB', 'Hematologi', 0, 2, '23000', '1', 3),
+(5, 'LECO', 'Hematologi', 10000, 2, 'P (4000-10000) || L (4000-10000) ', 'ml', 4);
 
 -- --------------------------------------------------------
 
@@ -432,7 +472,10 @@ CREATE TABLE `tbl_diagnosa_rm` (
 
 INSERT INTO `tbl_diagnosa_rm` (`id_diagnosa`, `id_pemeriksaan`, `icd_x`, `nama_diagnosa`, `jenis`, `kasus`, `no_rm`, `status`) VALUES
 (1, 4, '1-01', 'bronkitis', 'Primer', 'Baru', '10.A0001.2', 'hapus'),
-(2, 4, '1-02', 'bronkitis2', 'Primer', 'Baru', '10.A0001.2', 'tersedia');
+(2, 4, '1-02', 'bronkitis2', 'Primer', 'Baru', '10.A0001.2', 'tersedia'),
+(3, 10, '1-03', 'liver', 'Primer', 'Baru', '10.L0001.5', 'tersedia'),
+(4, 11, '1-00', 'bronkitis3', 'Primer', 'Baru', '10.S0001.1', 'hapus'),
+(5, 11, '1-02', 'bronkitis3', 'Komplikasi', 'Baru', '10.S0001.1', 'hapus');
 
 -- --------------------------------------------------------
 
@@ -473,6 +516,9 @@ CREATE TABLE `tbl_ffs` (
 INSERT INTO `tbl_ffs` (`nama_kk`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `telp`, `foto_KK`, `no_index`, `updated_at`, `created_at`) VALUES
 ('abdullah', 'malang', 'smaan', 'klojen', 'malang', '084555555555', NULL, '10.A0001', '2021-11-28 02:09:07', '2021-11-28 02:09:07'),
 ('hamid', 'samaan', 'samaan', 'klojen', 'malang', '08122333444', NULL, '10.H0001', '2021-12-08 14:29:11', '2021-12-08 14:29:11'),
+('koko', 'klojen, malang', 'samaan', 'klojen', 'malang', '085744455566', NULL, '10.K0001', '2021-12-22 00:35:42', '2021-12-22 00:35:42'),
+('lisa yulianti', 'klojen, malang', 'samaan', 'klojen', 'malang', '08122333444', NULL, '10.L0001', '2021-12-16 02:29:57', '2021-12-16 02:29:57'),
+('nandar', 'mojolangu, lowokwaru, malang', 'mojolangu', 'lowokwaru', 'malang', '085744455566', NULL, '10.N0001', '2021-12-16 13:19:23', '2021-12-16 13:19:23'),
 ('sulaiman', 'klojen, malang', 'samaan', 'klojen', 'malang', '081222999111', NULL, '10.S0001', '2021-12-13 01:20:43', '2021-12-13 01:20:43');
 
 -- --------------------------------------------------------
@@ -489,6 +535,16 @@ CREATE TABLE `tbl_hasil_lab` (
   `hasil_pemeriksaan_lab` float NOT NULL,
   `penanggung_jawab` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_hasil_lab`
+--
+
+INSERT INTO `tbl_hasil_lab` (`id_pemeriksaan_lab`, `id_pemeriksaan`, `id_nama_pemeriksaan`, `id_jenis_pemeriksaan`, `hasil_pemeriksaan_lab`, `penanggung_jawab`) VALUES
+(3, 11, 1, 2, 23000, 'hahaha'),
+(4, 11, 4, 2, 4500, 'hahaha'),
+(11, 12, 3, 2, 22000, 'hahaha'),
+(12, 12, 4, 2, 5000, 'hahaha');
 
 -- --------------------------------------------------------
 
@@ -519,23 +575,24 @@ INSERT INTO `tbl_jamkes` (`id_jamkes`, `singkatan_jamkes`, `nama_jamkes`) VALUES
 
 CREATE TABLE `tbl_jenis_pemeriksaan` (
   `id_jenis_pemeriksaan` int(11) NOT NULL,
-  `jenis_pemeriksaan` varchar(225) NOT NULL
+  `jenis_pemeriksaan` varchar(225) NOT NULL,
+  `status` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_jenis_pemeriksaan`
 --
 
-INSERT INTO `tbl_jenis_pemeriksaan` (`id_jenis_pemeriksaan`, `jenis_pemeriksaan`) VALUES
-(1, 'fsfsfs'),
-(2, 'Hematologi'),
-(3, 'urin'),
-(4, 'Hitung Jenis'),
-(5, 'Sedimen'),
-(6, 'Golongan Darah Widal'),
-(7, 'Tes Kehamilan'),
-(8, 'Kimia Darah'),
-(9, 'Feses');
+INSERT INTO `tbl_jenis_pemeriksaan` (`id_jenis_pemeriksaan`, `jenis_pemeriksaan`, `status`) VALUES
+(1, 'fsfsfs', 'tersedia'),
+(2, 'Hematologi', 'tersedia'),
+(3, 'urin', 'tersedia'),
+(4, 'Hitung Jenis', 'tersedia'),
+(5, 'Sedimen', 'tersedia'),
+(6, 'Golongan Darah Widal', 'tersedia'),
+(7, 'Tes Kehamilan', 'tersedia'),
+(8, 'Kimia Darah', 'hapus'),
+(9, 'Feses', 'tersedia');
 
 -- --------------------------------------------------------
 
@@ -601,15 +658,20 @@ CREATE TABLE `tbl_pemeriksaan_rm` (
   `suhu` float NOT NULL,
   `rr` int(11) NOT NULL,
   `sistol` int(11) NOT NULL,
-  `diastol` int(11) NOT NULL
+  `diastol` int(11) NOT NULL,
+  `no_rm` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_pemeriksaan_rm`
 --
 
-INSERT INTO `tbl_pemeriksaan_rm` (`id_pemeriksaan_objek`, `id_pemeriksaan`, `tinggi_badan`, `berat_badan`, `imt`, `suhu`, `rr`, `sistol`, `diastol`) VALUES
-(1, 4, 150, 50, 22.2, 35, 60, 90, 120);
+INSERT INTO `tbl_pemeriksaan_rm` (`id_pemeriksaan_objek`, `id_pemeriksaan`, `tinggi_badan`, `berat_badan`, `imt`, `suhu`, `rr`, `sistol`, `diastol`, `no_rm`) VALUES
+(1, 4, 150, 50, 22.2, 35, 60, 90, 120, ''),
+(3, 4, 150, 50, 22.2, 35, 60, 90, 120, ''),
+(6, 10, 150, 50, 22.2, 35, 60, 90, 120, '10.L0001.5'),
+(7, 9, 150, 50, 22.2, 35, 60, 90, 120, '10.N0001.2'),
+(8, 11, 150, 50, 22.2, 35, 60, 90, 120, '10.S0001.1');
 
 -- --------------------------------------------------------
 
@@ -676,7 +738,16 @@ INSERT INTO `tbl_pendaftarans` (`no_antrian`, `nama`, `no_rm`, `tanggal`, `tipe_
 ('A 00 1', 'hamid rusdi', '10.H0001.1', '2021-12-11', 'Baru', 'Poli Umum', '09:10:05', '2021-12-11 09:10:06', '2021-12-11 09:10:06'),
 ('A 00 1', 'hamid rusdi', '10.H0001.1', '2021-12-12', 'Baru', 'Poli Umum', '10:23:05', '2021-12-12 10:23:06', '2021-12-12 10:23:06'),
 ('A 00 3', 'jihan', '10.A0001.2', '2021-12-12', 'Baru', 'Poli Umum', '21:17:26', '2021-12-12 21:17:26', '2021-12-12 21:17:26'),
-('A 00 1', 'sulaiman', '10.S0001.1', '2021-12-13', 'Baru', 'Poli Umum', '08:22:23', '2021-12-13 08:22:23', '2021-12-13 08:22:23');
+('A 00 1', 'sulaiman', '10.S0001.1', '2021-12-13', 'Baru', 'Poli Umum', '08:22:23', '2021-12-13 08:22:23', '2021-12-13 08:22:23'),
+('A 00 1', 'lisa yulianti', '10.L0001.1', '2021-12-16', 'Baru', 'Poli Umum', '09:31:21', '2021-12-16 09:31:21', '2021-12-16 09:31:21'),
+('A 00 2', 'lisa yulianti', '10.L0001.1', '2021-12-16', 'Baru', 'Poli Umum', '20:05:29', '2021-12-16 20:05:30', '2021-12-16 20:05:30'),
+('A 00 3', 'nurfarida', '10.N0001.2', '2021-12-16', 'Baru', 'Poli Umum', '20:32:27', '2021-12-16 20:32:27', '2021-12-16 20:32:27'),
+('A 00 1', 'lisa yulianti', '10.L0001.1', '2021-12-19', 'Baru', 'Poli Umum', '06:16:14', '2021-12-19 06:16:14', '2021-12-19 06:16:14'),
+('A 00 2', 'bambang', '10.L0001.5', '2021-12-19', 'Baru', 'Poli Umum', '06:38:31', '2021-12-19 06:38:31', '2021-12-19 06:38:31'),
+('A 00 1', 'nurfarida', '10.N0001.2', '2021-12-21', 'Lama', 'Poli Umum', '13:56:11', '2021-12-21 13:56:12', '2021-12-21 13:56:12'),
+('A 00 2', 'nurfarida', '10.N0001.2', '2021-12-21', 'Lama', 'Poli Umum', '14:31:44', '2021-12-21 14:31:44', '2021-12-21 14:31:44'),
+('A 00 3', 'sulaiman', '10.S0001.1', '2021-12-21', 'Baru', 'Poli Umum', '14:45:25', '2021-12-21 14:45:25', '2021-12-21 14:45:25'),
+('A 00 1', 'koko ari', '10.K0001.1', '2021-12-22', 'Baru', 'Poli Umum', '07:52:36', '2021-12-22 07:52:36', '2021-12-22 07:52:36');
 
 -- --------------------------------------------------------
 
@@ -721,8 +792,33 @@ CREATE TABLE `tbl_pengobatan_rm` (
   `id_pemeriksaan` int(11) NOT NULL,
   `rencana` varchar(255) NOT NULL,
   `terapi/tindakan` varchar(255) NOT NULL,
-  `keterangan` varchar(255) NOT NULL
+  `keterangan` varchar(255) NOT NULL,
+  `no_rm` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_penyuluhan`
+--
+
+CREATE TABLE `tbl_penyuluhan` (
+  `id_penyuluhan` int(11) NOT NULL,
+  `isi_penyuluhan` varchar(250) NOT NULL,
+  `no_rm` varchar(250) NOT NULL,
+  `id_pemeriksaan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_penyuluhan`
+--
+
+INSERT INTO `tbl_penyuluhan` (`id_penyuluhan`, `isi_penyuluhan`, `no_rm`, `id_pemeriksaan`) VALUES
+(2, 'adaasdad', '10.A0001.2', 4),
+(3, 'adaasdad', '10.A0001.2', 4),
+(4, 'adaasdad', '10.A0001.2', 4),
+(5, 'asdada', '10.L0001.1', 7),
+(6, 'asdada', '10.L0001.1', 7);
 
 -- --------------------------------------------------------
 
@@ -736,8 +832,20 @@ CREATE TABLE `tbl_permintaanlab` (
   `id_data_laborat_dokter` int(11) NOT NULL,
   `status_permintaan` varchar(25) NOT NULL,
   `waktu` varchar(25) NOT NULL,
-  `tanggal` varchar(25) NOT NULL
+  `tanggal` varchar(25) NOT NULL,
+  `dokter_penanggungjawab` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_permintaanlab`
+--
+
+INSERT INTO `tbl_permintaanlab` (`id_permintaan`, `id_pemeriksaan`, `id_data_laborat_dokter`, `status_permintaan`, `waktu`, `tanggal`, `dokter_penanggungjawab`) VALUES
+(11, 10, 1, 'Baru', '12:31:50', '2021-12-19', 'Yulia Rahayu Putri'),
+(12, 11, 1, 'Baru', '04:11:26', '2021-12-21', 'ciiiia'),
+(15, 11, 5, 'Baru', '04:11:26', '04:11:26', 'ciiiia'),
+(19, 12, 1, 'Baru', '08:28:32', '2021-12-22', 'ciiiia'),
+(20, 12, 5, 'Baru', '08:28:32', '2021-12-22', 'ciiiia');
 
 -- --------------------------------------------------------
 
@@ -782,8 +890,14 @@ INSERT INTO `tbl_rekam_medis` (`id_pemeriksaan`, `tanggal_kunjungan`, `waktu_mul
 (1, '2021-12-12', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'hihi', ''),
 (2, '2021-12-12', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, '10.A0001.8'),
 (3, '2021-12-12', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'Yulia Rahayu Putri', '10.A0001.9'),
-(4, '2021-12-12', '2009-08-00 00:00:00', '2009-08-00 00:00:00', NULL, 'Yulia Rahayu Putri', '10.A0001.2'),
-(5, '2021-12-13', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'Yulia Rahayu Putri', '10.S0001.1');
+(4, '2021-12-12', '2009-08-00 00:00:00', '2009-08-00 00:00:00', 'ciiiia', 'Yulia Rahayu Putri', '10.A0001.2'),
+(5, '2021-12-13', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'Yulia Rahayu Putri', '10.S0001.1'),
+(7, '2021-12-16', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'Yulia Rahayu Putri', '10.L0001.1'),
+(8, '2021-12-16', '2008-03-14 00:00:00', '2008-03-14 00:00:00', NULL, 'Yulia Rahayu Putri', '10.L0001.4'),
+(9, '2021-12-16', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'ciiiia', 'Yulia Rahayu Putri', '10.N0001.2'),
+(10, '2021-12-19', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Yulia Rahayu Putri', 'Yulia Rahayu Putri', '10.L0001.5'),
+(11, '2021-12-21', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'ciiiia', 'Yulia Rahayu Putri', '10.S0001.1'),
+(12, '2021-12-22', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'Yulia Rahayu Putri', '10.K0001.1');
 
 -- --------------------------------------------------------
 
@@ -804,7 +918,44 @@ CREATE TABLE `tbl_resep_obat` (
 --
 
 INSERT INTO `tbl_resep_obat` (`id_resep`, `id_pemeriksaan`, `jenis_resep`, `signa`, `aturan_pakai`) VALUES
-(28, 4, 'Racikan', 'signa obat', '3x1');
+(28, 4, 'Racikan', 'signa obat', '3x1'),
+(29, 4, 'Racikan', 'signa obat2', '3x2'),
+(34, 11, 'Racikan', 'signa obat', '3x2'),
+(35, 11, 'Racikan', 'signa obat', '3x1'),
+(36, 11, 'Racikan', 'signa obat2', '3x2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_resep_obats`
+--
+
+CREATE TABLE `tbl_resep_obats` (
+  `id` int(11) NOT NULL,
+  `nama_obat` varchar(250) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `id_resep` int(11) NOT NULL,
+  `status` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_resep_obats`
+--
+
+INSERT INTO `tbl_resep_obats` (`id`, `nama_obat`, `jumlah`, `id_resep`, `status`) VALUES
+(1, 'obh herbal', 2, 28, 'hapus'),
+(2, 'paracetamol', 3, 28, 'tersedia'),
+(3, 'obh herbal', 2, 28, ''),
+(4, 'paracetamol', 2, 28, 'tersedia'),
+(5, 'obh herbal', 1, 28, 'tersedia'),
+(6, 'obh herbal', 2, 28, 'tersedia'),
+(7, 'paracetamol', 2, 28, 'tersedia'),
+(8, 'obh herbal', 2, 28, 'tersedia'),
+(9, 'paracetamol', 32, 28, 'tersedia'),
+(10, 'obh herbal', 2, 28, 'tersedia'),
+(11, 'obh herbal', 1, 35, 'hapus'),
+(12, 'paracetamol', 1, 36, 'tersedia'),
+(13, 'obh herbal', 2, 36, 'tersedia');
 
 -- --------------------------------------------------------
 
@@ -882,15 +1033,19 @@ CREATE TABLE `tbl_tindakan_rm` (
   `waktu_tindakan` datetime NOT NULL,
   `status` varchar(225) NOT NULL,
   `penanggung_jawab` varchar(225) NOT NULL,
-  `no_rm` varchar(250) NOT NULL
+  `no_rm` varchar(250) NOT NULL,
+  `perawat` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_tindakan_rm`
 --
 
-INSERT INTO `tbl_tindakan_rm` (`id_tindakan`, `id_pemeriksaan`, `tindakan`, `keterangan`, `waktu_tindakan`, `status`, `penanggung_jawab`, `no_rm`) VALUES
-(1, 4, 'rewrw', 'keterangan tindakan rewrw', '0000-00-00 00:00:00', 'Masuk', 'hihi', '10.A0001.2');
+INSERT INTO `tbl_tindakan_rm` (`id_tindakan`, `id_pemeriksaan`, `tindakan`, `keterangan`, `waktu_tindakan`, `status`, `penanggung_jawab`, `no_rm`, `perawat`) VALUES
+(1, 4, 'rewrw', 'keterangan tindakan rewrw', '0000-00-00 00:00:00', 'Masuk', 'hihi', '10.A0001.2', ''),
+(2, 7, 'rewrw', 'keterangan tindakan rewrw', '0000-00-00 00:00:00', 'Masuk', 'ciiiia', '10.A0001.2', ''),
+(3, 10, 'rewrw', 'keterangan tindakan rewrw', '0000-00-00 00:00:00', 'Masuk', 'Yulia Rahayu Putri', '10.L0001.5', 'hihi'),
+(4, 11, 'rewrw899', 'keterangan tindakan rewrw899', '0000-00-00 00:00:00', 'hapus', 'ciiiia', '10.S0001.1', 'hihi');
 
 -- --------------------------------------------------------
 
@@ -994,7 +1149,8 @@ ALTER TABLE `tbl_data_icdx`
 -- Indexes for table `tbl_data_laborat_dokter`
 --
 ALTER TABLE `tbl_data_laborat_dokter`
-  ADD PRIMARY KEY (`id_data_laborat_dokter`);
+  ADD PRIMARY KEY (`id_data_laborat_dokter`),
+  ADD KEY `id_jenis` (`id_jenis`);
 
 --
 -- Indexes for table `tbl_data_obat`
@@ -1092,6 +1248,14 @@ ALTER TABLE `tbl_pengobatan_rm`
   ADD KEY `id_pemeriksaan` (`id_pemeriksaan`);
 
 --
+-- Indexes for table `tbl_penyuluhan`
+--
+ALTER TABLE `tbl_penyuluhan`
+  ADD PRIMARY KEY (`id_penyuluhan`),
+  ADD KEY `no_rm` (`no_rm`),
+  ADD KEY `id_pemeriksaan` (`id_pemeriksaan`);
+
+--
 -- Indexes for table `tbl_permintaanlab`
 --
 ALTER TABLE `tbl_permintaanlab`
@@ -1118,6 +1282,13 @@ ALTER TABLE `tbl_rekam_medis`
 ALTER TABLE `tbl_resep_obat`
   ADD PRIMARY KEY (`id_resep`),
   ADD KEY `id_pemeriksaan` (`id_pemeriksaan`);
+
+--
+-- Indexes for table `tbl_resep_obats`
+--
+ALTER TABLE `tbl_resep_obats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_resep` (`id_resep`);
 
 --
 -- Indexes for table `tbl_telaah_obat`
@@ -1166,25 +1337,31 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `tbl_anamnesa_rm`
 --
 ALTER TABLE `tbl_anamnesa_rm`
-  MODIFY `id_anamnesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_anamnesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_antrian_poli_umums`
 --
 ALTER TABLE `tbl_antrian_poli_umums`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tbl_antri_pendaftaran`
 --
 ALTER TABLE `tbl_antri_pendaftaran`
-  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000050;
+  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000060;
+
+--
+-- AUTO_INCREMENT for table `tbl_asuhan_keperawatan`
+--
+ALTER TABLE `tbl_asuhan_keperawatan`
+  MODIFY `id_askep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_datapasiens`
 --
 ALTER TABLE `tbl_datapasiens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tbl_data_icdx`
@@ -1196,7 +1373,7 @@ ALTER TABLE `tbl_data_icdx`
 -- AUTO_INCREMENT for table `tbl_data_laborat_dokter`
 --
 ALTER TABLE `tbl_data_laborat_dokter`
-  MODIFY `id_data_laborat_dokter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_data_laborat_dokter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_data_obat`
@@ -1220,7 +1397,7 @@ ALTER TABLE `tbl_data_tindakan`
 -- AUTO_INCREMENT for table `tbl_diagnosa_rm`
 --
 ALTER TABLE `tbl_diagnosa_rm`
-  MODIFY `id_diagnosa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_diagnosa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_farmasi`
@@ -1232,7 +1409,7 @@ ALTER TABLE `tbl_farmasi`
 -- AUTO_INCREMENT for table `tbl_hasil_lab`
 --
 ALTER TABLE `tbl_hasil_lab`
-  MODIFY `id_pemeriksaan_lab` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pemeriksaan_lab` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_jamkes`
@@ -1256,7 +1433,7 @@ ALTER TABLE `tbl_nama_pemeriksaan`
 -- AUTO_INCREMENT for table `tbl_pemeriksaan_rm`
 --
 ALTER TABLE `tbl_pemeriksaan_rm`
-  MODIFY `id_pemeriksaan_objek` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pemeriksaan_objek` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengguna`
@@ -1271,10 +1448,16 @@ ALTER TABLE `tbl_pengobatan_rm`
   MODIFY `id_pengobatan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tbl_penyuluhan`
+--
+ALTER TABLE `tbl_penyuluhan`
+  MODIFY `id_penyuluhan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `tbl_permintaanlab`
 --
 ALTER TABLE `tbl_permintaanlab`
-  MODIFY `id_permintaan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_permintaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_poli`
@@ -1286,13 +1469,19 @@ ALTER TABLE `tbl_poli`
 -- AUTO_INCREMENT for table `tbl_rekam_medis`
 --
 ALTER TABLE `tbl_rekam_medis`
-  MODIFY `id_pemeriksaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pemeriksaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_resep_obat`
 --
 ALTER TABLE `tbl_resep_obat`
-  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `tbl_resep_obats`
+--
+ALTER TABLE `tbl_resep_obats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_telaah_obat`
@@ -1310,7 +1499,7 @@ ALTER TABLE `tbl_telaah_resep`
 -- AUTO_INCREMENT for table `tbl_tindakan_rm`
 --
 ALTER TABLE `tbl_tindakan_rm`
-  MODIFY `id_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_role`
@@ -1347,6 +1536,12 @@ ALTER TABLE `tbl_datapasiens`
   ADD CONSTRAINT `tbl_datapasiens_ibfk_1` FOREIGN KEY (`no_index`) REFERENCES `tbl_ffs` (`no_index`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `tbl_data_laborat_dokter`
+--
+ALTER TABLE `tbl_data_laborat_dokter`
+  ADD CONSTRAINT `tbl_data_laborat_dokter_ibfk_1` FOREIGN KEY (`id_jenis`) REFERENCES `tbl_jenis_pemeriksaan` (`id_jenis_pemeriksaan`);
+
+--
 -- Constraints for table `tbl_data_stock_obat`
 --
 ALTER TABLE `tbl_data_stock_obat`
@@ -1369,7 +1564,8 @@ ALTER TABLE `tbl_farmasi`
 --
 ALTER TABLE `tbl_hasil_lab`
   ADD CONSTRAINT `tbl_hasil_lab_ibfk_1` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `tbl_rekam_medis` (`id_pemeriksaan`) ON DELETE CASCADE,
-  ADD CONSTRAINT `tbl_hasil_lab_ibfk_2` FOREIGN KEY (`id_jenis_pemeriksaan`) REFERENCES `tbl_jenis_pemeriksaan` (`id_jenis_pemeriksaan`);
+  ADD CONSTRAINT `tbl_hasil_lab_ibfk_2` FOREIGN KEY (`id_jenis_pemeriksaan`) REFERENCES `tbl_jenis_pemeriksaan` (`id_jenis_pemeriksaan`),
+  ADD CONSTRAINT `tbl_hasil_lab_ibfk_3` FOREIGN KEY (`id_nama_pemeriksaan`) REFERENCES `tbl_nama_pemeriksaan` (`id_nama_pemeriksaan`);
 
 --
 -- Constraints for table `tbl_nama_pemeriksaan`
@@ -1396,6 +1592,13 @@ ALTER TABLE `tbl_pengobatan_rm`
   ADD CONSTRAINT `tbl_pengobatan_rm_ibfk_1` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `tbl_rekam_medis` (`id_pemeriksaan`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `tbl_penyuluhan`
+--
+ALTER TABLE `tbl_penyuluhan`
+  ADD CONSTRAINT `tbl_penyuluhan_ibfk_1` FOREIGN KEY (`no_rm`) REFERENCES `tbl_datapasiens` (`no_rm`),
+  ADD CONSTRAINT `tbl_penyuluhan_ibfk_2` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `tbl_asuhan_keperawatan` (`id_pemeriksaan`);
+
+--
 -- Constraints for table `tbl_permintaanlab`
 --
 ALTER TABLE `tbl_permintaanlab`
@@ -1407,6 +1610,12 @@ ALTER TABLE `tbl_permintaanlab`
 --
 ALTER TABLE `tbl_resep_obat`
   ADD CONSTRAINT `tbl_resep_obat_ibfk_1` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `tbl_rekam_medis` (`id_pemeriksaan`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tbl_resep_obats`
+--
+ALTER TABLE `tbl_resep_obats`
+  ADD CONSTRAINT `tbl_resep_obats_ibfk_1` FOREIGN KEY (`id_resep`) REFERENCES `tbl_resep_obat` (`id_resep`);
 
 --
 -- Constraints for table `tbl_telaah_obat`
