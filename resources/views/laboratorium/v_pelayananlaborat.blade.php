@@ -105,6 +105,7 @@
                                     <form action="/savehasillab" method="post">
                                         @csrf  
                                         <input type="hidden" value="{{$permintaan[0]->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
+                                        <input type="hidden" value="{{$pasien[0]->no_rm}}" name="no_rm" class="form-control">
                                         @foreach($permintaan as $permintaans)
                                             <h4>{{$permintaans->jenis}} - {{$permintaans->nama}}</h4>
                                             <div class="row">

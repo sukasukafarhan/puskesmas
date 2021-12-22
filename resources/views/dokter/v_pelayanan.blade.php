@@ -49,7 +49,7 @@
                             <div class="btn-group-vertical">
                                 <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalRM">Riwayat Rekam Medis</button>
                                 <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalPemeriksaan">Riwayat Pemeriksaan</button>
-                                <button class="btn btn-secondary mb-2 px-4">Hasil Lab</button>
+                                <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalHasilLab">Hasil Lab</button>
                                 <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalAskep">Askep Pasien</button>
                             </div>
                         </div>
@@ -551,32 +551,38 @@
     </div>
 </div>
 
-<div class="modal" id="modalRM" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+<div class="modal" id="modalHasilLab" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Data Rekam Medis</h5>
+                <h5 class="modal-title">Data Hasil Lab</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <div>
-                <table class="table table-bordered">
+            <div class="table-responsive">
+                <table class="table table-bordered ">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>RPK</th>
-                            <th>RPS</th>
-                            <th>RPD</th>
+                            <th>Jenis Pelayanan Lab</th>
+                            <th>Jenis Permintaan Dokter</th>
+                            <th>Jenis Uji Lab</th>
+                            <th>Hasil Lab</th>
+                            <th>Nilai Normal</th>
+                            <th>Satuan</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php $no=1;?>
-                        @foreach($anamnesa as $anamnesas)
+                        @foreach($hasillab as $hasillabs)
                         <tr>
                             <td>{{$no}}</td>
-                            <td>{{$anamnesas->rpk}}</td>   
-                            <td>{{$anamnesas->rps}}</td>
-                            <td>{{$anamnesas->rpd}}</td>
+                            <td>{{$hasillabs->jenis_pemeriksaan}}</td>   
+                            <td>{{$hasillabs->jenis_pemeriksaan}}</td>
+                            <td>{{$hasillabs->nama_pemeriksaan}}</td>
+                            <td>{{$hasillabs->hasil_pemeriksaan_lab}}</td>
+                            <td>{{$hasillabs->nilai_normal}}</td>
+                            <td>{{$hasillabs->satuan}}</td>
                         </tr>
                         <?php $no++;?>
                         @endforeach
@@ -733,67 +739,6 @@
                 <input type="hidden" value="{{$data[0]->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
                 <input type="hidden" value="{{$data[0]->no_rm}}" name="no_rm" class="form-control">
                 <div class="modal-body">
-                   <!-- <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="jenis">Jenis -->
-                            <!-- <span class="text-danger">*</span> -->
-               <!--          </label>
-                        <div class="col-lg-6">
-                            <select class="form-control" id="jenis" name="jenis">
-                                <option value="">Please select</option>
-                                <option value="Racikan">Racikan</option>
-                                <option value="Jadi">Jadi</option>
-                            </select>
-                        </div>
-                    </div>
-
-                  
-                     
-                       <div class="control-group after-add-more">
-                            <select  id="jenis"  name="nama[]" class="form-control">
-                                 <option value="">Please select</option>
-                                 
-                                <option value=""></option>
-                            
-                            </select>
-                   
-              <label>Jumlah</label>
-              <input type="text" name="jk[]" class="form-control">
-             
-             
-                   <br>
-            <button class="btn btn-success add-more" type="button">
-              <i class="glyphicon glyphicon-plus"></i> Add
-            </button>
-            <hr>
-          </div>  
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="jumlah">Jumlah </label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah Obat">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="signa">Signa </label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="signa" name="signa" placeholder="Signa Obat">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="aturan_pakai">Aturan Pakai </label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="aturan_pakai" name="aturan_pakai" placeholder="Aturan Pakai">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="keterangan">Keterangan </label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan">
-                        </div>
-                    </div>
-                </div>
-            -->
-             <!-- <form action="proses.php" method="POST"> -->
                 <div class="form-group row">
                     <label class="col-lg-4 col-form-label" for="jenis">Jenis
                                     <!-- <span class="text-danger">*</span> -->
@@ -812,10 +757,6 @@
                             <option value="{{$dataobats->nama_obat}}">{{$dataobats->nama_obat}}</option>
                              @endforeach
                         </select>
-                    <!-- <select class="form-control" id="jenis" name="nama[]">
-                        <option value="">Please select</option>
-                        <option value=""></option>
-                    </select> -->
                     <label>Jumlah</label>
                         <input type="text" name="jk[]" class="form-control">
                 </div>

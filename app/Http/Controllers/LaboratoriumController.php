@@ -29,9 +29,11 @@ class LaboratoriumController extends Controller
             date_default_timezone_set('Asia/jakarta');
             $tanggal=date('Y-m-d');
             $status='masuk';
+            
             // $antrian = DB::select("SELECT tbl_antri_pendaftaran.id_antrian,tbl_antri_pendaftaran.no_antrian,tbl_poli.kode_poli, tbl_antri_pendaftaran.status,tbl_antri_pendaftaran.id_poli,tbl_poli.nama_poli FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' && tbl_antri_pendaftaran.status!='hapus' ");
             // $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.created_at='".$tanggal."' && tbl_antrian_poli_umums.status='proses'");
-            $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums, tbl_datapasiens, tbl_rekam_medis where tbl_rekam_medis.tanggal_kunjungan='".$tanggal."' AND tbl_antrian_poli_umums.status='proses' AND tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm AND tbl_datapasiens.no_rm = tbl_rekam_medis.no_rm ");
+            $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums, tbl_datapasiens, tbl_rekam_medis where tbl_rekam_medis.tanggal_kunjungan='".$tanggal."' AND tbl_antrian_poli_umums.status='permintaanlab' AND tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm AND tbl_datapasiens.no_rm = tbl_rekam_medis.no_rm ");
+            
             // print_r($antrian);
             return view('laboratorium/v_antrianlaborat',[ 'antrian'=>$antrian ,'judul' => $judul]);
         }
@@ -53,13 +55,13 @@ class LaboratoriumController extends Controller
     { 
         $tanggal=date('Y-m-d');
         $judul = 'Pelayanan Laboratorium';
-        $pasien = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.no_rm='".$id2."' && tbl_antrian_poli_umums.status='proses'");
+        $pasien = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.no_rm='".$id2."' && tbl_antrian_poli_umums.status='permintaanlab'");
         $pasien[0]->tanggal = $tanggal;
         // print_r($pasien);
         $permintaan = DB::select("SELECT * FROM tbl_permintaanlab JOIN tbl_data_laborat_dokter where id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter");
         // $permintaan2 = DB::select("SELECT a.id_jenis_pemeriksaan, a.jenis_pemeriksaan, a.nama_pemeriksaan, a.nilai_nominal, a.satuan FROM tbl_nama_pemeriksaan a, tbl_permintaanlab b WHERE a.nama_pemeriksaan = b.");
         // $permintaan =  DB::select("SELECT * FROM tbl_permintaanlab, tbl_data_laborat_dokter, tbl_jenis_pemeriksaan where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter");
-        print_r($permintaan);
+        // print_r($permintaan);
         return view('laboratorium/v_pelayananlaborat', ['permintaan'=>$permintaan, 'pasien'=>$pasien, 'judul'=> $judul]);
     }
     
@@ -125,7 +127,8 @@ class LaboratoriumController extends Controller
     }
 
     public function storehasillab(Request $request)
-    {
+    {  date_default_timezone_set('Asia/jakarta');
+        $tanggal=date('Y-m-d');
         $countdata = count($request->hasil);
         for($i = 0; $i<$countdata; $i++){
             $Tbl_hasillab = new Tbl_hasillab;
@@ -136,7 +139,8 @@ class LaboratoriumController extends Controller
             $Tbl_hasillab->penanggung_jawab=session('user_data')[0]['nama'];
             $Tbl_hasillab->save();
         }
-        
+
+            $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='proses' where no_rm='".$request->no_rm."' AND created_at='".$tanggal."'");
         // dd($request);
         return redirect ('/laborat');
     }
