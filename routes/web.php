@@ -55,13 +55,16 @@ Route::get('/laborat','LaboratoriumController@index');
 Route::get('/laboratpelayanan/{id1}/{id2}','LaboratoriumController@layani');
 Route::get('/laboratdatajenislab','LaboratoriumController@dataJenisPelayananLab');
 Route::get('/laboratdatajenisdokter/{id}','LaboratoriumController@dataJenisPelayananDokter');
+Route::get('/laboratjenisdokter','LaboratoriumController@dataJenisDokter');
 Route::get('/laboratdataujilab/{id}','LaboratoriumController@dataUjiLab');
 Route::get('/laboratlaporanlab','LaboratoriumController@dataLaporanLab');
 Route::get('/laborathistory','LaboratoriumController@history');
 Route::post('/savepelayanandokter','LaboratoriumController@storepelayanandokter');
+Route::post('/savejenisdokter','LaboratoriumController@storejenisdokter');
 Route::post('/savehasillab','LaboratoriumController@storehasillab');
 Route::get('/laborat/deletepelayanandokter/{id1}/{id2}','LaboratoriumController@deletepelayanandokter');
 Route::get('/laborat/deletedatajenislab/{id}','LaboratoriumController@deletedatajenislab');
+Route::get('/showpemeriksaandokter/{id}','LaboratoriumController@showPemeriksaanDokter');
 
 Route::get('/pelayanandokter/{id1}/{id2}','DokterController@index');
 Route::post('/saveanamnesa','DokterController@storeanamnesa');
@@ -95,7 +98,8 @@ Route::get('/laporantelaah','FarmasiController@showlaporantelaah');
 Route::get('/farmasi/history','FarmasiController@showhistory');
 
 Route::get('/kasir','KasirController@index');
-Route::get('/pelayanankasir','KasirController@showpelayanankasir');
+Route::get('/pelayanankasir/{id1}/{id2}','KasirController@showpelayanankasir');
+Route::post('/pelayanankasir/savekasir','KasirController@storekasir');
 Route::get('/kasir/history','KasirController@showhistory');
 Route::get('/kasir/laporan','KasirController@showlaporan');
 

@@ -80,8 +80,9 @@
                             </div>
                             <div class="form-group">
                                 <label>No. Asuransi</label>
-                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" >
+                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" ><span><button class="btn btn-success ">Cek Asuransi</button></span>
                             </div>
+                            
                             <div class="form-group">
                                 <label>Agama</label>
                                 <input type="text" name="agama" class="form-control" placeholder="Agama" required autofocuse>

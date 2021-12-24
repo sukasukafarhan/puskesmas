@@ -32,16 +32,15 @@
                                 @foreach($jenis as $jenis)
                                 <tr>
                                     <td class="text-center" style="width: 1px;"> {{$no}}</td>
-                                    <td> {{$jenis->id_jenis_pemeriksaan}}</td>
-                                    <td> {{$jenis->jenis_pemeriksaan}}</td>
-                                    <td>
-                                        <span>
-                                        <button type="button" onclick="location.href='/laboratdataujilab/{{$jenis->id_jenis_pemeriksaan}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
-                                            Data Pelayanan 
+                                    <td> {{$jenis->id_jenis_dokter}}</td>
+                                    <td> {{$jenis->jenis_dokter}}</td>
+                                    <td><span>
+                                        <button type="button" onclick="location.href='/laboratdatajenisdokter/{{$jenis->id_jenis_dokter}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                            Data Pelayanan Dokter
                                             </button>
                                         </span>
                                         <span>
-                                        <button type="button" class="btn btn-danger" onclick="location.href='/laborat/deletedatajenislab/{{$jenis->id_jenis_pemeriksaan}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                        <button type="button" class="btn btn-danger" onclick="location.href=''" data-toggle="tooltip" data-placement="top" title="Hapus">
                                                 Hapus
                                         </button>
                                         </span>
@@ -69,17 +68,18 @@
         <div class="modal-content">
             <div class="modal-header">
 
-                <h5 class="modal-title">Tambah Jenis Pemeriksaan Lab</h5>
+                <h5 class="modal-title">Tambah Jenis Pemeriksaan Dokter</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="#">
+            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="/savejenisdokter">
+                @csrf
                 <div class="modal-body">
                     <!-- Modal body text goes here. -->
                     <div class="form-group row">
-                        <label class="col-lg-4 col-form-label">Jenis Pemeriksaan Lab</label>
+                        <label class="col-lg-4 col-form-label">Jenis Pemeriksaan Dokter</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="kode" placeholder="Jenis Pemeriksaan">
+                            <input type="text" class="form-control" name="jenis" placeholder="Jenis Pemeriksaan">
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,8 @@
                 <ul aria-expanded="false">
                     <li><a href="/laborat">Antrian Pasien</a></li>
                     <li><a href="/laborathistory">History</a></li>
-                    <li><a href="/laboratdatajenislab">Data Jenis Pelayanan Laborat</a></li> 
+                    <li><a href="/laboratdatajenislab">Data Jenis Pelayanan Laborat</a></li>
+                    <li><a href="/laboratjenisdokter">Data Jenis Pelayanan Dokter</a></li> 
                 </ul>
             </li>
             <li>

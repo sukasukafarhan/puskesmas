@@ -20,30 +20,49 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No.</th>
-                                    <th>Nama Obat</th>
                                     <th>Nomor Antrian</th>
-                                    <th>No RM</th>
+                                    <th>Nomor Rekam Medis</th>
+                                    <th>Jenis Asuransi</th>
                                     <th>Poli Asal</th>
-                                     <th>Asuransi</th>
+                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no=1; ?>
+                                @foreach($antrian as $antrians)
                                 <tr>
-                                    <td class=" text-center"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class=" text-center">{{$no}}</td>
+                                    <td>{{$antrians->no_antrian}}</td>
+                                    <td>{{$antrians->no_rm}}</td>
+                                    <td>{{$antrians->jenis_asuransi}}</td>
+                                    <td>{{$antrians->poli_asal}}</td>
+                                    <td>{{$antrians->status}}</td>
                                     <td>
-                                        <span>
+                                    <button type="button" onclick="location.href='/pelayanankasir/{{$antrians->id_pemeriksaan}}/{{$antrians->no_rm}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                            Layani
+                                            </button>
+                                            <!-- <button type="button" onclick="location.href='/pelayanankasir'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                            Layani
+                                            </button> -->
+                                            <button type="button" onclick="panggil({{$antrians->no_antrian}}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Panggil" id="panggil">
+                                            Panggil
+                                            </button>
+                                            <button type="button" class="btn btn-danger" onclick="location.href=''" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                Hapus
+                                            </button>
+                                            <button type="button" class="btn btn-warning"  onclick=""  data-toggle="tooltip" data-placement="top" title="Lewati">
+                                            Lewati
+                                            </button>
+                                        <!-- <span>
                                             <button type="button" class="btn btn-light"  onclick="location.href='/pelayanankasir'" data-toggle="tooltip" data-placement="top" title="Buka">
                                             <i class="fa fa-folder"></i>
                                             </button>
-                                        </span>
+                                        </span> -->
                                     </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>

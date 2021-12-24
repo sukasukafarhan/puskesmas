@@ -70,8 +70,8 @@
                                 @foreach($permintaan as $permintaans)
                                     <tr>
                                         <td>{{$no}}</td>
-                                        <td>{{$permintaans->jenis}}</td>
-                                        <td>{{$permintaans->nama}}</td>
+                                        <td>{{$permintaans->jenis_dokter}}</td>
+                                        <td>{{$permintaans->nama_pemeriksaan}}</td>
                                     </tr>
                                     <?php $no++; ?>
                                 @endforeach
@@ -107,20 +107,20 @@
                                         <input type="hidden" value="{{$permintaan[0]->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
                                         <input type="hidden" value="{{$pasien[0]->no_rm}}" name="no_rm" class="form-control">
                                         @foreach($permintaan as $permintaans)
-                                            <h4>{{$permintaans->jenis}} - {{$permintaans->nama}}</h4>
+                                            <h4>{{$permintaans->jenis_dokter}} - {{$permintaans->nama_pemeriksaan}}</h4>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>Jenis</label>
-                                                        <input type="text" value="{{$permintaans->jenis}}" name="jenis[]" class="form-control" required disabled> 
-                                                        <input type="hidden" value="{{$permintaans->id_jenis}}" name="id_jenis[]" class="form-control">
+                                                        <input type="text" value="{{$permintaans->jenis_dokter}}" name="jenis[]" class="form-control" required disabled> 
+                                                        <input type="hidden" value="{{$permintaans->id_jenis_dokter}}" name="id_jenis[]" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>Nama</label>
-                                                        <input type="text" name="nama[]" value="{{$permintaans->nama}}" class="form-control" required disabled>
-                                                        <input type="hidden" value="{{$permintaans->id_nama}}" name="id_nama[]" class="form-control">
+                                                        <input type="text" name="nama[]" value="{{$permintaans->nama_pemeriksaan}}" class="form-control" required disabled>
+                                                        <input type="hidden" value="{{$permintaans->id_nama_pemeriksaan}}" name="id_nama[]" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">

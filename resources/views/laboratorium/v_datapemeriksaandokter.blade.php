@@ -5,7 +5,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javascript:void(0)">Data Pasien</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">Family Folder</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Data Pemeriksaan Dokter</a></li>
         </ol>
     </div>
 </div>
@@ -23,42 +23,40 @@
                             <tr>
                                 <th class="text-center">No.</th>
                                 <th>Nama Pemeriksaan</th>
-                                <th>Jenis Pemeriksaan</th>
+                                <th>Nilai Normal</th>
                                 <th>Tarif</th>
-                                <th>Action</th>
+                                <th>Satuan</th>
+                                <!-- <th>Action</th> -->
                             </tr>
                             </thead>
                             <tbody>
-                                <?php $no=1; ?>
+                                <?php $no = 1; ?>
                                 @foreach($data as $datas)
                                 <tr>
                                     <td class="text-center" style="width: 1px;">{{$no}} </td>
-                                    <td> {{$datas->nama}}</td>
-                                    <td> {{$datas->jenis_dokter}}</td>
-                                    <td> {{$datas->tarif}}</td>
-                                    <td>
+                                    <td> {{$datas->nama_pemeriksaan}}</td>
+                                    <td> {{$datas->nilai_normal}}</td>
+                                    <td> {{$datas->tarif_pemeriksaan}}</td>
+                                    <td> {{$datas->satuan}}</td>
+                                    <!-- <td>
                                         <span>
-                                        <button type="button" class="btn btn-danger" onclick="location.href='/laborat/deletepelayanandokter/{{$datajenis[0]->id_jenis_dokter}}/{{$datas->id_data_laborat_dokter}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
-                                                Hapus
-                                        </button>
-                                        </span><span>
-                                        <button type="button" class="btn btn-info" onclick="location.href='/showpemeriksaandokter/{{$datas->id_data_laborat_dokter}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
-                                                Detail
-                                        </button>
+                                            <button type="button" class="btn btn-light" onclick="location.href=' '" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
                                         </span>
                                         
-                                    </td>
+                                    </td> -->
                                 </tr>
                                 <?php $no++; ?>
-                                @endforeach;
+                                @endforeach
                             </tbody>
                         </table>
 
-                    <div class="card-footer">
+                    <!-- <div class="card-footer">
                         <div class="rounded-button">
                              <button type="button" class="btn mb-1 btn-rounded btn-primary float-right" data-toggle="modal" data-target="#basicModal1">Tambah Data</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -70,65 +68,46 @@
         <div class="modal-content">
             <div class="modal-header">
 
-                <h5 class="modal-title">Tambah Jenis Pemeriksaan Dokter</h5>
+                <h5 class="modal-title">Tambah Jenis Pemeriksaan Lab</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="/savepelayanandokter">
-                @csrf
-                
-                <input type="hidden" value="{{$datajenis[0]->id_jenis_dokter}}" name="id_jenis" class="form-control">
+            <form class="form-horizontal" enctype="multipart/form-data" method="post" action="">
                 <div class="modal-body">
                     <!-- Modal body text goes here. -->
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label">Kode</label>
                         <div class="col-lg-6">
-                            <?php $jdata = count($data)?>
-                            <input readonly type="text" class="form-control" name="kode" value="{{$jdata}}" placeholder="Kode" required autofocuse>
+                            <input readonly type="text" class="form-control" name="kode" value=" " placeholder="Kode" required autofocuse>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label">Nama Jenis Pemeriksaan Lab</label>
                         <div class="col-lg-6">
-                            <input readonly type="text" class="form-control" name="jenis_lab" value="{{$datajenis[0]->id_jenis_dokter}} " placeholder="Jenis Pemeriksaan Lab" required autofocuse>
+                            <input readonly type="text" name="jenis_lab" class="form-control" value=" " placeholder="Jenis Pemeriksaan Lab" required autofocuse>
                     </div>
                     </div>
                     <div class="form-group row">
+                        
                         <label class="col-lg-4 col-form-label">Nama Pemeriksaan</label>
                         <div class="col-lg-6">
-                             <input type="text" name="nama_pemeriksaan_dokter" id="nama_pemeriksaan_dokter" class="form-control" placeholder="Nama Pemeriksaan" required autofocuse>
+                            <input type="text" name="jenis_pemeriksaan" id="jenis_pemeriksaan" class="form-control" placeholder="Nama Jenis Pemeriksaan" required autofocuse>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-lg-12">
-                            <div class="col-lg-6">
-                             <!-- <label class="form-check-label"> -->
-                                @foreach($datanama as $datanama)
-                                   <input type="checkbox" class="form-check-input" name="id_nama[]" value="{{$datanama->id_nama_pemeriksaan}}" ><label for="id_nama[]">{{$datanama->nama_pemeriksaan }}</label><br>
-                                <!-- </label> -->
-                                @endforeach
-    
-                            </div>
-                        </div>    
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label">Tarif</label>
-                        <div class="col-lg-6">
-                            <input type="text" name="tarif" id="tarif" class="form-control" placeholder="Tarif" required autofocuse>
-                        </div>
-                    </div>
-                    <!-- <div class="form-group row">
+                        
                         <label class="col-lg-4 col-form-label">Nilai Normal</label>
                         <div class="col-lg-6">
-                            <input type="text" name="nilai_normal" id="nilai_normal" class="form-control" placeholder="Nilai Normal" required autofocuse>
+                            <input type="text" name="nilai_normal" id="nilai_normal" class="form-control" placeholder="Tarif" required autofocuse>
                         </div>
                     </div>
                     <div class="form-group row">
+                        
                         <label class="col-lg-4 col-form-label">Satuan</label>
                         <div class="col-lg-6">
                             <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Satuan" required autofocuse>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
                 <div class="modal-footer">
                     </br>

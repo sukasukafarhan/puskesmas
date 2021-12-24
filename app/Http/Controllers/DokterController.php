@@ -99,7 +99,7 @@ class DokterController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         //ganti ke antrian dokter
-        $antrian = DB::select("SELECT * FROM tbl_asuhan_keperawatan JOIN tbl_antrian_poli_umums on tbl_asuhan_keperawatan.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.status!='Masuk' AND tbl_antrian_poli_umums.status!='selesai' AND tbl_asuhan_keperawatan.tanggal='".$tanggal."'");
+        $antrian = DB::select("SELECT * FROM tbl_asuhan_keperawatan JOIN tbl_antrian_poli_umums on tbl_asuhan_keperawatan.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.status!='Masuk' AND tbl_antrian_poli_umums.status!='selesai' AND tbl_antrian_poli_umums.status!='pembayaran' AND tbl_asuhan_keperawatan.tanggal='".$tanggal."'");
         // print_r($antrian);
         $waktu=date('h:i:s');
         $jdata = count($antrian);
@@ -163,6 +163,8 @@ class DokterController extends Controller
 
     public function storepenyuluhan(Request $request)
     {
+        date_default_timezone_set('Asia/jakarta');
+        $tanggal=date('Y-m-d');
         $Tbl_penyuluhan = new Tbl_penyuluhan;
         $Tbl_penyuluhan->isi_penyuluhan=$request->lainnya;
         $Tbl_penyuluhan->no_rm=$request->no_rm;
@@ -170,7 +172,7 @@ class DokterController extends Controller
         $Tbl_penyuluhan->save();
         // dd($request);
 
-        $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='selesai' where no_rm='".$request->no_rm."'");
+        $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='pembayaran' where no_rm='".$request->no_rm."' && created_at='".$today."'");
 
         return redirect ('/daftarantriandokter');
     }
@@ -228,8 +230,8 @@ class DokterController extends Controller
     public function storetindakan(Request $request)
     {
         date_default_timezone_set('Asia/jakarta');
-        $tanggal=date('Y-m-d');
-        $waktu=date("H:i:s");
+        $tanggal=date('Y-m-d h:i:s');
+        // $waktu=date("H:i:s");
         
         // $data_rm = DB::select("select * from tbl_rekam_medis where no_rm='".$request->no_rm."'");  
 
@@ -237,7 +239,7 @@ class DokterController extends Controller
         $Tbl_tindakan->id_pemeriksaan=$request->id_pemeriksaan;
         $Tbl_tindakan->tindakan=$request->tindakan;
         $Tbl_tindakan->keterangan=$request->keterangan;
-        $Tbl_tindakan->waktu_tindakan=$waktu;
+        $Tbl_tindakan->waktu_tindakan=$tanggal;
         $Tbl_tindakan->status="Masuk";
         $Tbl_tindakan->penanggung_jawab=session('user_data')[0]['nama'];
         $Tbl_tindakan->no_rm = $request->no_rm;

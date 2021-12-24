@@ -22,16 +22,16 @@
                             </div>
                             <ul class="card-profile__info">
                             @foreach($pasien as $pasiens)
-                                <li class="mb-1"><strong class="text-dark mr-4">No. Pendaftaran</strong> <span>{{$pasiens->no_index}}</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Tanggal</strong> <span>{{$pasiens->tanggal}}</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">No. Rekam Medis</strong> <span>{{$pasiens->no_rm}}</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Nama Lengkap</strong> <span>{{$pasiens->nama}}</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Tanggal Lahir</strong> <span> {{$pasiens->tanggal_lahir}}</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span>{{$pasiens->umur}}</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Status Pasien</strong> <span>Masuk</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span>{{$pasiens->nama_kk}}</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Pekerjaan</strong> <span>{{$pasiens->pekerjaan}}</span></li>
-                                <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span>{{$pasiens->poli_asal}} </span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">No. Pendaftaran</strong> <span class="float-right">{{$pasiens->no_index}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Tanggal</strong> <span class="float-right">{{$pasiens->tanggal}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">No. Rekam Medis</strong> <span class="float-right">{{$pasiens->no_rm}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Nama Lengkap</strong> <span class="float-right">{{$pasiens->nama}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Tanggal Lahir</strong> <span class="float-right"> {{$pasiens->tanggal_lahir}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span class="float-right">{{$pasiens->umur}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Status Pasien</strong> <span class="float-right">Masuk</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span class="float-right">{{$pasiens->nama_kk}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Pekerjaan</strong> <span class="float-right">{{$pasiens->pekerjaan}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span class="float-right">{{$pasiens->poli_asal}} </span></li>
                             @endforeach
                             </ul>
 
@@ -525,7 +525,7 @@
                 <div class="modal-body">
                     <!-- Modal body text goes here. -->
                     <div class="form-group row">
-
+                
                         <div class="col-lg-12">
                             <h4></h4>
                             <div class="col-lg-6">
