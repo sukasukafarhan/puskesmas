@@ -788,6 +788,7 @@
                         <select class="form-control" id="nama_obat" name="nama_obat[]">
                             @foreach($dataobat as $dataobats)
                             <option value="{{$dataobats->nama_obat}}">{{$dataobats->nama_obat}}</option>
+                            <input type="hidden" value="{{$dataobats->id_obat}}" name="id_obat[]" class="form-control">
                              @endforeach
                         </select>
                     <label>Jumlah</label>

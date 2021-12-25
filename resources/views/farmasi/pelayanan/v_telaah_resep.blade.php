@@ -19,16 +19,19 @@
                             <h4 class="text-muted mb-4">Data Pasien</h4>
                         </div>
                         <ul class="card-profile__info">
-                            <li class="mb-1"><strong class="text-dark mr-4">No. Pendaftaran</strong> <span>no. daftar</span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Tanggal</strong> <span>tanggal, jam</span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">No RM</strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Nama Lengkap</strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Tanggal Lahir</strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Status Pasien</strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span>nama KK</span> </li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Berat Badan</strong> <span> </span></li>
-                            <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span>asal </span></li>
+                            @foreach($pasien as $pasiens)
+                                <li class="mb-1"><strong class="text-dark mr-4">No. Antrian</strong> <span class="float-right">{{$pasiens->no_antrian}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Tanggal</strong> <span class="float-right">{{$pasiens->tanggal}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">No. Rekam Medis</strong> <span class="float-right">{{$pasiens->no_rm}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Nama Lengkap</strong> <span class="float-right">{{$pasiens->nama}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Tanggal Lahir</strong> <span class="float-right"> {{$pasiens->tanggal_lahir}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span class="float-right">{{$pasiens->umur}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Alamat</strong> <span class="float-right">{{$pasiens->alamat}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Jenis Kelamin</strong> <span class="float-right">{{$pasiens->jenis_kelamin}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Jenis Asuransi</strong> <span class="float-right">{{$pasiens->jenis_asuransi}}</span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Nomor Asuransi</strong> <span class="float-right">{{$pasiens->no_asuransi}} </span></li>
+                                <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span class="float-right">{{$pasiens->poli_asal}} </span></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -85,9 +88,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    <?php $no=1; ?>
+                                    @foreach($obat as $obats)
+                                    <tr>
+                                        <td>{{$obats->jenis_resep}}</td>
+                                        <td>{{$obats->nama_obat}}</td>
+                                        <td>{{$obats->satuan}}</td>
+                                        <td>{{$obats->jumlah}}</td>
+                                        <td>{{$obats->signa}}</td>
+                                        <td>{{$obats->aturan_pakai}}</td>
+                                        <td>{{$obats->status}}</td>
+                                    </tr>
+                                    <?php $no++; ?>
+                                    @endforeach
                                 </tbody>
                             </table>
+                            <button class="btn mb-1 btn-rounded btn-warning float-right text-white mr-2">Selesai</button>
                         </div>
 
                     </div>
@@ -96,7 +112,7 @@
         </div>
     </div>
 
-        <div class="col-lg-12 col-xl-12">
+        <!-- <div class="col-lg-12 col-xl-12">
       
                 <div class="card">
                    
@@ -114,7 +130,7 @@
                                 </div>
                             </div>
                    
-    <form   enctype="multipart/form-data" method="post" action="">
+                    <form enctype="multipart/form-data" method="post" action="">
                         <div class="table-responsive">
                             <table class="table table-bordered">
 
@@ -364,7 +380,7 @@
                             </table>
                         </div>
                         
-              <div class="rounded-button">
+                        <div class="rounded-button">
                             <button type="submit" class="btn mb-2 btn-secondary float-right">Telaah Resep</button>
                         </div>
                     </div>
@@ -373,7 +389,7 @@
             </form>
 
                             
-        </div>
+        </div> -->
     </div>
     <!-- #/ container -->
 </div>

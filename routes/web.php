@@ -83,9 +83,9 @@ Route::post('/saveicdx','DokterController@storeicdx');
 Route::get('/dataicdx/hapus/{id}','DokterController@hapus');
 
 Route::get('/farmasi','FarmasiController@index');
-Route::get('/showantrianfarmasi','FarmasiController@showantrian');
+// Route::get('/showantrianfarmasi','FarmasiController@showantrian');
 Route::get('/telaahobat','FarmasiController@showtelaahobat');
-Route::get('/telaahresep','FarmasiController@showtelaahresep');
+Route::get('/telaahresep/{id1}/{id2}','FarmasiController@showtelaahresep');
 Route::get('/pelayanan','FarmasiController@showpelayanan');
 Route::get('/tabelobat','FarmasiController@showobat');
 Route::get('/stokobat','FarmasiController@showstokobat');

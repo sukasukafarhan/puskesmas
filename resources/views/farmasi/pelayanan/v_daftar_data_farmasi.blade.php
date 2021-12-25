@@ -18,7 +18,6 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
-
                                 <tr>
                                     <th class="text-center">No</th>
                                     <th>no RM </th>
@@ -26,28 +25,33 @@
                                     <th>Obat</th>
                                     <th>Waktu</th>
                                     <th>Status</th>
-                                    <th></th> 
                             </thead>
                             <tbody>
+                            <?php $no=1; ?>
+                            @foreach($pasien as $pasiens)
                                 <tr>
-                                    <td class=" text-center"></td>
-                                    <td class=" text-center"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class=" text-center">{{$no}}</td>
+                                    <td class=" text-center">{{$pasiens->no_rm}}</td>
+                                    <td>{{$pasiens->id_pemeriksaan}}</td>
+                                    <td>@foreach($pasiens->obat as $obats)
+                                            {{$obats}} ,
+                                        @endforeach
+                                    </td>
+                                    <td>{{$pasiens->waktu}}</td>
                                     <td>     
+                                        {{$pasiens->status}}
                                     <!-- <span class="label label-success"> Selesai Oleh Dokter</span> -->
                                     </td>
-                                    <!-- <span class="label label-warning">Selesai Oleh Kasir</span> -->
-                                    </td>
                                     <td>
-                                            <button type="button" class="btn btn-light"  onclick="location.href='/telaahresep'" data-toggle="tooltip" data-placement="top" title="Buka">
+                                            <button type="button" class="btn btn-light"  onclick="location.href='/telaahresep/{{$pasiens->id_pemeriksaan}}/{{$pasiens->no_rm}}/'" data-toggle="tooltip" data-placement="top" title="Buka">
                                     <i class="fa fa-folder"></i>
                                     </button>
                                     </td>
-                                    </tr>
-                                 </tbody>                          
-                            </table>
+                                </tr>
+                            <?php $no++;?>
+                            @endforeach
+                            </tbody>                          
+                        </table>
                     </div>
                 </div>
             </div>

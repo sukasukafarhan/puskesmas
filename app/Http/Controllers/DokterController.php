@@ -37,6 +37,7 @@ class DokterController extends Controller
                 $Tbl_resep_obats = new Tbl_resep_obats;
                 $Tbl_resep_obats->id_resep=$lastindex;
                 $Tbl_resep_obats->nama_obat=$request->nama_obat[$i];
+                $Tbl_resep_obats->id_obat=$request->id_obat[$i];
                 $Tbl_resep_obats->jumlah=$request->jk[$i];
                 $Tbl_resep_obats->status="tersedia";
                 $Tbl_resep_obats->save();
