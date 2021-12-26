@@ -29,15 +29,27 @@ class DokterController extends Controller
         $Tbl_resep_obat->save();
         $lastdata = DB::table('tbl_resep_obat')->latest('id_resep')->first();
         $lastindex = $lastdata->id_resep;
-        // $listresep = DB::table('tbl_resep_obat')->count();
-        // echo $lastindex;
+        $listresep = DB::table('tbl_resep_obat')->count();
+        echo $lastindex;
+        $obat = DB::select("select * from tbl_data_obat"); 
+        $dataobat = array();
+        $obatpasien = array();
+        foreach($obat as $obats){
+            array_push($dataobat,$obats);
+        }
+        // print_r($dataobat);
         $countobat = count($request->nama_obat);
+        echo ($countobat);
+        for($i = 0 ; $i < $countobat-1 ; $i++ ){
+            array_push($obatpasien,$dataobat[$i]->nama_obat);
+        }
+        // print_r($obatpasien);
         if($countobat>1){
             for($i = 0; $i<$countobat-1; $i++){
                 $Tbl_resep_obats = new Tbl_resep_obats;
                 $Tbl_resep_obats->id_resep=$lastindex;
-                $Tbl_resep_obats->nama_obat=$request->nama_obat[$i];
-                $Tbl_resep_obats->id_obat=$request->id_obat[$i];
+                $Tbl_resep_obats->nama_obat=$obatpasien[$i];
+                $Tbl_resep_obats->id_obat=$request->nama_obat[$i];
                 $Tbl_resep_obats->jumlah=$request->jk[$i];
                 $Tbl_resep_obats->status="tersedia";
                 $Tbl_resep_obats->save();
@@ -47,7 +59,8 @@ class DokterController extends Controller
             for($i = 0; $i<$countobat; $i++){
                 $Tbl_resep_obats = new Tbl_resep_obats;
                 $Tbl_resep_obats->id_resep=$lastindex;
-                $Tbl_resep_obats->nama_obat=$request->nama_obat[$i];
+                $Tbl_resep_obats->nama_obat=$obatpasien[$i];
+                $Tbl_resep_obats->id_obat=$request->nama_obat[$i];
                 $Tbl_resep_obats->jumlah=$request->jk[$i];
                 $Tbl_resep_obats->status="tersedia";
                 $Tbl_resep_obats->save();
@@ -173,7 +186,7 @@ class DokterController extends Controller
         $Tbl_penyuluhan->save();
         // dd($request);
 
-        $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='pembayaran' where no_rm='".$request->no_rm."' && created_at='".$today."'");
+        $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='pembayaran' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
 
         return redirect ('/daftarantriandokter');
     }

@@ -71,7 +71,7 @@
                         <div class="form-group row col-md-6">
                             <label class="col-sm-4 col-form-label">No. Asuransi</label>
                             <div class="col-sm-6">
-                                <input type="text" name="no_asuransi" class="form-control" placeholder="Nomor Asuransi" value="{{ $data['data_pasien'][0]->no_asuransi }}"><span> <button class="btn btn-success text-white ">Cek</button></span>
+                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" value="{{ $data['data_pasien'][0]->no_asuransi }}"><span><button onclick="cekbpjs()"class="btn btn-success text-white" id="button_bpjs" >Cek Asuransi</button></span>
                             </div>
                             <!-- <div class="col-sm-2">
                             <button type="" class="btn btn-dark">Cek</button>
@@ -137,4 +137,34 @@
 
     </div>    </div>
 </div>
+<script
+    src="https://code.jquery.com/jquery-2.2.4.js"
+    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous">
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    })
+ </script>
+ <script>   
+    function cekbpjs() {
+        var no_asuransi = document.getElementById("no_asuransi");
+        if (no_asuransi && no_asuransi.value) {
+            $.ajax({
+                type:'GET',
+                url: "{{ url('/cekbpjs/')}}"+'/'+no_asuransi.value,               
+                success: function( data ) {
+                    alert(data);
+                }  
+            });
+        }else{
+            alert("nomor asuransi belum diisi");
+        }
+    }
+
+</script>
 @include('template.footer')

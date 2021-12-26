@@ -21,8 +21,8 @@ class FarmasiController extends Controller
             $tanggal=date('Y-m-d');
             // $pasien = 
             // $antrian = DB::select("SELECT tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan, tbl_antrian_poli_umums.status FROM tbl_antrian_poli_umums JOIN tbl_rekam_medis on tbl_antrian_poli_umums.no_rm = tbl_rekam_medis.no_rm where tbl_antrian_poli_umums.status='farmasi' AND tbl_antrian_poli_umums.created_at='2021-12-24'"); 
-            $pasien = DB::select("SELECT a.no_rm, a.id_pemeriksaan, b.waktu, b.status FROM tbl_rekam_medis a JOIN tbl_antrian_poli_umums b on a.no_rm = b.no_rm where b.status='farmasi' AND a.tanggal_kunjungan='2021-12-24'");
-            $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep JOIN tbl_rekam_medis on tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan WHERE tbl_rekam_medis.tanggal_kunjungan = '2021-12-24' ");
+            $pasien = DB::select("SELECT a.no_rm, a.id_pemeriksaan, b.waktu, b.status FROM tbl_rekam_medis a JOIN tbl_antrian_poli_umums b on a.no_rm = b.no_rm where b.status='farmasi' AND a.tanggal_kunjungan='".$tanggal."'");
+            $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep JOIN tbl_rekam_medis on tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan WHERE tbl_rekam_medis.tanggal_kunjungan = '".$tanggal."' ");
             // $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep "); 
             foreach($pasien as $pasiens){
                 $pasiens->obat = array();
@@ -58,17 +58,26 @@ class FarmasiController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $data = DB::select("select id_pemeriksaan from tbl_asuhan_keperawatan where no_rm='".$id2."' && id_pemeriksaan ='".$id1."'");
-        $poli_asal = DB::select("select poli_asal, no_antrian from tbl_antrian_poli_umums where no_rm='".$id2."' && created_at ='2021-12-24'"); 
+        $poli_asal = DB::select("select poli_asal, no_antrian from tbl_antrian_poli_umums where no_rm='".$id2."' && created_at ='".$tanggal."'"); 
         $pasien = DB::select("select * from tbl_datapasiens where no_rm='".$id2."'"); 
         $pasien[0]->poli_asal = $poli_asal[0]->poli_asal;
         $pasien[0]->no_antrian = $poli_asal[0]->no_antrian;
         $pasien[0]->tanggal = $tanggal;
         $pasien[0]->id_pemeriksaan = $data[0]->id_pemeriksaan;
-        $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep JOIN tbl_rekam_medis on tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan JOIN tbl_data_obat on tbl_resep_obats.id_obat=tbl_data_obat.id_obat WHERE tbl_rekam_medis.tanggal_kunjungan = '2021-12-24' ");
+        $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep JOIN tbl_rekam_medis on tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan JOIN tbl_data_obat on tbl_resep_obats.id_obat=tbl_data_obat.id_obat WHERE tbl_rekam_medis.tanggal_kunjungan = '".$tanggal."' ");
         
         // print_r($obat);
         return view('farmasi/pelayanan/v_telaah_resep',['obat' => $obat,'pasien' => $pasien,'judul' => $judul]);
     }
+
+    public function selesai($id)
+    {
+        $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='selesai' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
+        
+        // print_r($obat);
+        return view('farmasi/pelayanan/v_telaah_resep',['obat' => $obat,'pasien' => $pasien,'judul' => $judul]);
+    }
+
     public function showantrian()
     {
         $judul = 'PELAYANAN PASIEN';

@@ -25,6 +25,7 @@ Route::get('/history','PendaftaranController@history');
 Route::get('/datapasien/{id}/{id2}','PendaftaranController@datapasien');
 Route::get('/datapasien/addpasien/{id}/{id2}','PendaftaranController@addpasien');
 Route::post('/datapasien/createpasien','PendaftaranController@storepasien');
+Route::get('/cekbpjs/{id}','PendaftaranController@cekbpjs');
 
 Route::get('/pendaftaranpasien/{id}/{id2}','PendaftaranController@pendaftaran_pasien');
 Route::post('/pendaftaranpasien','PendaftaranController@save_pendaftaran');
@@ -89,7 +90,8 @@ Route::get('/telaahresep/{id1}/{id2}','FarmasiController@showtelaahresep');
 Route::get('/pelayanan','FarmasiController@showpelayanan');
 Route::get('/tabelobat','FarmasiController@showobat');
 Route::get('/stokobat','FarmasiController@showstokobat');
-Route::post('/tabelobat/tambahdataobat','FarmasiController@storedataobat');
+Route::get('/tabelobat/tambahdataobat','FarmasiController@storedataobat');
+Route::post('/selesai/{id1}','FarmasiController@selesai');
 Route::post('/tabelobat/tambahstokobat','FarmasiController@storestockobat');
 Route::get('/laporanlidi','FarmasiController@showlaporanlidi');
 Route::get('/laporanlplpo','FarmasiController@showlaporanlplpo');

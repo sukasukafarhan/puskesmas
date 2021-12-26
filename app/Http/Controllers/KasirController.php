@@ -19,7 +19,7 @@ class KasirController extends Controller
             $judul = 'PELAYANAN PASIEN';
             date_default_timezone_set('Asia/jakarta');
             $tanggal=date('Y-m-d');
-            $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums  where status='pembayaran' AND created_at='2021-12-24'"); 
+            $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums  where status='pembayaran' AND created_at='".$tanggal."'"); 
             $pasien = DB::select("SELECT a.jenis_asuransi, a.no_rm, c.id_pemeriksaan  FROM tbl_datapasiens a JOIN tbl_antrian_poli_umums b on a.no_rm = b.no_rm JOIN tbl_rekam_medis c on a.no_rm = c.no_rm where b.status='pembayaran'");
             
             foreach($antrian as $antrians){
@@ -45,7 +45,7 @@ class KasirController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $data = DB::select("select id_pemeriksaan from tbl_asuhan_keperawatan where no_rm='".$id2."' && id_pemeriksaan ='".$id1."'");
-        $poli_asal = DB::select("select poli_asal, no_antrian from tbl_antrian_poli_umums where no_rm='".$id2."' && created_at ='2021-12-24'"); 
+        $poli_asal = DB::select("select poli_asal, no_antrian from tbl_antrian_poli_umums where no_rm='".$id2."' && created_at ='".$tanggal."'"); 
         $pasien = DB::select("select * from tbl_datapasiens where no_rm='".$id2."'"); 
         $pasien[0]->poli_asal = $poli_asal[0]->poli_asal;
         $pasien[0]->no_antrian = $poli_asal[0]->no_antrian;
@@ -91,7 +91,7 @@ class KasirController extends Controller
         $Tbl_kasir->save();
         // dd($request);
 
-        $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='farmasi' where no_rm='".$request->no_rm."' && created_at='2021-12-24'");
+        $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='farmasi' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
         
         return redirect ('/kasir');
     }

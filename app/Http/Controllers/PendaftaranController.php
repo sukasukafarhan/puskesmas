@@ -437,6 +437,16 @@ class PendaftaranController extends Controller
         return view('pendaftaran/v_history', ['history'=>$history, 'judul' => $judul]);
     }
 
+    public function cekbpjs($id){
+        $data_bpjs =  DB::select("select *  from tbl_bpjs where nomor_asuransi='".$id."'");
+        if(count($data_bpjs)==0){
+            return ("Data tidak ditemukan");
+        }
+        else{
+            $kalimat = "Data ditemukan : ".$data_bpjs[0]->nama." adalah pasien BPJS";
+            return ( $kalimat);
+        }
+    }
     public function panggil($no){
         
         $data_pendaftaran =  DB::select("select *  from tbl_antri_pendaftaran where id_antrian='".$no."'");

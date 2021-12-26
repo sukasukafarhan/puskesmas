@@ -71,7 +71,7 @@
                             </div>
                             <div class="form-group ">
                                 <label>Asuransi</label>
-                                <select id="jenis_asuransi" name="jenis_asuransi" class="form-control"  onkeyup="getassurance();" required autofocuse>
+                                <select id="jenis_asuransi" name="jenis_asuransi" class="form-control" onchange="isbpjs()" required autofocuse>
                                     <option selected="selected">Choose...</option>
                                     <option value="Umum">Umum</option>
                                     <option value="BPJS" >BPJS</option>
@@ -80,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <label>No. Asuransi</label>
-                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" ><span><button class="btn btn-success ">Cek Asuransi</button></span>
+                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" readonly><span><button onclick="cekbpjs()"class="btn btn-success text-white" id="button_bpjs" disabled >Cek Asuransi</button></span>
                             </div>
                             
                             <div class="form-group">
@@ -111,7 +111,48 @@
         </div>
     </div>
 </div>
-<script>
+<script
+    src="https://code.jquery.com/jquery-2.2.4.js"
+    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous">
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    })
+ </script>
+ <script>   
+ 
+    function isbpjs() {
+        var asuransi = document.getElementById('jenis_asuransi').value;
+        
+        if(asuransi==="BPJS"){
+            // $('#button_bpjs').attr('disabled','disabled');
+            $("#button_bpjs").removeAttr('disabled');
+            $("#no_asuransi").removeAttr('readonly');
+        }else{
+            $("#button_bpjs").attr('disabled', 'true');
+            $("#no_asuransi").attr('readonly', 'false');
+        }
+    }
+    function cekbpjs() {
+        var no_asuransi = document.getElementById("no_asuransi");
+        if (no_asuransi && no_asuransi.value) {
+            $.ajax({
+                type:'GET',
+                url: "{{ url('/cekbpjs/')}}"+'/'+no_asuransi.value,               
+                success: function( data ) {
+                    alert(data);
+                }  
+            });
+        }else{
+            alert("nomor asuransi belum diisi");
+        }
+    }
+    
     function cari() {
         var date = document.getElementById('tanggal_lahir').value;
 
@@ -131,19 +172,19 @@
         }
         document.getElementById('umur').value = age;
     }
-    function getassurance() {
-        var ass= document.getElementById('jenis_asuransi').value;
+    // function getassurance() {
+    //     var ass= document.getElementById('jenis_asuransi').value;
 
-        if(ass === "Umum"){
-            var asuransi="0o9oi9okimh";
-            document.getElementById('no_asuransi').value = asuransi;
-        }else{
-            document.getElementById('no_asuransi').value = "";
+    //     if(ass === "Umum"){
+    //         var asuransi="0o9oi9okimh";
+    //         document.getElementById('no_asuransi').value = asuransi;
+    //     }else{
+    //         document.getElementById('no_asuransi').value = "";
 
 
 
-        }
-    }
+    //     }
+    // }
 
 </script>
 @include('template.footer')

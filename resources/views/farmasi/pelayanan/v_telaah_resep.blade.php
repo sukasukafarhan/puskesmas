@@ -103,7 +103,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <button class="btn mb-1 btn-rounded btn-warning float-right text-white mr-2">Selesai</button>
+                            <a href="/selesai/{{$pasien[0]->no_rm}}/" class="btn mb-1 btn-rounded btn-warning float-right text-white mr-2">Selesai</a>
                         </div>
 
                     </div>
