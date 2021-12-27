@@ -53,7 +53,13 @@ class KasirController extends Controller
         $pasien[0]->id_pemeriksaan = $data[0]->id_pemeriksaan;
         $tindakan_rm = DB::select("SELECT * FROM tbl_tindakan_rm JOIN tbl_data_tindakan on tbl_tindakan_rm.tindakan = tbl_data_tindakan.nama_tindakan where tbl_tindakan_rm.no_rm='".$id2."' && tbl_tindakan_rm.status!='hapus'"); 
         $pemeriksaan = DB::select("SELECT * FROM tbl_permintaanlab JOIN tbl_data_laborat_dokter on tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter where tbl_permintaanlab.id_pemeriksaan ='".$id1."'");
-        // print_r($pasien);
+        
+        if($pasien[0]->jenis_asuransi == "BPJS"){
+            for($i=0;$i<count($tindakan_rm);$i++){
+                $tindakan_rm[$i]->tarif = 0;
+            }
+        }
+        
         // $pelayanan = 
         
         return view('kasir/v_datapelayanankasir',['pemeriksaan' => $pemeriksaan, 'tindakan_rm' => $tindakan_rm, 'pasien' => $pasien, 'judul' => $judul]);

@@ -274,7 +274,7 @@ class PerawatUmumController extends Controller
     public function history()
     {
         $judul = 'Daftar Pelayanan Pasien';
-        $history = $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm");
+        $history = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm");
 
         return view('perawat/v_history', ['history' => $history,'judul' => $judul]);
     }
@@ -282,8 +282,16 @@ class PerawatUmumController extends Controller
     public function showlaporanrm()
     {
         $judul = 'Daftar Pelayanan Pasien';
-       
-        return view('perawat/datalaporan/v_laporanrm', ['judul' => $judul]);
+        $data = DB::select("SELECT tbl_resep_obat.jenis_resep,tbl_resep_obat.signa, tbl_resep_obat.aturan_pakai, tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat,tbl_penyuluhan.isi_penyuluhan, tbl_diagnosa_rm.nama_diagnosa, tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal ,tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan FROM tbl_rekam_medis,tbl_tindakan_rm,tbl_diagnosa_rm,tbl_pemeriksaan_rm,tbl_anamnesa_rm,tbl_datapasiens, tbl_antrian_poli_umums, tbl_pendaftarans, tbl_penyuluhan, tbl_resep_obat where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_pendaftarans.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_anamnesa_rm.no_rm && tbl_diagnosa_rm.no_rm = tbl_pemeriksaan_rm.no_rm && tbl_penyuluhan.no_rm = tbl_diagnosa_rm.no_rm && tbl_tindakan_rm.no_rm = tbl_penyuluhan.no_rm && tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan && tbl_rekam_medis.no_rm = tbl_penyuluhan.no_rm ");
+        $pasien = DB::select("SELECT tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal,tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat, tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_diagnosa_rm.nama_diagnosa, tbl_penyuluhan.isi_penyuluhan FROM tbl_penyuluhan, tbl_pemeriksaan_rm,tbl_anamnesa_rm, tbl_pendaftarans,tbl_tindakan_rm, tbl_datapasiens, tbl_antrian_poli_umums, tbl_diagnosa_rm where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_tindakan_rm.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_antrian_poli_umums.no_rm && tbl_diagnosa_rm.no_rm = tbl_antrian_poli_umums.no_rm && tbl_penyuluhan.no_rm = tbl_antrian_poli_umums.no_rm");
+        // $poli_asal = DB::select("SELECT poli_asal FROM tbl_antrian_poli_umums");
+        // for($i = 0; $i<(count($poli_asal); $i++){
+        //     if($poli_asal)
+        // }
+        // $data = DB::select("SELECT * tbl_antrian_poli_umums.poli_asal,  FROM tbl_datapasiens , tbl_antrian_poli_umums, tbl_pendaftarans,tbl_anamnesa_rm,tbl_pemeriksaan_rm,tbl_diagnosa_rm,tbl_penyuluhan,tbl_tindakan_rm,tbl_resep_obats");
+        print_r($pasien);
+        
+        return view('perawat/datalaporan/v_laporanrm', ['data' => $data, 'judul' => $judul]);
     }
 
     public function panggil($no){

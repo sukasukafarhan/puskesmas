@@ -1,5 +1,5 @@
 @include('template.header')
-@include('laboratorium.template.sidebar')
+@include('perawat.template.sidebar')
 
 
 <div class="row page-titles mx-0">
@@ -28,11 +28,11 @@
                                     <th>Nama Pasien</th>
                                     <th>Nomor Rekam Medis</th>
                                     <th>Nama KK</th>
-                                    <th>Alamat(RT, Kelurahan/Desa)</th>
+                                    <th>Alamat</th>
                                     <th>Jenis Kelamin</th>
-                                    <th>Umur(thn, bln, hari)</th>
+                                    <th>Umur</th>
                                     <th>Jenis Kunjungan Dalam 1 Tahun(baru/lama)</th>
-                                    <th>Jenis Kunjungan(BPJS/Umum)</th>
+                                    <th>Jenis Asuransi(BPJS/Umum)</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Pekerjaan</th>
                                     <th>Anamnesa</th>
@@ -41,17 +41,39 @@
                                     <th>Jenis Tindakan</th>
                                     <th>Penyuluhan</th>
                                     <th>Resep Obat</th>
-                                    <th>Jam Datang</th>
+                                    <!-- <th>Jam Datang</th>
                                     <th>Jam Selesai</th>
-                                    <th>Jumlah Waktu</th>
+                                    <th>Jumlah Waktu</th> -->
                                     <th>Tenaga Medis 1</th>
                                     <th>Tenaga Medis 2</th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no=1;?>
+                                @foreach($data as $datas)
                                 <tr>
-                                            <td class=" text-center"></td>
+                                            <td class=" text-center">{{$no}}</td>
+                                            <td>{{$datas->tanggal}}</td>
+                                            <td>{{$datas->poli_asal}}</td>
+                                            <td>{{$datas->nama}}</td>
+                                            <td>{{$datas->no_rm}}</td>
+                                            <td>{{$datas->nama_kk}}</td>
+                                            <td>{{$datas->alamat}}</td>
+                                            <td>{{$datas->jenis_kelamin}}</td>
+                                            <td>{{$datas->umur}}</td>
+                                            <td>{{$datas->tipe_kunjungan}}</td>
+                                            <td>{{$datas->jenis_asuransi}}</td>
+                                            <td>{{$datas->pekerjaan}}</td>
+                                            <td>RPS: {{$datas->rps}} | RPK: {{$datas->rpk}} | RPD: {{$datas->rpd}}</td>
+                                            <td>TB: {{$datas->tinggi_badan}} | BB: {{$datas->berat_badan}} | IMT: {{$datas->imt}} | RR: {{$datas->rr}} | Sistol: {{$datas->sistol}} | Diastol: {{$datas->diastol}}</td>
+                                            <td>{{$datas->nama_diagnosa}}</td>
+                                            <td>{{$datas->tindakan}}</td>
+                                            <td>{{$datas->isi_penyuluhan}}</td>
+                                            <td>Jenis Resep: {{$datas->jenis_resep}} | Signa Obat: {{$datas->signa}} | Aturan Pakai: {{$datas->aturan_pakai}}</td>
+                                            <td>{{$datas->penanggung_jawab}}</td>
+                                            <td>{{$datas->perawat}}</td>
+                                            <!-- <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -59,26 +81,11 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td></td> -->
                                             
                                 </tr>
+                                <?php $no++;?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
