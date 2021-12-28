@@ -64,6 +64,7 @@
                                             <td>{{$datas->umur}}</td>
                                             <td>{{$datas->tipe_kunjungan}}</td>
                                             <td>{{$datas->jenis_asuransi}}</td>
+                                            <td>{{$datas->jenis_kelamin}}</td>
                                             <td>{{$datas->pekerjaan}}</td>
                                             <td>RPS: {{$datas->rps}} | RPK: {{$datas->rpk}} | RPD: {{$datas->rpd}}</td>
                                             <td>TB: {{$datas->tinggi_badan}} | BB: {{$datas->berat_badan}} | IMT: {{$datas->imt}} | RR: {{$datas->rr}} | Sistol: {{$datas->sistol}} | Diastol: {{$datas->diastol}}</td>
@@ -103,7 +104,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="rounded-button">
-                            <button type="button" class="btn mb-1 btn-rounded btn-success float-right">Export to ecxel</button>
+                            <button type="button" class="btn mb-1 btn-rounded btn-success float-right" data-href='/poliumum/print' id="export" onclick="exportTasks(event.target);">Export to ecxel</button>
                         </div>
                     </div>
                 </div>
@@ -113,8 +114,14 @@
     </div>
 </div>
 
-
 <script>
+   function exportTasks(_this) {
+      let _url = $(_this).data('href');
+      window.location.href = _url;
+   }
+</script>
+<script>
+    
     // function deleteConfirm(url) {
     //     $('#btn-delete').attr('href', url);
     //     $('#deleteModal').modal();

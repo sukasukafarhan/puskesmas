@@ -50,7 +50,7 @@ Route::get('/poliumum/layani/{id}/{id2}','PerawatUmumController@layani');
 Route::post('/poliumumperawat','PerawatUmumController@storeperawat');
 Route::get('/historyperawat','PerawatUmumController@history');
 Route::get('/poliumum/laporanrm','PerawatUmumController@showlaporanrm');
-
+Route::get('/poliumum/print', 'PerawatUmumController@exportCsv');
 
 Route::get('/laborat','LaboratoriumController@index');
 Route::get('/laboratpelayanan/{id1}/{id2}','LaboratoriumController@layani');

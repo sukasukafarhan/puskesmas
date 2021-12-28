@@ -10,6 +10,8 @@ use App\Tbl_pendaftaran;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Http\Request;
+use Excel;
+// use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PerawatUmumController extends Controller
 {
@@ -282,17 +284,74 @@ class PerawatUmumController extends Controller
     public function showlaporanrm()
     {
         $judul = 'Daftar Pelayanan Pasien';
-        $data = DB::select("SELECT tbl_resep_obat.jenis_resep,tbl_resep_obat.signa, tbl_resep_obat.aturan_pakai, tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat,tbl_penyuluhan.isi_penyuluhan, tbl_diagnosa_rm.nama_diagnosa, tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal ,tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan FROM tbl_rekam_medis,tbl_tindakan_rm,tbl_diagnosa_rm,tbl_pemeriksaan_rm,tbl_anamnesa_rm,tbl_datapasiens, tbl_antrian_poli_umums, tbl_pendaftarans, tbl_penyuluhan, tbl_resep_obat where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_pendaftarans.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_anamnesa_rm.no_rm && tbl_diagnosa_rm.no_rm = tbl_pemeriksaan_rm.no_rm && tbl_penyuluhan.no_rm = tbl_diagnosa_rm.no_rm && tbl_tindakan_rm.no_rm = tbl_penyuluhan.no_rm && tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan && tbl_rekam_medis.no_rm = tbl_penyuluhan.no_rm ");
-        $pasien = DB::select("SELECT tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal,tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat, tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_diagnosa_rm.nama_diagnosa, tbl_penyuluhan.isi_penyuluhan FROM tbl_penyuluhan, tbl_pemeriksaan_rm,tbl_anamnesa_rm, tbl_pendaftarans,tbl_tindakan_rm, tbl_datapasiens, tbl_antrian_poli_umums, tbl_diagnosa_rm where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_tindakan_rm.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_antrian_poli_umums.no_rm && tbl_diagnosa_rm.no_rm = tbl_antrian_poli_umums.no_rm && tbl_penyuluhan.no_rm = tbl_antrian_poli_umums.no_rm");
+        $data = DB::select("SELECT tbl_resep_obat.jenis_resep,tbl_resep_obat.signa, tbl_resep_obat.aturan_pakai, tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat,tbl_penyuluhan.isi_penyuluhan, tbl_diagnosa_rm.nama_diagnosa, tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal ,tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan FROM tbl_rekam_medis,tbl_tindakan_rm,tbl_diagnosa_rm,tbl_pemeriksaan_rm,tbl_anamnesa_rm,tbl_datapasiens, tbl_antrian_poli_umums, tbl_pendaftarans, tbl_penyuluhan, tbl_resep_obat where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_pendaftarans.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_anamnesa_rm.no_rm && tbl_diagnosa_rm.no_rm = tbl_pemeriksaan_rm.no_rm && tbl_penyuluhan.no_rm = tbl_diagnosa_rm.no_rm && tbl_tindakan_rm.no_rm = tbl_penyuluhan.no_rm && tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan && tbl_rekam_medis.no_rm = tbl_penyuluhan.no_rm && tbl_antrian_poli_umums.no_rm");
+        // $pasien = DB::select("SELECT tbl_antrian_poli_umums.poli_asal, tbl_antrian_poli_umums.no_rm,tbl_datapasiens.nama,tbl_datapasiens.nama_kk,tbl_datapasiens.alamat,tbl_datapasiens.jenis_kelamin,tbl_datapasiens.umur FROM tbl_antrian_poli_umums,tbl_datapasiens where tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm");
+        // $kunjungan = DB::select("SELECT tbl_pendaftarans.tipe_kunjungan FROM tbl_pendaftarans JOIN tbl_datapasiens ON tbl_datapasiens.no_rm = tbl_pendaftarans.no_rm");
         // $poli_asal = DB::select("SELECT poli_asal FROM tbl_antrian_poli_umums");
         // for($i = 0; $i<(count($poli_asal); $i++){
         //     if($poli_asal)
         // }
         // $data = DB::select("SELECT * tbl_antrian_poli_umums.poli_asal,  FROM tbl_datapasiens , tbl_antrian_poli_umums, tbl_pendaftarans,tbl_anamnesa_rm,tbl_pemeriksaan_rm,tbl_diagnosa_rm,tbl_penyuluhan,tbl_tindakan_rm,tbl_resep_obats");
-        print_r($pasien);
+        // print_r($data);
         
         return view('perawat/datalaporan/v_laporanrm', ['data' => $data, 'judul' => $judul]);
     }
+
+    public function exportCsv()
+    {
+        $fileName = 'laporan poli umum.csv';
+        $data = DB::select("SELECT tbl_resep_obat.jenis_resep,tbl_resep_obat.signa, tbl_resep_obat.aturan_pakai, tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat,tbl_penyuluhan.isi_penyuluhan, tbl_diagnosa_rm.nama_diagnosa, tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal ,tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan FROM tbl_rekam_medis,tbl_tindakan_rm,tbl_diagnosa_rm,tbl_pemeriksaan_rm,tbl_anamnesa_rm,tbl_datapasiens, tbl_antrian_poli_umums, tbl_pendaftarans, tbl_penyuluhan, tbl_resep_obat where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_pendaftarans.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_anamnesa_rm.no_rm && tbl_diagnosa_rm.no_rm = tbl_pemeriksaan_rm.no_rm && tbl_penyuluhan.no_rm = tbl_diagnosa_rm.no_rm && tbl_tindakan_rm.no_rm = tbl_penyuluhan.no_rm && tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan && tbl_rekam_medis.no_rm = tbl_penyuluhan.no_rm && tbl_antrian_poli_umums.no_rm");
+        // print_r($data);
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        // $columns = array('nama');
+        // $columns = array('Tanggal', 'Poli Asal',' Nama Pasien',' Nomor Rekam Medis', 'Nama KK','Alamat', 'Jenis Kelamin', 'Umur', 'Jenis Kunjungan Dalam 1 Tahun(baru/lama)', 'Jenis Asuransi(BPJS/Umum)', 'Jenis Kelamin', 'Pekerjaan', 'Anamnesa', 'Pemeriksaan', 'Diagnosa', 'Jenis Tindakan', 'Penyuluhan', 'Resep Obat', 'Tenaga Medis 1',' Tenaga Medis 2' );
+        $columns = array('Tanggal','Poli Asal',' Nama Pasien',' Nomor Rekam Medis', 'Nama KK','Alamat', 'Jenis Kelamin', 'Umur', 'Jenis Kunjungan Dalam 1 Tahun(baru/lama)', 'Jenis Asuransi(BPJS/Umum)', 'Pekerjaan', 'Anamnesa', 'Pemeriksaan', 'Diagnosa', 'Jenis Tindakan', 'Penyuluhan', 'Resep Obat', 'Tenaga Medis 1', 'Tenaga Medis 2' );
+
+        $callback = function() use($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($data as $datas) {
+                $row['Tanggal']  = $datas->tanggal;
+                $row['Poli Asal']    = $datas->poli_asal;
+                $row['Nama Pasien']    = $datas->nama;
+                $row['Nomor Rekam Medis']  = $datas->no_rm;
+                $row['Nama KK']  = $datas->nama_kk;
+                $row['Alamat']  = $datas->alamat;
+                $row['Jenis Kelamin']    = $datas->jenis_kelamin;
+                $row['Umur']    = $datas->umur;
+                $row['Jenis Kunjungan Dalam 1 Tahun(baru/lama)']  = $datas->tipe_kunjungan;
+                $row['Jenis Asuransi(BPJS/Umum)']  = $datas->jenis_asuransi;
+                $row['Pekerjaan']    = $datas->pekerjaan;
+                $row['Anamnesa']    = $datas->rps.",".$datas->rpd.",".$datas->rpk;
+                $row['Pemeriksaan']  = $datas->tinggi_badan.",".$datas->berat_badan.",".$datas->imt.",".$datas->suhu.",".$datas->rr.",".$datas->sistol.",".$datas->diastol;
+                $row['Diagnosa']  = $datas->nama_diagnosa;
+                $row['Jenis Tindakan']  = $datas->tindakan;
+                $row['Penyuluhan']    = $datas->isi_penyuluhan;
+                $row['Resep Obat']    = "Jenis Resep: ".$datas->jenis_resep."| Signa Obat".$datas->signa."Aturan Pakai: ".$datas->aturan_pakai;
+                $row['Tenaga Medis 1']  = $datas->penanggung_jawab;
+                $row['Tenaga Medis 2']  = $datas->perawat;
+                fputcsv($file, array($row['Tanggal'], $row['Poli Asal'], $row['Nama Pasien'], $row['Nomor Rekam Medis'], $row['Nama KK'], $row['Alamat'], $row['Jenis Kelamin'], $row['Umur'], $row['Jenis Kunjungan Dalam 1 Tahun(baru/lama)'], $row['Jenis Asuransi(BPJS/Umum)'], $row['Pekerjaan'], $row['Anamnesa'], $row['Pemeriksaan'], $row['Diagnosa'], $row['Jenis Tindakan'], $row['Penyuluhan'], $row['Resep Obat'], $row['Tenaga Medis 1'], $row['Tenaga Medis 2']));
+                // fputcsv($file, array($row['Tanggal'], $row['Poli Asal'], ['Nama Pasien'], $row['Nomor Rekam Medis'], $row['Nama KK'], $row['Alamat'], $row['Jenis Kelamin'], $row['Umur'], $row['Jenis Kunjungan Dalam 1 Tahun(baru/lama)'], $row['Jenis Asuransi(BPJS/Umum)'], $row['Pekerjaan'] , $row['Anamnesa'], $row['Pemeriksaan'], $row['Diagnosa'], $row['Jenis Tindakan'], $row['Penyuluhan'] , $row['Resep Obat'] , $row['Tenaga Medis 1'] , $row['Tenaga Medis 2']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+    // public function exportCsv(){
+        
+    //     return Excel::download(new DataExport, 'Laporan Poli Umum.xlsx');
+    // }
+
 
     public function panggil($no){
         // $data_pendaftaran =  DB::select("select *  from tbl_antri_pendaftaran where id_antrian='".$no."'");
@@ -373,3 +432,10 @@ class PerawatUmumController extends Controller
                                 ));
     }
 }
+
+// Class DataExport implements FromCollection{
+//     function collection(){
+//         $data = DB::select("SELECT tbl_resep_obat.jenis_resep,tbl_resep_obat.signa, tbl_resep_obat.aturan_pakai, tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat,tbl_penyuluhan.isi_penyuluhan, tbl_diagnosa_rm.nama_diagnosa, tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal ,tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan FROM tbl_rekam_medis,tbl_tindakan_rm,tbl_diagnosa_rm,tbl_pemeriksaan_rm,tbl_anamnesa_rm,tbl_datapasiens, tbl_antrian_poli_umums, tbl_pendaftarans, tbl_penyuluhan, tbl_resep_obat where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_pendaftarans.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_anamnesa_rm.no_rm && tbl_diagnosa_rm.no_rm = tbl_pemeriksaan_rm.no_rm && tbl_penyuluhan.no_rm = tbl_diagnosa_rm.no_rm && tbl_tindakan_rm.no_rm = tbl_penyuluhan.no_rm && tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan && tbl_rekam_medis.no_rm = tbl_penyuluhan.no_rm && tbl_antrian_poli_umums.no_rm ");
+//         return $data;
+//     }
+// }
