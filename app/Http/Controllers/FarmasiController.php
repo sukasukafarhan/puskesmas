@@ -141,8 +141,73 @@ class FarmasiController extends Controller
         $judul = 'PELAYANAN PASIEN';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
+        // Jenis Kunjungan Dalam 1 Tahun(baru/lama),Tanggal, poli_yang_dituju
+        $data = $dataobat = DB::select("SELECT tbl_datapasiens.nama,tbl_datapasiens.jenis_kelamin,tbl_datapasiens.umur,tbl_datapasiens.jenis_asuransi, kasir.total_pembayaran, kasir.id_pemeriksaan, tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_pendaftarans.poli_yang_dituju  FROM tbl_pendaftarans,tbl_datapasiens,kasir where tbl_datapasiens.no_rm = kasir.no_rm && tbl_datapasiens.no_rm = tbl_pendaftarans.no_rm");
+        $dataobats = DB::select("SELECT tbl_resep_obats.nama_obat,kasir.id_pemeriksaan FROM tbl_resep_obats,tbl_resep_obat,kasir where tbl_resep_obats.id_resep = tbl_resep_obat.id_resep && tbl_resep_obat.id_pemeriksaan = kasir.id_pemeriksaan ");
+        $j=0;
         
-        return view('farmasi/datalaporan/v_laporanlidi',['judul' => $judul]);
+        for($i=0; $i<count($dataobats); $i++){
+            for($j=0; $j<count($data); $j++){
+                $data[$j]->obat = array();
+                if($data[$j]->id_pemeriksaan ==  $dataobats[$i]->id_pemeriksaan){
+                    array_push($data[$j]->obat, $dataobats[$i]->nama_obat);
+                }
+            }
+        }
+        // print_r($data);
+        // echo (count($data->obat));
+        return view('farmasi/datalaporan/v_laporanlidi',['data' => $data, 'judul' => $judul]);
+    }
+
+    public function exportLidi()
+    {
+        $fileName = 'laporan Lidi.csv';
+        $data = $dataobat = DB::select("SELECT tbl_datapasiens.nama,tbl_datapasiens.jenis_kelamin,tbl_datapasiens.umur,tbl_datapasiens.jenis_asuransi, kasir.total_pembayaran, kasir.id_pemeriksaan, tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_pendaftarans.poli_yang_dituju  FROM tbl_pendaftarans,tbl_datapasiens,kasir where tbl_datapasiens.no_rm = kasir.no_rm && tbl_datapasiens.no_rm = tbl_pendaftarans.no_rm");
+        $dataobats = DB::select("SELECT tbl_resep_obats.nama_obat,kasir.id_pemeriksaan FROM tbl_resep_obats,tbl_resep_obat,kasir where tbl_resep_obats.id_resep = tbl_resep_obat.id_resep && tbl_resep_obat.id_pemeriksaan = kasir.id_pemeriksaan ");
+        $j=0;
+        
+        for($i=0; $i<count($dataobats); $i++){
+            for($j=0; $j<count($data); $j++){
+                $data[$j]->obat = array();
+                if($data[$j]->id_pemeriksaan ==  $dataobats[$i]->id_pemeriksaan){
+                    array_push($data[$j]->obat, $dataobats[$i]->nama_obat);
+                }
+            }
+        }
+        // print_r($data);
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        // $columns = array('Tanggal','Poli Asal',' Nama Pasien',' Jenis Kelamin', 'Umur', 'Total', 'Jenis Kunjungan(BPJS/Umum)', 'Jenis Kunjungan Dalam 1 Tahun(baru/lama)' );
+        $columns = array('Tanggal','Poli Asal',' Nama Pasien',' Jenis Kelamin', 'Umur', 'Nama Obat', 'Total', 'Jenis Kunjungan(BPJS/Umum)','Jenis Kunjungan Dalam 1 Tahun(baru/lama)' );
+
+        $callback = function() use($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($data as $datas) {
+                $row['Tanggal']  = $datas->tanggal;
+                $row['Poli Asal']    = $datas->poli_yang_dituju;
+                $row['Nama Pasien']    = $datas->nama;
+                $row['Jenis Kelamin']  = $datas->jenis_kelamin;
+                $row['Umur']  = $datas->umur;
+                $row['Nama Obat']  = implode(', ',$datas->obat);
+                $row['Total']  = $datas->total_pembayaran;
+                $row['Jenis Kunjungan(BPJS/Umum)']   = $datas->jenis_asuransi;
+                $row['Jenis Kunjungan Dalam 1 Tahun(baru/lama)']  = $datas->tipe_kunjungan;
+               
+                fputcsv($file, array($row['Tanggal'], $row['Poli Asal'], $row['Nama Pasien'], $row['Jenis Kelamin'], $row['Umur'],$row['Nama Obat'], $row['Total'], $row['Jenis Kunjungan(BPJS/Umum)'], $row['Jenis Kunjungan Dalam 1 Tahun(baru/lama)']));
+                
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     public function showlaporanlplpo()

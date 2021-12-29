@@ -98,6 +98,7 @@ Route::get('/laporanlplpo','FarmasiController@showlaporanlplpo');
 Route::get('/laporanstock','FarmasiController@showlaporanstok');
 Route::get('/laporantelaah','FarmasiController@showlaporantelaah');
 Route::get('/farmasi/history','FarmasiController@showhistory');
+Route::get('/farmasi/printlidi', 'FarmasiController@exportLidi');
 
 Route::get('/kasir','KasirController@index');
 Route::get('/pelayanankasir/{id1}/{id2}','KasirController@showpelayanankasir');

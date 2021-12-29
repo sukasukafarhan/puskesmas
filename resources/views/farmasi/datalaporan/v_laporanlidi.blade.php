@@ -26,35 +26,38 @@
                                     <th>Poli Asal</th>
                                     <th>Nama Pasien</th>
                                     <th>Jenis Kelamin</th>
-                                    <th>Umur(thn, bln, hari)</th>
+                                    <th>Umur</th>
                                     <th>nama obat</th>
                                     <th>total</th>
                                     <th>Jenis Kunjungan(BPJS/Umum)</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Jam Datang</th>
+                                    <!-- <th>Jenis Kelamin</th> -->
+                                    <!-- <th>Jam Datang</th>
                                     <th>Jam Selesai</th>
-                                    <th>Jumlah Waktu</th>
+                                    <th>Jumlah Waktu</th> -->
                                     <th>Jenis Kunjungan Dalam 1 Tahun(baru/lama)</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no=1; ?>
+                                @foreach($data as $datas)
                                 <tr>
-                                            <td class=" text-center"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            
+                                    <td class=" text-center">{{$no}}</td>
+                                    <td>{{$datas->tanggal}}</td>
+                                    <td>{{$datas->poli_yang_dituju }}</td>
+                                    <td>{{$datas->nama}}</td>
+                                    <td>{{$datas->jenis_kelamin}}</td>
+                                    <td>{{$datas->umur}}</td>
+                                    <td>{{implode(', ',$datas->obat)}}</td>
+                                    <td>{{$datas->total_pembayaran}}</td>
+                                    <td>{{$datas->jenis_asuransi}}</td>
+                                    <!-- <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td> -->
+                                    <td>{{$datas->tipe_kunjungan}}</td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
@@ -72,7 +75,8 @@
                     </div>
                     <div class="card-footer">
                         <div class="rounded-button">
-                            <button type="button" class="btn mb-1 btn-rounded btn-success float-right">Export to ecxel</button>
+                            <button type="button" class="btn mb-1 btn-rounded btn-success float-right" data-href='/farmasi/printlidi' id="export" onclick="exportTasks(event.target);">Export to ecxel</button>    
+                            <!-- <button type="button" class="btn mb-1 btn-rounded btn-success float-right">Export to ecxel</button> -->
                         </div>
                     </div>
                 </div>
@@ -84,10 +88,10 @@
 
 
 <script>
-    // function deleteConfirm(url) {
-    //     $('#btn-delete').attr('href', url);
-    //     $('#deleteModal').modal();
-    // }
+   function exportTasks(_this) {
+      let _url = $(_this).data('href');
+      window.location.href = _url;
+   }
 </script>
 <!--**********************************
             Content body end
