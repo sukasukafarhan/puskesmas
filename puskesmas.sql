@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2021 at 03:38 AM
+-- Generation Time: Dec 30, 2021 at 03:45 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -310,6 +310,14 @@ INSERT INTO `tbl_asuhan_keperawatan` (`id_askep`, `id_pemeriksaan`, `no_rm`, `ta
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_bpjs`
+--
+-- Error reading structure for table puskesmas.tbl_bpjs: #1030 - Got error 194 &quot;Tablespace is missing for a table&quot; from storage engine InnoDB
+-- Error reading data for table puskesmas.tbl_bpjs: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `puskesmas`.`tbl_bpjs`' at line 1
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_datapasiens`
 --
 
@@ -594,6 +602,26 @@ INSERT INTO `tbl_jamkes` (`id_jamkes`, `singkatan_jamkes`, `nama_jamkes`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_jenis_dokter`
+--
+
+CREATE TABLE `tbl_jenis_dokter` (
+  `id_jenis_dokter` int(11) NOT NULL,
+  `jenis_dokter` varchar(250) NOT NULL,
+  `status` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_jenis_dokter`
+--
+
+INSERT INTO `tbl_jenis_dokter` (`id_jenis_dokter`, `jenis_dokter`, `status`) VALUES
+(1, 'Hematologi', 'tersedia'),
+(2, 'Urin', 'tersedia');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_jenis_pemeriksaan`
 --
 
@@ -666,6 +694,49 @@ INSERT INTO `tbl_nama_pemeriksaan` (`id_nama_pemeriksaan`, `id_jenis_pemeriksaan
 (26, 5, 'Silinder', '', '', '/lpb'),
 (27, 5, 'Ephitel', '', '', '/lpb'),
 (28, 5, 'Kristal', '', '', '/lpb');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_pemeriksaan_dokter`
+--
+
+CREATE TABLE `tbl_pemeriksaan_dokter` (
+  `id` int(11) NOT NULL,
+  `id_jenis` int(11) NOT NULL,
+  `id_nama` int(250) NOT NULL,
+  `id_data_laborat_dokter` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_pemeriksaan_dokter`
+--
+
+INSERT INTO `tbl_pemeriksaan_dokter` (`id`, `id_jenis`, `id_nama`, `id_data_laborat_dokter`) VALUES
+(6, 1, 3, 12),
+(7, 1, 4, 12),
+(8, 1, 5, 12),
+(9, 1, 6, 12),
+(10, 1, 7, 12),
+(11, 1, 3, 13),
+(12, 2, 8, 14),
+(13, 2, 9, 14),
+(14, 2, 13, 14),
+(15, 2, 8, 15),
+(16, 2, 9, 15),
+(17, 2, 10, 15),
+(18, 2, 11, 15),
+(19, 2, 12, 15),
+(20, 2, 13, 15),
+(21, 2, 14, 15),
+(22, 2, 15, 15),
+(23, 2, 16, 15),
+(24, 2, 17, 15),
+(25, 2, 5, 16),
+(26, 2, 25, 16),
+(27, 2, 26, 16),
+(28, 2, 27, 16),
+(29, 2, 28, 16);
 
 -- --------------------------------------------------------
 
@@ -827,6 +898,32 @@ CREATE TABLE `tbl_pengobatan_rm` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_penyuluhan`
+--
+
+CREATE TABLE `tbl_penyuluhan` (
+  `id_penyuluhan` int(11) NOT NULL,
+  `isi_penyuluhan` varchar(250) NOT NULL,
+  `no_rm` varchar(250) NOT NULL,
+  `id_pemeriksaan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_penyuluhan`
+--
+
+INSERT INTO `tbl_penyuluhan` (`id_penyuluhan`, `isi_penyuluhan`, `no_rm`, `id_pemeriksaan`) VALUES
+(2, 'adaasdad', '10.A0001.2', 4),
+(3, 'adaasdad', '10.A0001.2', 4),
+(4, 'adaasdad', '10.A0001.2', 4),
+(5, 'asdada', '10.L0001.1', 7),
+(6, 'asdada', '10.L0001.1', 7),
+(7, 'istirahat yang cukup', '10.K0001.1', 12),
+(8, 'Banyak Istirahat', '10.K0001.1', 16);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_permintaanlab`
 --
 
@@ -928,6 +1025,44 @@ INSERT INTO `tbl_resep_obat` (`id_resep`, `id_pemeriksaan`, `jenis_resep`, `sign
 (36, 11, 'Racikan', 'signa obat2', '3x2'),
 (37, 12, 'Racikan', 'signa obat2', '3x2'),
 (38, 16, 'Racikan', 'signa obat koko', '3x1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_resep_obats`
+--
+
+CREATE TABLE `tbl_resep_obats` (
+  `id` int(11) NOT NULL,
+  `nama_obat` varchar(250) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `id_resep` int(11) NOT NULL,
+  `status` varchar(250) NOT NULL,
+  `id_obat` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_resep_obats`
+--
+
+INSERT INTO `tbl_resep_obats` (`id`, `nama_obat`, `jumlah`, `id_resep`, `status`, `id_obat`) VALUES
+(1, 'obh herbal', 2, 28, 'hapus', 2),
+(2, 'paracetamol', 3, 28, 'tersedia', 1),
+(3, 'obh herbal', 2, 28, '', 2),
+(4, 'paracetamol', 2, 28, 'tersedia', 1),
+(5, 'obh herbal', 1, 28, 'tersedia', 2),
+(6, 'obh herbal', 2, 28, 'tersedia', 2),
+(7, 'paracetamol', 2, 28, 'tersedia', 1),
+(8, 'obh herbal', 2, 28, 'tersedia', 2),
+(9, 'paracetamol', 32, 28, 'tersedia', 1),
+(10, 'obh herbal', 2, 28, 'tersedia', 2),
+(11, 'obh herbal', 1, 35, 'hapus', 2),
+(12, 'paracetamol', 1, 36, 'tersedia', 1),
+(13, 'obh herbal', 2, 36, 'tersedia', 2),
+(14, 'obh herbal', 2, 37, 'tersedia', 2),
+(15, 'paracetamol', 32, 37, 'tersedia', 1),
+(16, 'paracetamol', 2, 38, 'tersedia', 1),
+(17, 'paracetamol', 1, 38, 'tersedia', 1);
 
 -- --------------------------------------------------------
 
@@ -1181,6 +1316,12 @@ ALTER TABLE `tbl_jamkes`
   ADD PRIMARY KEY (`id_jamkes`);
 
 --
+-- Indexes for table `tbl_jenis_dokter`
+--
+ALTER TABLE `tbl_jenis_dokter`
+  ADD PRIMARY KEY (`id_jenis_dokter`);
+
+--
 -- Indexes for table `tbl_jenis_pemeriksaan`
 --
 ALTER TABLE `tbl_jenis_pemeriksaan`
@@ -1192,6 +1333,15 @@ ALTER TABLE `tbl_jenis_pemeriksaan`
 ALTER TABLE `tbl_nama_pemeriksaan`
   ADD PRIMARY KEY (`id_nama_pemeriksaan`),
   ADD KEY `id_jenis_pemeriksaan` (`id_jenis_pemeriksaan`);
+
+--
+-- Indexes for table `tbl_pemeriksaan_dokter`
+--
+ALTER TABLE `tbl_pemeriksaan_dokter`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_jenis` (`id_jenis`),
+  ADD KEY `id_nama` (`id_nama`),
+  ADD KEY `id_data_laborat_dokter` (`id_data_laborat_dokter`);
 
 --
 -- Indexes for table `tbl_pemeriksaan_rm`
@@ -1221,6 +1371,14 @@ ALTER TABLE `tbl_pengobatan_rm`
   ADD KEY `id_pemeriksaan` (`id_pemeriksaan`);
 
 --
+-- Indexes for table `tbl_penyuluhan`
+--
+ALTER TABLE `tbl_penyuluhan`
+  ADD PRIMARY KEY (`id_penyuluhan`),
+  ADD KEY `no_rm` (`no_rm`),
+  ADD KEY `id_pemeriksaan` (`id_pemeriksaan`);
+
+--
 -- Indexes for table `tbl_permintaanlab`
 --
 ALTER TABLE `tbl_permintaanlab`
@@ -1247,6 +1405,14 @@ ALTER TABLE `tbl_rekam_medis`
 ALTER TABLE `tbl_resep_obat`
   ADD PRIMARY KEY (`id_resep`),
   ADD KEY `id_pemeriksaan` (`id_pemeriksaan`);
+
+--
+-- Indexes for table `tbl_resep_obats`
+--
+ALTER TABLE `tbl_resep_obats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_resep` (`id_resep`),
+  ADD KEY `id_obat` (`id_obat`);
 
 --
 -- Indexes for table `tbl_telaah_obat`
@@ -1376,6 +1542,12 @@ ALTER TABLE `tbl_jamkes`
   MODIFY `id_jamkes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `tbl_jenis_dokter`
+--
+ALTER TABLE `tbl_jenis_dokter`
+  MODIFY `id_jenis_dokter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `tbl_jenis_pemeriksaan`
 --
 ALTER TABLE `tbl_jenis_pemeriksaan`
@@ -1386,6 +1558,12 @@ ALTER TABLE `tbl_jenis_pemeriksaan`
 --
 ALTER TABLE `tbl_nama_pemeriksaan`
   MODIFY `id_nama_pemeriksaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `tbl_pemeriksaan_dokter`
+--
+ALTER TABLE `tbl_pemeriksaan_dokter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `tbl_pemeriksaan_rm`
@@ -1404,6 +1582,12 @@ ALTER TABLE `tbl_pengguna`
 --
 ALTER TABLE `tbl_pengobatan_rm`
   MODIFY `id_pengobatan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_penyuluhan`
+--
+ALTER TABLE `tbl_penyuluhan`
+  MODIFY `id_penyuluhan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_permintaanlab`
@@ -1428,6 +1612,12 @@ ALTER TABLE `tbl_rekam_medis`
 --
 ALTER TABLE `tbl_resep_obat`
   MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT for table `tbl_resep_obats`
+--
+ALTER TABLE `tbl_resep_obats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_telaah_obat`
@@ -1520,6 +1710,14 @@ ALTER TABLE `tbl_nama_pemeriksaan`
   ADD CONSTRAINT `tbl_nama_pemeriksaan_ibfk_1` FOREIGN KEY (`id_jenis_pemeriksaan`) REFERENCES `tbl_jenis_pemeriksaan` (`id_jenis_pemeriksaan`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `tbl_pemeriksaan_dokter`
+--
+ALTER TABLE `tbl_pemeriksaan_dokter`
+  ADD CONSTRAINT `tbl_pemeriksaan_dokter_ibfk_1` FOREIGN KEY (`id_jenis`) REFERENCES `tbl_jenis_dokter` (`id_jenis_dokter`),
+  ADD CONSTRAINT `tbl_pemeriksaan_dokter_ibfk_2` FOREIGN KEY (`id_nama`) REFERENCES `tbl_nama_pemeriksaan` (`id_nama_pemeriksaan`),
+  ADD CONSTRAINT `tbl_pemeriksaan_dokter_ibfk_3` FOREIGN KEY (`id_data_laborat_dokter`) REFERENCES `tbl_data_laborat_dokter` (`id_data_laborat_dokter`);
+
+--
 -- Constraints for table `tbl_pemeriksaan_rm`
 --
 ALTER TABLE `tbl_pemeriksaan_rm`
@@ -1538,6 +1736,13 @@ ALTER TABLE `tbl_pengobatan_rm`
   ADD CONSTRAINT `tbl_pengobatan_rm_ibfk_1` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `tbl_rekam_medis` (`id_pemeriksaan`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `tbl_penyuluhan`
+--
+ALTER TABLE `tbl_penyuluhan`
+  ADD CONSTRAINT `tbl_penyuluhan_ibfk_1` FOREIGN KEY (`no_rm`) REFERENCES `tbl_datapasiens` (`no_rm`),
+  ADD CONSTRAINT `tbl_penyuluhan_ibfk_2` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `tbl_asuhan_keperawatan` (`id_pemeriksaan`);
+
+--
 -- Constraints for table `tbl_permintaanlab`
 --
 ALTER TABLE `tbl_permintaanlab`
@@ -1549,6 +1754,12 @@ ALTER TABLE `tbl_permintaanlab`
 --
 ALTER TABLE `tbl_resep_obat`
   ADD CONSTRAINT `tbl_resep_obat_ibfk_1` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `tbl_rekam_medis` (`id_pemeriksaan`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tbl_resep_obats`
+--
+ALTER TABLE `tbl_resep_obats`
+  ADD CONSTRAINT `tbl_resep_obats_ibfk_1` FOREIGN KEY (`id_resep`) REFERENCES `tbl_resep_obat` (`id_resep`);
 
 --
 -- Constraints for table `tbl_telaah_obat`
