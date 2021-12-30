@@ -184,6 +184,22 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Jenis Laboratorium</th>
+                                        <th>Harga Jenis Laboratorium</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($pemeriksaan as $pemeriksaans)
+                                    <tr>
+                                        <td>{{$pemeriksaans->nama}}</td>
+                                        <td>{{$pemeriksaans->tarif}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                                 </div>
                                 <li class="mb-1"><strong class="text-dark mr-4">Tanggal Pembayaran :</strong> <span class="float-right">{{$pasien[0]->tanggal}} </span></li>
                             </ul>
