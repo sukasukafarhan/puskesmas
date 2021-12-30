@@ -34,9 +34,9 @@ class LaboratoriumController extends Controller
             
             // $antrian = DB::select("SELECT tbl_antri_pendaftaran.id_antrian,tbl_antri_pendaftaran.no_antrian,tbl_poli.kode_poli, tbl_antri_pendaftaran.status,tbl_antri_pendaftaran.id_poli,tbl_poli.nama_poli FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' && tbl_antri_pendaftaran.status!='hapus' ");
             // $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.created_at='".$tanggal."' && tbl_antrian_poli_umums.status='proses'");
-            $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums, tbl_datapasiens, tbl_rekam_medis where tbl_rekam_medis.tanggal_kunjungan='".$tanggal."' AND tbl_antrian_poli_umums.status='permintaanlab' AND tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm AND tbl_datapasiens.no_rm = tbl_rekam_medis.no_rm ");
+            $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums, tbl_datapasiens, tbl_rekam_medis where  tbl_antrian_poli_umums.status='permintaanlab' AND tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm AND tbl_datapasiens.no_rm = tbl_rekam_medis.no_rm AND tbl_rekam_medis.tanggal_kunjungan='".$tanggal."'");
             
-            // print_r($antrian);
+            print_r($antrian);
             return view('laboratorium/v_antrianlaborat',[ 'antrian'=>$antrian ,'judul' => $judul]);
         }
     }

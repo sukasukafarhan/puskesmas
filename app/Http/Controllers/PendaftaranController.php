@@ -241,6 +241,42 @@ class PendaftaranController extends Controller
         return view('pendaftaran/v_addpasien', ['data' => $data,'judul' => $judul]);
     }
 
+    public function tambahFF(Request $request)
+    {
+        $tbl_ff = new Tbl_ff;
+        $tbl_ff->nama_kk=$request->nama_kk;
+        $tbl_ff->alamat=$request->alamat;
+        $tbl_ff->desa=$request->desa;
+        $tbl_ff->kecamatan=$request->kecamatan;
+        $tbl_ff->kabupaten=$request->kabupaten;
+        $tbl_ff->telp=$request->telp;
+        $kode = $this->kode($request->kabupaten, $request->kecamatan, $request->desa);
+        $char = substr($request->nama_kk, 0, 1);
+        $c = strtoupper($char);
+        $data = DB::select("select * from tbl_ffs where desa='".$request->desa."'");
+        $no = 1;
+        foreach ($data as $row) {
+            $sub_kalimat = substr($row->nama_kk, 0, 1);
+            if ($sub_kalimat == $char) {
+                $no++;
+            }
+        }
+        if ($no < 10) {
+            $no_index = $kode . '.' . $c . '000' . $no;
+        } elseif ($no > 9) {
+            $no_index = $kode . '.' . $c . '00' . $no;
+        } elseif ($no > 99) {
+            $no_index = $kode . '.' . $c . '0' . $no;
+        } else {
+            $no_index = $kode . '.' . $c . $no;
+        }
+        $tbl_ff->no_index=$no_index;
+        $tbl_ff->save();
+
+        return redirect ('/datapasienrm');
+    }
+
+
     public function store(Request $request)
     {
         $tbl_ff = new Tbl_ff;
@@ -414,14 +450,17 @@ class PendaftaranController extends Controller
         $Tbl_antrian_poli_umum->urutan = $jumlah_antrian;
         $Tbl_antrian_poli_umum->save();
         $Tbl_pendaftaran->save();
+        
 
-        $Tbl_rekammedis = new Tbl_RekamMedis;
-        $Tbl_rekammedis->tanggal_kunjungan = $tanggal;
-        $Tbl_rekammedis->waktu_mulai = $waktu;
-        $Tbl_rekammedis->waktu_selesai = $waktu;
-        $Tbl_rekammedis->perawat_penanggung_jawab = session('user_data')[0]['nama'];
-        $Tbl_rekammedis->no_rm=$request->no_rm;
-        $Tbl_rekammedis->save();
+        // $update = DB::select("UPDATE tbl_rekam_medis set status='lewati' where id_antrian=".$id."");
+            
+        // $Tbl_rekammedis = new Tbl_RekamMedis;
+        // $Tbl_rekammedis->tanggal_kunjungan = $tanggal;
+        // $Tbl_rekammedis->waktu_mulai = $waktu;
+        // $Tbl_rekammedis->waktu_selesai = $waktu;
+        // $Tbl_rekammedis->perawat_penanggung_jawab = session('user_data')[0]['nama'];
+        // $Tbl_rekammedis->no_rm=$request->no_rm;
+        // $Tbl_rekammedis->save();
 
         broadcast(new EveryoneEvent());
         $this->hapus($request->id_antrian);

@@ -71,7 +71,7 @@
                                     <tr>
                                         <td>{{$no}}</td>
                                         <td>{{$permintaans->jenis_dokter}}</td>
-                                        <td>{{$permintaans->nama_pemeriksaan}}</td>
+                                        <td>{{$permintaans->nama}}</td>
                                     </tr>
                                     <?php $no++; ?>
                                 @endforeach

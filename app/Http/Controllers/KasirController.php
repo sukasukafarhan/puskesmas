@@ -58,6 +58,9 @@ class KasirController extends Controller
             for($i=0;$i<count($tindakan_rm);$i++){
                 $tindakan_rm[$i]->tarif = 0;
             }
+            for($j=0;$j<count($pemeriksaan);$j++){
+                $pemeriksaan[$j]->tarif = 0;
+            }
         }
         
         // $pelayanan = 

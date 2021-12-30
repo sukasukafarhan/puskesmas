@@ -27,7 +27,7 @@
                                     <li class="mb-1"><strong class="text-dark mr-4">Nama Lengkap</strong> <span>{{$datas->nama}}</span></li>
                                     <li class="mb-1"><strong class="text-dark mr-4">Tanggal Lahir</strong> <span>{{$datas->tanggal_lahir}}</span></li>
                                     <li class="mb-1"><strong class="text-dark mr-4">Umur</strong> <span>{{$datas->umur}}</span></li>
-                                    <li class="mb-1"><strong class="text-dark mr-4">Status Pasien</strong> <span>{{$datas->status}}</span></li>
+                                    <li class="mb-1"><strong class="text-dark mr-4">Status Pasien</strong> <span>{{$datas->jenis_asuransi}}</span></li>
                                     <li class="mb-1"><strong class="text-dark mr-4">Nama KK</strong> <span>{{$datas->nama_kk}}</span></li>
                                     <li class="mb-1"><strong class="text-dark mr-4">Pekerjaan</strong> <span>{{$datas->pekerjaan}}</span></li>
                                     <li class="mb-1"><strong class="text-dark mr-4">Poli Asal</strong> <span>{{$datas->poli_asal}}</span></li>

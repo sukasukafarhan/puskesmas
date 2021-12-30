@@ -401,15 +401,22 @@
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label" for="icdx">ICD-X </label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" id="icdx" name="icdx" placeholder="">
+                            <select class="form-control" id="icdx" name="icdx">
+                                <option readonly>Please select</option>
+                                @foreach($pilihandiagnosa as $diagnosas)
+                                    <option value="{{$diagnosas->icd_x}}">{{$diagnosas->nama_diagnosa}}</option>
+                                @endforeach
+                            </select>   
+                        
+                        <!-- <input type="text" class="form-control" id="icdx" name="icdx" placeholder=""> -->
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label class="col-lg-4 col-form-label" for="diagnosa">Diagnosa </label>
                         <div class="col-lg-6">
                             <input type="text" class="form-control" id="diagnosa" name="diagnosa" placeholder="">
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label" for="jenis">Jenis
