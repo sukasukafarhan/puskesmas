@@ -215,8 +215,100 @@ class FarmasiController extends Controller
         $judul = 'PELAYANAN PASIEN';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
+        $dataobats = DB::select("SELECT * FROM tbl_data_obat,tbl_data_stock_obat where  tbl_data_obat.id_obat = tbl_data_stock_obat.id_obat");
         
-        return view('farmasi/datalaporan/v_lplpo',['judul' => $judul]);
+        return view('farmasi/datalaporan/v_lplpo',['dataobats' => $dataobats,'judul' => $judul]);
+    }
+
+    public function exportLplpo()
+    {
+        $fileName = 'laporan LPLPO.csv';
+        $dataobats = DB::select("SELECT * FROM tbl_data_obat,tbl_data_stock_obat where  tbl_data_obat.id_obat = tbl_data_stock_obat.id_obat");
+        $j=0;
+        
+        // for($i=0; $i<count($dataobats); $i++){
+        //     for($j=0; $j<count($data); $j++){
+        //         $data[$j]->obat = array();
+        //         if($data[$j]->id_pemeriksaan ==  $dataobats[$i]->id_pemeriksaan){
+        //             array_push($data[$j]->obat, $dataobats[$i]->nama_obat);
+        //         }
+        //     }
+        // }
+        // print_r($data);
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        // $columns = array('Tanggal','Poli Asal',' Nama Pasien',' Jenis Kelamin', 'Umur', 'Total', 'Jenis Kunjungan(BPJS/Umum)', 'Jenis Kunjungan Dalam 1 Tahun(baru/lama)' );
+        $columns = array('Nama Obat','Satuan',' Stok Awal','Penerimaan', 'Persediaan', 'Pemakaian', 'Sisa Stok');
+
+        $callback = function() use($dataobats, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($dataobats as $datas) {
+                $row['Nama Obat']  = $datas->nama_obat;
+                $row['Satuan']    = $datas->satuan;
+                $row['Stok Awal']    = $datas->jumlah_penerimaan;
+                $row['Penerimaan']  = $datas->jumlah_penerimaan;
+                $row['Persediaan']  = $datas->sisa;
+                $row['Pemakaian']  = $datas->pemakaian;
+                $row['Sisa Stok']  = $datas->sisa;
+                
+                fputcsv($file, array($row['Nama Obat'], $row['Satuan'] , $row['Stok Awal'], $row['Penerimaan'], $row['Persediaan'],$row['Pemakaian'], $row['Sisa Stok']));
+                
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function exportStock()
+    {
+        $fileName = 'laporan Stock Obat.csv';
+        $dataobats = DB::select("SELECT * FROM tbl_data_obat,tbl_data_stock_obat where  tbl_data_obat.id_obat = tbl_data_stock_obat.id_obat");
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        // $columns = array('Tanggal','Poli Asal',' Nama Pasien',' Jenis Kelamin', 'Umur', 'Total', 'Jenis Kunjungan(BPJS/Umum)', 'Jenis Kunjungan Dalam 1 Tahun(baru/lama)' );
+        $columns = array('Nama Obat','Satuan',' Tanggal','Expired Date', 'Jumlah Masuk', 'Jumlah Keluar', 'Sisa Stok', 'Keterangan');
+
+        $callback = function() use($dataobats, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($dataobats as $datas) {
+                $row['Nama Obat']  = $datas->nama_obat;
+                $row['Satuan']    = $datas->satuan;
+                $row['Tanggal']    = $datas->tanggal_masuk;
+                $row['Expired Date']    = $datas->tanggal_kadaluarsa;
+                $row['Jumlah Masuk']  = $datas->jumlah_penerimaan;
+                $row['Jumlah Keluar']  = $datas->pemakaian;
+                $row['Sisa Stok']  = $datas->sisa;
+                if($datas->sisa==0){
+                    $row['Keterangan']  = "Habis";
+                }else{
+                    $row['Keterangan']  = "Tersedia";
+                }
+                
+                
+                fputcsv($file, array($row['Nama Obat'], $row['Satuan'] , $row['Tanggal'], $row['Expired Date'], $row['Jumlah Masuk'],$row['Jumlah Keluar'], $row['Sisa Stok'], $row['Keterangan']));
+                
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     public function showlaporanstok()
@@ -224,8 +316,10 @@ class FarmasiController extends Controller
         $judul = 'PELAYANAN PASIEN';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
+        $dataobats = DB::select("SELECT * FROM tbl_data_obat,tbl_data_stock_obat where  tbl_data_obat.id_obat = tbl_data_stock_obat.id_obat");
+
         
-        return view('farmasi/datalaporan/v_stock',['judul' => $judul]);
+        return view('farmasi/datalaporan/v_stock',['dataobats' => $dataobats, 'judul' => $judul]);
     }
 
     public function showlaporantelaah()
@@ -233,8 +327,42 @@ class FarmasiController extends Controller
         $judul = 'PELAYANAN PASIEN';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        
-        return view('farmasi/datalaporan/v_laporantelaah',['judul' => $judul]);
+        $data  = DB::select("SELECT * FROM tbl_antrian_poli_umums, tbl_datapasiens where tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm AND tbl_antrian_poli_umums.status = 'selesai'");
+        return view('farmasi/datalaporan/v_laporantelaah',['data' => $data,'judul' => $judul]);
+    }
+
+    public function exportTelaah()
+    {
+        $fileName = 'laporan Telaah Pasien.csv';
+        $data  = DB::select("SELECT * FROM tbl_antrian_poli_umums, tbl_datapasiens where tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm AND tbl_antrian_poli_umums.status = 'selesai'");
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        // $columns = array('Tanggal','Poli Asal',' Nama Pasien',' Jenis Kelamin', 'Umur', 'Total', 'Jenis Kunjungan(BPJS/Umum)', 'Jenis Kunjungan Dalam 1 Tahun(baru/lama)' );
+        $columns = array('Tanggal','Poli Asal','Nama Pasien','Jenis Kelamin', 'Umur');
+
+        $callback = function() use($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($data as $datas) {
+                $row['Tanggal']  = $datas->created_at;
+                $row['Poli Asal']    = $datas->poli_asal;
+                $row['Nama Pasien']    = $datas->nama;
+                $row['Jenis Kelamin']    = $datas->jenis_kelamin;
+                $row['Umur']  = $datas->umur;             
+                
+                fputcsv($file, array($row['Tanggal'], $row['Poli Asal'] , $row['Nama Pasien'], $row['Jenis Kelamin'], $row['Umur']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     public function showhistory()

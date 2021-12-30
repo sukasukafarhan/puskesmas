@@ -99,12 +99,17 @@ Route::get('/laporanstock','FarmasiController@showlaporanstok');
 Route::get('/laporantelaah','FarmasiController@showlaporantelaah');
 Route::get('/farmasi/history','FarmasiController@showhistory');
 Route::get('/farmasi/printlidi', 'FarmasiController@exportLidi');
+Route::get('/farmasi/printlplpo', 'FarmasiController@exportLplpo');
+Route::get('/farmasi/printstock', 'FarmasiController@exportStock');
+Route::get('/farmasi/printtelaah', 'FarmasiController@exportTelaah');
+
 
 Route::get('/kasir','KasirController@index');
 Route::get('/pelayanankasir/{id1}/{id2}','KasirController@showpelayanankasir');
 Route::post('/pelayanankasir/savekasir','KasirController@storekasir');
 Route::get('/kasir/history','KasirController@showhistory');
 Route::get('/kasir/laporan','KasirController@showlaporan');
+Route::get('/kasir/printlaporan', 'KasirController@exportLaporan');
 
 Route::get('/admin','AdminController@index');
 Route::get('/admin/jamkes','AdminController@showjamkes');

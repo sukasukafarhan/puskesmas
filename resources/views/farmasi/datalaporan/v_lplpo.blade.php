@@ -33,23 +33,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no=1; ?>
+                                @foreach($dataobats as $datas)
                                 <tr>
-                                            <td class=" text-center"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class=" text-center">{{$no}}</td>
+                                            <td>{{$datas->nama_obat}}</td>
+                                            <td>{{$datas->satuan}}</td>
+                                            <td>{{$datas->jumlah_penerimaan}}</td>
+                                            <td>{{$datas->jumlah_penerimaan}}</td>
+                                            <td>{{$datas->sisa}}</td>
+                                            <td>{{$datas->pemakaian}}</td>
+                                            <td>{{$datas->sisa}}</td>
                                             
                                 </tr>
+                                <?php $no++;?>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer">
                         <div class="rounded-button">
-                            <button type="button" class="btn mb-1 btn-rounded btn-success float-right">Export to ecxel</button>
+                        <button type="button" class="btn mb-1 btn-rounded btn-success float-right" data-href='/farmasi/printlplpo' id="export" onclick="exportTasks(event.target);">Export to ecxel</button>    
+  
+                        <!-- <button type="button" class="btn mb-1 btn-rounded btn-success float-right">Export to ecxel</button> -->
                         </div>
                     </div>
                 </div>
@@ -61,10 +67,10 @@
 
 
 <script>
-    // function deleteConfirm(url) {
-    //     $('#btn-delete').attr('href', url);
-    //     $('#deleteModal').modal();
-    // }
+   function exportTasks(_this) {
+      let _url = $(_this).data('href');
+      window.location.href = _url;
+   }
 </script>
 <!--**********************************
             Content body end

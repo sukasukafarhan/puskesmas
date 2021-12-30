@@ -107,9 +107,52 @@ class KasirController extends Controller
         $judul = 'PELAYANAN PASIEN';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        
-        return view('kasir/datalaporan/v_laporankasir',['judul' => $judul]);
+        $data = DB::select("SELECT * FROM tbl_permintaanlab,tbl_data_laborat_dokter,tbl_antrian_poli_umums, tbl_datapasiens, tbl_tindakan_rm, kasir where kasir.id_pemeriksaan = tbl_tindakan_rm.id_pemeriksaan AND tbl_permintaanlab.id_pemeriksaan = tbl_tindakan_rm.id_pemeriksaan AND tbl_permintaanlab.id_data_laborat_dokter = tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_tindakan_rm.no_rm = tbl_datapasiens.no_rm AND  tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm"); 
+        // print_r($data);
+        return view('kasir/datalaporan/v_laporankasir',['data' => $data,'judul' => $judul]);
     }
    
+    public function exportLaporan()
+    {
+        $fileName = 'laporan Kasir.csv';
+        $data = DB::select("SELECT * FROM tbl_permintaanlab,tbl_data_laborat_dokter,tbl_antrian_poli_umums, tbl_datapasiens, tbl_tindakan_rm, kasir where kasir.id_pemeriksaan = tbl_tindakan_rm.id_pemeriksaan AND tbl_permintaanlab.id_pemeriksaan = tbl_tindakan_rm.id_pemeriksaan AND tbl_permintaanlab.id_data_laborat_dokter = tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_tindakan_rm.no_rm = tbl_datapasiens.no_rm AND  tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm"); 
+        
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        // $columns = array('Tanggal','Poli Asal',' Nama Pasien',' Jenis Kelamin', 'Umur', 'Total', 'Jenis Kunjungan(BPJS/Umum)', 'Jenis Kunjungan Dalam 1 Tahun(baru/lama)' );
+        $columns = array('Nama Pasien','Nomor Rekam Medis','Alamat','Jenis Kelamin', 'Jenis Kunjungan(BPJS/Umum)','Poli Asal','Jenis Tindakan','Harga','Jenis Pelayanan Lab', 'Harga', 'Total Pembayaran');
+
+        $callback = function() use($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($data as $datas) {
+                $row['Nama Pasien']  = $datas->nama;
+                $row['Nomor Rekam Medis'] = $datas->no_rm;
+                $row['Alamat'] = $datas->alamat;
+                $row['Jenis Kelamin']    = $datas->jenis_kelamin;
+                $row['Jenis Kunjungan(BPJS/Umum)']  = $datas->jenis_asuransi;             
+                $row['Poli Asal']  = $datas->poli_asal;
+                $row['Jenis Tindakan']    = $datas->tindakan;
+                $row['Harga']= $datas->tarif;
+                $row['Jenis Pelayanan Lab'] = $datas->nama;
+                $row['Harga']  = $datas->tarif;             
+                $row['Total Pembayaran']  = $datas->total_pembayaran;             
+
+                fputcsv($file, array($row['Nama Pasien'],$row['Nomor Rekam Medis'], $row['Alamat'], $row['Jenis Kelamin'], $row['Jenis Kunjungan(BPJS/Umum)'], $row['Poli Asal'] , $row['Jenis Tindakan'] , $row['Harga'], $row['Jenis Pelayanan Lab'], $row['Harga'], $row['Total Pembayaran']));
+
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
 
 }

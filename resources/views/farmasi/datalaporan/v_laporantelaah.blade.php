@@ -32,16 +32,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $no=1; ?>
+                                @foreach($data as $datas)
                                 <tr>
-                                            <td class=" text-center"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class=" text-center">{{$no}}</td>
+                                            <td>{{$datas->created_at}}</td>
+                                            <td>{{$datas->poli_asal}}</td>
+                                            <td>{{$datas->nama}}</td>
+                                            <td>{{$datas->jenis_kelamin}}</td>
+                                            <td>{{$datas->umur}}</td>
                                             <td></td>
                                             
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
@@ -59,7 +63,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="rounded-button">
-                            <button type="button" class="btn mb-1 btn-rounded btn-success float-right">Export to ecxel</button>
+                        <button type="button" class="btn mb-1 btn-rounded btn-success float-right" data-href='/farmasi/printtelaah' id="export" onclick="exportTasks(event.target);">Export to ecxel</
                         </div>
                     </div>
                 </div>
@@ -71,11 +75,12 @@
 
 
 <script>
-    // function deleteConfirm(url) {
-    //     $('#btn-delete').attr('href', url);
-    //     $('#deleteModal').modal();
-    // }
+   function exportTasks(_this) {
+      let _url = $(_this).data('href');
+      window.location.href = _url;
+   }
 </script>
+
 <!--**********************************
             Content body end
         ***********************************-->

@@ -33,36 +33,41 @@
                                     <th>Jenis Pelayanan Lab</th>
                                     <th>Harga</th>
                                     <th>Total Harga</th>
-                                    <th>Jam Datang</th>
+                                    <!-- <th>Jam Datang</th>
                                     <th>Jam Selesai</th>
-                                    <th>Jumlah Waktu</th>
+                                    <th>Jumlah Waktu</th> -->
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $no=1; ?>
+                                @foreach($data as $datas)
                                 <tr>
-                                            <td class=" text-center"></td>
+                                            <td class=" text-center">{{$no}}</td>
+                                            <td>{{$datas->nama}}</td>
+                                            <td>{{$datas->no_rm}}</td>
+                                            <td>{{$datas->alamat}}</td>
+                                            <td>{{$datas->jenis_kelamin}}</td>
+                                            <td>{{$datas->jenis_asuransi}}</td>
+                                            <td>{{$datas->poli_asal}}</td>
+                                            <td>{{$datas->tindakan}}</td>
+                                            <td>{{$datas->tarif}}</td>
+                                            <td>{{$datas->nama}}</td>
+                                            <td>{{$datas->tarif}}</td>
+                                            <td>{{$datas->total_pembayaran}}</td>
+                                            <!-- <td></td>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td></td> -->
                                             
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer">
                         <div class="rounded-button">
-                            <button type="button" class="btn mb-1 btn-rounded btn-success float-right">Export to ecxel</button>
+                        <button type="button" class="btn mb-1 btn-rounded btn-success float-right" data-href='/kasir/printlaporan' id="export" onclick="exportTasks(event.target);">Export to ecxel</
+                       
                         </div>
                     </div>
                 </div>
@@ -72,13 +77,13 @@
     </div>
 </div>
 
-
 <script>
-    // function deleteConfirm(url) {
-    //     $('#btn-delete').attr('href', url);
-    //     $('#deleteModal').modal();
-    // }
+   function exportTasks(_this) {
+      let _url = $(_this).data('href');
+      window.location.href = _url;
+   }
 </script>
+
 <!--**********************************
             Content body end
         ***********************************-->
