@@ -38,8 +38,20 @@
                                     <td></td>
                                     <td>
                                         <span>
-                                            <button type="button" class="btn btn-light"  onclick="location.href='/pelayanankasir'" data-toggle="tooltip" data-placement="top" title="Buka">
+                                            <button type="button" onclick="location.href='/pelayanankasir'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                            Layani
+                                            </button>
+                                            <!-- <button type="button" class="btn btn-light"  onclick="location.href='/pelayanankasir'" data-toggle="tooltip" data-placement="top" title="Buka">
                                             <i class="fa fa-folder"></i>
+                                            </button> -->
+                                            <button type="button" onclick="panggil({{$antrians->id_antrian}},{{$antrians->urutan}});" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Panggil" id="panggil">
+                                            Panggil
+                                            </button>
+                                            <button type="button" class="btn btn-danger" onclick="location.href=''" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                Hapus
+                                            </button>
+                                            <button type="button" class="btn btn-warning"  onclick="lewati({{$antrians->id_antrian}},{{$antrians->urutan}});"  data-toggle="tooltip" data-placement="top" title="Lewati">
+                                            Lewati
                                             </button>
                                         </span>
                                     </td>

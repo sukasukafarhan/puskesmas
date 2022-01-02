@@ -66,6 +66,9 @@ Route::post('/savehasillab','LaboratoriumController@storehasillab');
 Route::get('/laborat/deletepelayanandokter/{id1}/{id2}','LaboratoriumController@deletepelayanandokter');
 Route::get('/laborat/deletedatajenislab/{id}','LaboratoriumController@deletedatajenislab');
 Route::get('/showpemeriksaandokter/{id}','LaboratoriumController@showPemeriksaanDokter');
+Route::get('/antrianlaborat/lewati/{id}','LaboratoriumController@lewati');
+Route::get('/antrianlaborat/panggil/{id}','LaboratoriumController@panggil');
+
 
 Route::get('/pelayanandokter/{id1}/{id2}','DokterController@index');
 Route::post('/saveanamnesa','DokterController@storeanamnesa');
@@ -91,7 +94,7 @@ Route::get('/pelayanan','FarmasiController@showpelayanan');
 Route::get('/tabelobat','FarmasiController@showobat');
 Route::get('/stokobat','FarmasiController@showstokobat');
 Route::get('/tabelobat/tambahdataobat','FarmasiController@storedataobat');
-Route::post('/selesai/{id1}','FarmasiController@selesai');
+Route::get('/selesai/{id1}','FarmasiController@selesai');
 Route::post('/tabelobat/tambahstokobat','FarmasiController@storestockobat');
 Route::get('/laporanlidi','FarmasiController@showlaporanlidi');
 Route::get('/laporanlplpo','FarmasiController@showlaporanlplpo');
@@ -102,7 +105,8 @@ Route::get('/farmasi/printlidi', 'FarmasiController@exportLidi');
 Route::get('/farmasi/printlplpo', 'FarmasiController@exportLplpo');
 Route::get('/farmasi/printstock', 'FarmasiController@exportStock');
 Route::get('/farmasi/printtelaah', 'FarmasiController@exportTelaah');
-
+Route::get('/antrianfarmasi/lewati/{id}','FarmasiController@lewati');
+Route::get('/antrianfarmasi/panggil/{id}','FarmasiController@panggil');
 
 Route::get('/kasir','KasirController@index');
 Route::get('/pelayanankasir/{id1}/{id2}','KasirController@showpelayanankasir');
@@ -110,6 +114,8 @@ Route::post('/pelayanankasir/savekasir','KasirController@storekasir');
 Route::get('/kasir/history','KasirController@showhistory');
 Route::get('/kasir/laporan','KasirController@showlaporan');
 Route::get('/kasir/printlaporan', 'KasirController@exportLaporan');
+Route::get('/antriankasir/lewati/{id}','KasirController@lewati');
+Route::get('/antriankasir/panggil/{id}','KasirController@panggil');
 
 Route::get('/admin','AdminController@index');
 Route::get('/admin/jamkes','AdminController@showjamkes');

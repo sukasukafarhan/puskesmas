@@ -15,6 +15,8 @@ use App\Tbl_resep_obats;
 use App\Tbl_RekamMedis;
 use App\Tbl_penyuluhan;
 use App\Tbl_permintaan_lab;
+use App\Tbl_antrian_kasir;
+use App\Tbl_antrian_laboratorium;
 use Session;
 use Illuminate\Support\Facades\DB;
 class DokterController extends Controller
@@ -180,6 +182,8 @@ class DokterController extends Controller
     {
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
+        $waktu=date("h:i:s");
+
         $Tbl_penyuluhan = new Tbl_penyuluhan;
         $Tbl_penyuluhan->isi_penyuluhan=$request->lainnya;
         $Tbl_penyuluhan->no_rm=$request->no_rm;
@@ -188,6 +192,23 @@ class DokterController extends Controller
         // dd($request);
 
         $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='pembayaran' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
+
+        $data = DB::select("SELECT * FROM tbl_antrian_poli_umums where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
+        
+        $Tbl_antrian_kasir = new Tbl_antrian_kasir();
+        $tanggal=date('Y-m-d');
+        $cek = $Tbl_antrian_kasir
+            // ->where('id_poli', '=', $id_poli)
+            ->where('created_at', '=', $tanggal)
+            ->count();
+        $jumlah_antrian = $cek + 1;
+        $Tbl_antrian_kasir->no_antrian=$data[0]->no_antrian;
+        $Tbl_antrian_kasir->no_rm=$data[0]->no_rm;
+        $Tbl_antrian_kasir->waktu=$waktu;
+        $Tbl_antrian_kasir->status="pembayaran";
+        $Tbl_antrian_kasir->poli_asal="Poli Umum";
+        $Tbl_antrian_kasir->urutan = $jumlah_antrian;
+        $Tbl_antrian_kasir->save();
 
         return redirect ('/daftarantriandokter');
     }
@@ -210,6 +231,23 @@ class DokterController extends Controller
             $Tbl_permintaan_lab->save();
         }
        
+        $data = DB::select("SELECT * FROM tbl_antrian_poli_umums where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
+        
+        $Tbl_antrian_laboratorium = new Tbl_antrian_laboratorium();
+        $tanggal=date('Y-m-d');
+        $cek = $Tbl_antrian_laboratorium
+            // ->where('id_poli', '=', $id_poli)
+            ->where('created_at', '=', $tanggal)
+            ->count();
+        $jumlah_antrian = $cek + 1;
+        $Tbl_antrian_laboratorium->no_antrian=$data[0]->no_antrian;
+        $Tbl_antrian_laboratorium->no_rm=$data[0]->no_rm;
+        $Tbl_antrian_laboratorium->waktu=$waktu;
+        $Tbl_antrian_laboratorium->status="permintaanlab";
+        $Tbl_antrian_laboratorium->poli_asal="Poli Umum";
+        $Tbl_antrian_laboratorium->urutan = $jumlah_antrian;
+        $Tbl_antrian_laboratorium->save();
+
         
         // dd($request);
 

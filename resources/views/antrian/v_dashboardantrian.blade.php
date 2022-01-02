@@ -31,7 +31,7 @@
                                     <div class="card-body">
                                         <h1 class="card-title text-white">Laboratorium</h1>
                                         <div class="d-inline-block">
-                                            <h2 class="card-title text-white">A001</h2>
+                                            <h2 class="card-title text-white" id="no_laboratorium">000</h2>
                                             <p>Total Antrian</p>
                                         </div>
                                         <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
@@ -39,9 +39,9 @@
                                 </div>
                                 <div class="card gradient-1">
                                     <div class="card-body">
-                                        <h1 class="card-title text-white">Farmasi</h1>
+                                        <h1 class="card-title text-white" >Farmasi</h1>
                                         <div class="d-inline-block">
-                                            <h2 class="card-title text-white">A001</h2>
+                                            <h2 class="card-title text-white" id="no_farmasi">000</h2>
                                             <p>Total Antrian</p>
                                         </div>
                                         <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
@@ -51,7 +51,7 @@
                                 <div class="card-body">
                                     <h1 class="card-title text-white">Kasir</h1>
                                     <div class="d-inline-block">
-                                        <h2 class="card-title text-white">A001</h2>
+                                        <h2 class="card-title text-white" id="no_kasir">000</h2>
                                         <p>Total Antrian</p>
                                     </div>
                                     <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
@@ -119,6 +119,18 @@
         else if(e[0].nama_poli == "Poli Umum"){
             nomor.innerHTML = e[0].no_antrian; 
             document.getElementById("no_poli_umum").innerHTML = e[0].no_antrian;
+        }
+        else if(e[0].nama_poli == "Kasir"){
+            nomor.innerHTML = e[0].no_antrian; 
+            document.getElementById("no_kasir").innerHTML = e[0].no_antrian;
+        }
+        else if(e[0].nama_poli == "Farmasi"){
+            nomor.innerHTML = e[0].no_antrian; 
+            document.getElementById("no_farmasi").innerHTML = e[0].no_antrian;
+        }
+        else if(e[0].nama_poli == "Laboratorium"){
+            nomor.innerHTML = e[0].no_antrian; 
+            document.getElementById("no_laboratorium").innerHTML = e[0].no_antrian;
         }
     })
 </script>
