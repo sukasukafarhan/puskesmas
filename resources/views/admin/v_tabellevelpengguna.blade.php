@@ -26,11 +26,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $no = 1; ?>
+                                @foreach($role as $roles)
                                 <tr>
-                                    <td class=" text-center"> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class=" text-center">{{$no}}</td>
+                                    <td>{{$roles->role}}</td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>

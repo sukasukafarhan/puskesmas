@@ -32,16 +32,32 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $no = 1; ?>
+                                @foreach($pengguna as $penggunas)
                                 <tr>
-                                    <td class=" text-center"> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class=" text-center">{{$no}} </td>
+                                    <td>{{$penggunas->full_name}} </td>
+                                    <td>{{$penggunas->username}}</td>
+                                    <td>{{$penggunas->role}}</td>
+                                    <td>{{$penggunas->email}} </td>
+                                    <td>{{$penggunas->no_hp}}</td>
+                                    <td>
+                                        <?php 
+                                            if($penggunas->is_active = 1){
+                                                echo("Aktif");
+                                            }else{
+                                                echo ("Tidak Aktif");
+                                            }
+                                        ?>
+                                    </td>
                                     <td><span>
-                                    <button type="button" class="btn btn-light"  data-toggle="tooltip" data-placement="top" title="In Active">
-                                        <i class="fa fa-stop"></i>
+                                    <button type="button" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Hapus" onclick="location.href='/admin/hapuspengguna/{{$penggunas->id}}'">
+                                        Hapus
                                     </button>
                                     </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
@@ -71,7 +87,8 @@
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                     </button>
                 </div>
-                <form class="form-horizontal" enctype="multipart/form-data" method="post" action="">
+                <form class="form-horizontal" enctype="multipart/form-data" method="post" action="/admin/savepengguna">
+                @csrf
                 <div class="modal-body">
                     <!-- Modal body text goes here. -->
                     <div class="form-group row">
@@ -89,10 +106,16 @@
                      <div class="form-group row">
                             <label class="col-lg-4 col-form-label">Role</label>
                                <div class="col-lg-6">
-                                    <select id="inputState" name="role_id" class="form-control" required autofocuse>
+                                    <select class="form-control" id="role_id" name="role_id">
+                                        <option readonly>Please select</option>
+                                        @foreach($role as $roles)
+                                            <option value="{{$roles->role_id}}">{{$roles->role}}</option>
+                                        @endforeach
+                                    </select>       
+                               <!-- <select id="inputState" name="role_id" class="form-control" required autofocuse>
                                         <option selected="selected">Choose...</option>
                                             <option value=""></option>
-                                    </select>
+                                    </select> -->
                                 </div>
                     </div>
                     <div class="form-group row">

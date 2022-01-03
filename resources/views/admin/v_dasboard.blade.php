@@ -42,9 +42,9 @@
                             <div class="card-body">
                                 <h1 class="card-title text-white">Poli Umum</h1>
                                 <div class="d-inline-block">
-                                    <h6 class="text-white">Jumlah Antrian 34</h6>
-                                    <h6 class="text-white">Jumlah Dilayani 34</h6>
-                                    <p class="text-white mb-0">13 - Nopember 2021</p>
+                                    <h6 class="text-white">Jumlah Antrian {{$antrian_umum}}</h6>
+                                    <h6 class="text-white">Jumlah Dilayani {{$dilayani_umum}}</h6>
+                                    <p class="text-white mb-0">{{$tanggal}}</p>
                                 </div>
                                 <span class="float-right display-5 opacity-4"><i class="fa fa-users"></i></span>
                             </div>
@@ -55,9 +55,9 @@
                             <div class="card-body">
                                 <h1 class="card-title text-white">Laboratorium</h1>
                                 <div class="d-inline-block">
-                                    <h6 class="text-white">Jumlah Antrian 34</h6>
-                                    <h6 class="text-white">Jumlah Dilayani 34</h6>
-                                    <p class="text-white mb-0">13 - Nopember 2021</p>
+                                    <h6 class="text-white">Jumlah Antrian {{$antrian_laboratorium}}</h6>
+                                    <h6 class="text-white">Jumlah Dilayani {{$dilayani_laboratorium}}</h6>
+                                    <p class="text-white mb-0">{{$tanggal}}</p>
                                 </div>
                                 <span class="float-right display-5 opacity-4"><i class="fa fa-users"></i></span>
                             </div>
@@ -68,9 +68,9 @@
                             <div class="card-body">
                                 <h1 class="card-title text-white">Farmasi</h1>
                                 <div class="d-inline-block">
-                                    <h6 class="text-white">Jumlah Antrian 34</h6>
-                                    <h6 class="text-white">Jumlah Dilayani 34</h6>
-                                    <p class="text-white mb-0">13 - Nopember 2021</p>
+                                    <h6 class="text-white">Jumlah Antrian {{$antrian_farmasi}}</h6>
+                                    <h6 class="text-white">Jumlah Dilayani {{$dilayani_farmasi}}</h6>
+                                    <p class="text-white mb-0">{{$tanggal}}</p>
                                 </div>
                                 <span class="float-right display-5 opacity-4"><i class="fa fa-users"></i></span>
                             </div>
@@ -81,9 +81,9 @@
                             <div class="card-body">
                                 <h1 class="card-title text-white">Kasir</h1>
                                 <div class="d-inline-block">
-                                    <h6 class="text-white">Jumlah Antrian 34</h6>
-                                    <h6 class="text-white">Jumlah Dilayani 34</h6>
-                                    <p class="text-white mb-0">13 - Nopember 2021</p>
+                                    <h6 class="text-white">Jumlah Antrian {{$antrian_kasir}}</h6>
+                                    <h6 class="text-white">Jumlah Dilayani {{$dilayani_farmasi}}</h6>
+                                    <p class="text-white mb-0">{{$tanggal}}</p>
                                 </div>
                                 <span class="float-right display-5 opacity-4"><i class="fa fa-money"></i></span>
                             </div>

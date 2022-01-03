@@ -29,16 +29,21 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no = 1; ?>
+                                @foreach($tindakan as $tindakan)
                                 <tr>
-                                    <td class=" text-center"> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class=" text-center"> {{$no}}</td>
+                                    <td> {{$tindakan->poli}}</td>
+                                    <td>{{$tindakan->nama_tindakan}} </td>
+                                    <td>{{$tindakan->tarif}} </td>
                                     <td><span>
-                                    <button type="button" class="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Hapus">
-                                        <i class="fa fa-delete"></i>
+                                    <button type="button" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Hapus" onclick="location.href='/admin/hapustindakan/{{$tindakan->id_datatindakan}}'">
+                                        Hapus
                                     </button>
                                     </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
@@ -69,7 +74,8 @@
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                     </button>
                 </div>
-               <form class="form-horizontal" enctype="multipart/form-data" method="post" action=" ">
+               <form class="form-horizontal" enctype="multipart/form-data" method="post" action="/admin/savetindakan">
+                    @csrf
                     <div class="modal-body">
                         <!-- Modal body text goes here. -->
                         <div class="form-group row">
@@ -93,7 +99,7 @@
                     </div>
                     <div class="modal-footer">
                         </br>
-                        <input type="hidden" name="id_pesan">
+                        <!-- <input type="hidden" name="id_pesan"> -->
                         <button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Batal</button>
                         <button class="btn btn-primary btn-sm">Simpan</button>
                     </div>

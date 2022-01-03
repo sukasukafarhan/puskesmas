@@ -29,16 +29,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no = 1; ?>
+                                @foreach($jamkes as $jamkes)
                                 <tr>
-                                    <td class=" text-center"> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class=" text-center">{{$no}} </td>
+                                    <td>{{$jamkes->singkatan_jamkes}} </td>
+                                    <td>{{$jamkes->nama_jamkes}} </td>
                                     <td><span>
-                                    <button type="button" class="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Hapus">
-                                        <i class="fa fa-delete"></i>
+                                    <button type="button" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Hapus" onclick="location.href='/admin/hapusjamkes/{{$jamkes->id_jamkes}}'">
+                                        Hapus
                                     </button>
                                     </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
@@ -65,7 +69,8 @@
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                     </button>
                 </div>
-                <form class="form-horizontal" enctype="multipart/form-data" method="post" action=" ">
+                <form class="form-horizontal" enctype="multipart/form-data" method="post" action="savejamkes ">
+                    @csrf
                     <div class="modal-body">
                         <!-- Modal body text goes here. -->
                         <div class="form-group row">
@@ -83,7 +88,7 @@
                     </div>
                     <div class="modal-footer">
                         </br>
-                        <input type="hidden" name="id_pesan">
+                        <!-- <input type="hidden" name="id_pesan"> -->
                         <button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Batal</button>
                         <button class="btn btn-primary btn-sm">Simpan</button>
                     </div>

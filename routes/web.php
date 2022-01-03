@@ -123,6 +123,12 @@ Route::get('/admin/levelpengguna','AdminController@showlevelpengguna');
 Route::get('/admin/pengguna','AdminController@showpengguna');
 Route::get('/admin/poliutama','AdminController@showpoliutama');
 Route::get('/admin/datapelayanan','AdminController@showdatapelayanan');
+Route::post('/admin/savejamkes','AdminController@storejamkes');
+Route::post('/admin/savetindakan','AdminController@storetindakan');
+Route::get('/admin/hapusjamkes/{id}','AdminController@hapusjamkes');
+Route::post('/admin/savepengguna','AdminController@storepengguna');
+Route::get('/admin/hapuspengguna/{id}','AdminController@hapuspengguna');
+Route::get('/admin/hapustindakan/{id}','AdminController@hapustindakan');
 
 Route::get('/datarekammedislab','PasienController@viewaddfamilyrmlaborat');
 Route::get('/datarekammedislab/laboratrmdatapasien/{id}','PasienController@viewdatapasienrmlaborat');

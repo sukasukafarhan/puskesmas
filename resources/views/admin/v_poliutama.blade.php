@@ -27,12 +27,15 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $no = 1; ?>
+                                @foreach($poli as $polis)
                                 <tr>
-                                    <td class=" text-center"> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    
+                                    <td class=" text-center">{{$no}} </td>
+                                    <td>{{$polis->kode_poli}} </td>
+                                    <td>{{$polis->nama_poli}} </td>
                                 </tr>
+                                <?php $no++; ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>
