@@ -37,7 +37,7 @@ class LaboratoriumController extends Controller
             // $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.created_at='".$tanggal."' && tbl_antrian_poli_umums.status='proses'");
             $antrian = DB::select("SELECT * FROM tbl_antrian_laboratorium, tbl_datapasiens, tbl_rekam_medis where  tbl_antrian_laboratorium.status='permintaanlab' AND tbl_antrian_laboratorium.no_rm = tbl_datapasiens.no_rm AND tbl_datapasiens.no_rm = tbl_rekam_medis.no_rm AND tbl_rekam_medis.tanggal_kunjungan='".$tanggal."'");
             
-            print_r($antrian);
+            // print_r($antrian);
             return view('laboratorium/v_antrianlaborat',[ 'antrian'=>$antrian ,'judul' => $judul]);
         }
     }
@@ -47,7 +47,7 @@ class LaboratoriumController extends Controller
         $data_laborat =  DB::select("select * from tbl_antrian_laboratorium where id_antrian='".$no."'");
         $data_laborat[0]->nama_poli = "Laboratorium";
         
-        print_r($data_laborat);
+        // print_r($data_laborat);
         broadcast(new PanggilLaboratEvent($data_laborat));
     
     }
@@ -226,12 +226,13 @@ class LaboratoriumController extends Controller
         $judul = 'Pelayanan Laboratorium';
         $pasien = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.no_rm='".$id2."' && tbl_antrian_poli_umums.status='permintaanlab'");
         $pasien[0]->tanggal = $tanggal;
+        // echo($id1);
         // print_r($pasien);
         // $permintaan = DB::select("SELECT * FROM tbl_permintaanlab JOIN tbl_data_laborat_dokter where id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter");
-        $permintaan = DB::select("SELECT * FROM tbl_data_laborat_dokter, tbl_permintaanlab, tbl_pemeriksaan_dokter, tbl_nama_pemeriksaan, tbl_jenis_dokter  where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter = tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter=tbl_pemeriksaan_dokter.id_data_laborat_dokter AND tbl_pemeriksaan_dokter.id_nama=tbl_nama_pemeriksaan.id_nama_pemeriksaan AND tbl_pemeriksaan_dokter.id_jenis=tbl_jenis_dokter.id_jenis_dokter");
+        $permintaan = DB::select("SELECT * FROM tbl_data_laborat_dokter, tbl_permintaanlab, tbl_pemeriksaan_dokter, tbl_nama_pemeriksaan, tbl_jenis_dokter  where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter = tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter=tbl_pemeriksaan_dokter.id_data_laborat_dokter AND tbl_pemeriksaan_dokter.id_nama=tbl_nama_pemeriksaan.id_nama_pemeriksaan AND tbl_pemeriksaan_dokter.id_jenis=tbl_jenis_dokter.id_jenis_dokter AND tbl_permintaanlab.tanggal='".$tanggal."'");
         // $permintaan2 = DB::select("SELECT a.id_jenis_pemeriksaan, a.jenis_pemeriksaan, a.nama_pemeriksaan, a.nilai_nominal, a.satuan FROM tbl_nama_pemeriksaan a, tbl_permintaanlab b WHERE a.nama_pemeriksaan = b.");
         // $permintaan =  DB::select("SELECT * FROM tbl_permintaanlab, tbl_data_laborat_dokter, tbl_jenis_pemeriksaan where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter");
-        print_r($permintaan);
+        // print_r($permintaan);
         return view('laboratorium/v_pelayananlaborat', ['permintaan'=>$permintaan, 'pasien'=>$pasien, 'judul'=> $judul]);
     }
     
@@ -357,7 +358,7 @@ class LaboratoriumController extends Controller
         }
 
             $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='proses' where no_rm='".$request->no_rm."' AND created_at='".$tanggal."'");
-            $updatestatus = DB::select("UPDATE tbl_antrian_laboratorium set status ='selesai' where no_rm='".$request->no_rm."' AND created_at='".$tanggal."'");
+            $updatestatus2 = DB::select("UPDATE tbl_antrian_laboratorium set status ='selesai' where no_rm='".$request->no_rm."' AND created_at='".$tanggal."'");
         // dd($request);
         return redirect ('/laborat');
     }

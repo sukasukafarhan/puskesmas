@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-body">
+                <!-- <div class="card-body">
                     <div class="row mb-5">
                         <div>
                             <h4 class="text-muted mb-4">Data Pelayanan</h4>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col-lg-12 col-xl-9">

@@ -98,7 +98,7 @@ class DokterController extends Controller
             $dataobatpasien = DB::select("SELECT * FROM tbl_resep_obat JOIN tbl_resep_obats on tbl_resep_obat.id_resep=tbl_resep_obats.id_resep where tbl_resep_obats.status!='hapus' and tbl_resep_obat.id_pemeriksaan='".$id2."'");
             $dataperawat = DB::select("select * from tbl_pengguna where role_id=4");
             $datalaborat = DB::select("select * from tbl_data_laborat_dokter");
-            $datahasillab = DB::select("SELECT * FROM tbl_hasil_lab, tbl_nama_pemeriksaan, tbl_jenis_pemeriksaan where tbl_hasil_lab.id_nama_pemeriksaan=tbl_nama_pemeriksaan.id_nama_pemeriksaan AND tbl_hasil_lab.id_jenis_pemeriksaan=tbl_jenis_pemeriksaan.id_jenis_pemeriksaan AND tbl_hasil_lab.id_pemeriksaan='".$id2."'");
+            $datahasillab = DB::select("SELECT * FROM tbl_hasil_lab, tbl_nama_pemeriksaan, tbl_jenis_dokter where tbl_hasil_lab.id_nama_pemeriksaan=tbl_nama_pemeriksaan.id_nama_pemeriksaan AND tbl_hasil_lab.id_jenis_pemeriksaan=tbl_jenis_dokter.id_jenis_dokter AND tbl_hasil_lab.id_pemeriksaan='".$id2."'");
             // $data[0]->waktu = $waktu;
             // print_r($dataobatpasien);
             // print_r($pilihandiagnosa);
@@ -196,7 +196,7 @@ class DokterController extends Controller
         $data = DB::select("SELECT * FROM tbl_antrian_poli_umums where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
         
         $Tbl_antrian_kasir = new Tbl_antrian_kasir();
-        $tanggal=date('Y-m-d');
+        // $tanggal=date('Y-m-d');
         $cek = $Tbl_antrian_kasir
             // ->where('id_poli', '=', $id_poli)
             ->where('created_at', '=', $tanggal)

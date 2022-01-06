@@ -278,12 +278,12 @@ class KasirController extends Controller
         // dd($request);
 
         $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='farmasi' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
-        $updatestatus = DB::select("UPDATE tbl_antrian_kasir set status ='selesai' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
+        $updatestatus2 = DB::select("UPDATE tbl_antrian_kasir set status ='selesai' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
 
         $data = DB::select("SELECT * FROM tbl_antrian_kasir where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
         
         $Tbl_antrian_farmasi = new Tbl_antrian_farmasi();
-        $tanggal=date('Y-m-d');
+        // $tanggal=date('Y-m-d');
         $cek = $Tbl_antrian_farmasi
             // ->where('id_poli', '=', $id_poli)
             ->where('created_at', '=', $tanggal)

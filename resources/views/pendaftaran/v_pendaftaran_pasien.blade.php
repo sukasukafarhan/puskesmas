@@ -57,7 +57,7 @@
                         <div class="form-group row col-md-6">
                             <label class="col-sm-4 col-form-label">Asuransi</label>
                             <div class="col-sm-6">
-                                <select id="inputState" name="jenis_asuransi" class="form-control" required autofocuse>
+                                <select id="inputState" name="jenis_asuransi" id="jenis_asuransi" class="form-control" required autofocuse disabled>
                                     @foreach($data['jamkes'] as $j):
                                         @if($j->singkatan_jamkes == $data['data_pasien'][0]->jenis_asuransi)
                                             <option value="{{$j->singkatan_jamkes}}" selected>{{ $j->singkatan_jamkes }}</option>
@@ -71,8 +71,9 @@
                         <div class="form-group row col-md-6">
                             <label class="col-sm-4 col-form-label">No. Asuransi</label>
                             <div class="col-sm-6">
-                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" value="{{ $data['data_pasien'][0]->no_asuransi }}"><span><button onclick="cekbpjs()"class="btn btn-success text-white" id="button_bpjs" >Cek Asuransi</button></span>
+                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" value="{{ $data['data_pasien'][0]->no_asuransi }}" >
                             </div>
+                            <span><button onclick="cekbpjs()"class="btn btn-success text-white float-right" id="button_bpjs" >Cek Asuransi</button></span>
                             <!-- <div class="col-sm-2">
                             <button type="" class="btn btn-dark">Cek</button>
                         </div> -->
@@ -151,6 +152,18 @@
     })
  </script>
  <script>   
+//   function isbpjs() {
+//         var asuransi = document.getElementById('jenis_asuransi').value;
+        
+//         if(asuransi==="BPJS"){
+//             // $('#button_bpjs').attr('disabled','disabled');
+//             $("#button_bpjs").removeAttr('disabled');
+//             $("#no_asuransi").removeAttr('readonly');
+//         }else{
+//             $("#button_bpjs").attr('disabled', 'true');
+//             $("#no_asuransi").attr('readonly', 'false');
+//         }
+//     }
     function cekbpjs() {
         var no_asuransi = document.getElementById("no_asuransi");
         if (no_asuransi && no_asuransi.value) {

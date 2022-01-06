@@ -617,8 +617,8 @@
                         @foreach($hasillab as $hasillabs)
                         <tr>
                             <td>{{$no}}</td>
-                            <td>{{$hasillabs->jenis_pemeriksaan}}</td>   
-                            <td>{{$hasillabs->jenis_pemeriksaan}}</td>
+                            <td>{{$hasillabs->jenis_dokter}}</td>   
+                            <td>{{$hasillabs->jenis_dokter}}</td>
                             <td>{{$hasillabs->nama_pemeriksaan}}</td>
                             <td>{{$hasillabs->hasil_pemeriksaan_lab}}</td>
                             <td>{{$hasillabs->nilai_normal}}</td>
@@ -784,7 +784,7 @@
                                     <!-- <span class="text-danger">*</span> -->
                     </label>
                     <div class="col-lg-6">
-                        <select class="form-control" id="jenisresep" name="jenis">
+                        <select class="form-control" id="jenisresep" onchange="jadi();" name="jenis">
                             <option value="Racikan">Racikan</option>
                             <option value="Jadi">Jadi</option>
                         </select>
@@ -866,20 +866,19 @@
 </div>
   
 
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script>
 
      $(document).ready(function() {
         var nilai=1;
         $(".copy").hide()        
         $(".add-more").click(function(){ 
-        var html = $(".copy").html();
-        $(".after-add-more").after(html);
-        var html1 = $(".add-more").html();
-        $(".copy").after(html1);
-        document.getElementById("coret").value =++nilai;
-      });
+            var html = $(".copy").html();
+            $(".after-add-more").after(html);
+            var html1 = $(".add-more").html();
+            $(".copy").after(html1);
+            document.getElementById("coret").value =++nilai;
+        });
 
       // saat tombol remove dklik control group akan dihapus 
       $("body").on("click",".remove",function(){ 
@@ -888,9 +887,11 @@
       });
     });
     function jadi(){
-        if(document.getElementById("jenisobat").value ="jadi"){
-            $("#add").hide();
-        }
+        var jenis = document.getElementById('jenisobat').value;
+        // console.log("kaks");
+        if(jenis === "Jadi"){
+            $("#add").attr('disabled', 'true');
+        }   
     }
 </script>
 @include('dokter.templatedokter.v_footer')

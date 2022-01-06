@@ -88,13 +88,28 @@ class FarmasiController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='selesai' where no_rm='".$id."' && created_at='".$tanggal."'");
-        $updatestatus = DB::select("UPDATE tbl_antrian_farmasi set status ='selesai' where no_rm='".$id."' && created_at='".$tanggal."'");
-        // print_r($obat);
-            // $pasien = 
-            // $antrian = DB::select("SELECT tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan, tbl_antrian_poli_umums.status FROM tbl_antrian_poli_umums JOIN tbl_rekam_medis on tbl_antrian_poli_umums.no_rm = tbl_rekam_medis.no_rm where tbl_antrian_poli_umums.status='farmasi' AND tbl_antrian_poli_umums.created_at='2021-12-24'"); 
+        $updatestatus2 = DB::select("UPDATE tbl_antrian_farmasi set status ='selesai' where no_rm='".$id."' && created_at='".$tanggal."'");
         $pasien = DB::select("SELECT * FROM tbl_rekam_medis a JOIN tbl_antrian_farmasi b on a.no_rm = b.no_rm where b.status='farmasi' AND b.created_at='".$tanggal."'");
         $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep JOIN tbl_rekam_medis on tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan WHERE tbl_rekam_medis.tanggal_kunjungan = '".$tanggal."' ");
-        // $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep "); 
+        $stokobat = DB::select("SELECT * FROM tbl_data_stock_obat");
+        // print_r($obat);
+        
+        foreach($stokobat as $stok){
+            // $stok->pemakaian = array();
+            // $stok->pengurangan = array();
+            foreach($obat as $obats){
+                if($obats->id_obat==$stok->id_obat){
+                    $stok->pemakaian += $obats->jumlah;
+                    $stok->sisa -= $obats->jumlah;
+                    $updatepemakaian = DB::select("UPDATE tbl_data_stock_obat set pemakaian ='".$stok->pemakaian."' where id_obat='".$obats->id_obat."'");
+                    $updatesisa = DB::select("UPDATE tbl_data_stock_obat set sisa ='".$stok->sisa."' where id_obat='".$obats->id_obat."'");
+                }
+            }
+        }
+        
+        // print_r($stokobat);
+        
+        $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep "); 
         foreach($pasien as $pasiens){
             $pasiens->obat = array();
             foreach($obat as $obats){
