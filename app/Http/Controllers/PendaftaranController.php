@@ -349,13 +349,13 @@ class PendaftaranController extends Controller
         $Tbl_datapasien->no_rm=$no_rm;
         $Tbl_datapasien->save();
 
-        $Tbl_rekammedis = new Tbl_RekamMedis;
-        $Tbl_rekammedis->tanggal_kunjungan = $tanggal;
-        $Tbl_rekammedis->waktu_mulai = $waktu;
-        $Tbl_rekammedis->waktu_selesai = $waktu;
-        $Tbl_rekammedis->perawat_penanggung_jawab = session('user_data')[0]['nama'];
-        $Tbl_rekammedis->no_rm=$no_rm;
-        $Tbl_rekammedis->save();
+        // $Tbl_rekammedis = new Tbl_RekamMedis;
+        // $Tbl_rekammedis->tanggal_kunjungan = $tanggal;
+        // $Tbl_rekammedis->waktu_mulai = $waktu;
+        // $Tbl_rekammedis->waktu_selesai = $waktu;
+        // $Tbl_rekammedis->perawat_penanggung_jawab = session('user_data')[0]['nama'];
+        // $Tbl_rekammedis->no_rm=$no_rm;
+        // $Tbl_rekammedis->save();
 
         return redirect ('/datapasien/'.$request->seg1."/".$request->seg2);
     }
@@ -454,13 +454,13 @@ class PendaftaranController extends Controller
 
         // $update = DB::select("UPDATE tbl_rekam_medis set status='lewati' where id_antrian=".$id."");
             
-        // $Tbl_rekammedis = new Tbl_RekamMedis;
-        // $Tbl_rekammedis->tanggal_kunjungan = $tanggal;
-        // $Tbl_rekammedis->waktu_mulai = $waktu;
-        // $Tbl_rekammedis->waktu_selesai = $waktu;
-        // $Tbl_rekammedis->perawat_penanggung_jawab = session('user_data')[0]['nama'];
-        // $Tbl_rekammedis->no_rm=$request->no_rm;
-        // $Tbl_rekammedis->save();
+        $Tbl_rekammedis = new Tbl_RekamMedis;
+        $Tbl_rekammedis->tanggal_kunjungan = $tanggal;
+        $Tbl_rekammedis->waktu_mulai = $waktu;
+        $Tbl_rekammedis->waktu_selesai = $waktu;
+        $Tbl_rekammedis->perawat_penanggung_jawab = session('user_data')[0]['nama'];
+        $Tbl_rekammedis->no_rm=$request->no_rm;
+        $Tbl_rekammedis->save();
 
         broadcast(new EveryoneEvent());
         $this->hapus($request->id_antrian);

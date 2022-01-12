@@ -226,34 +226,35 @@ class PerawatUmumController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $waktu=date("H:i:s");
+        echo ($tanggal);
         
         $data_rm = DB::select("select * from tbl_rekam_medis where no_rm='".$request->no_rm."' and tanggal_kunjungan='".$tanggal. "'");  
-
-        $Tbl_asuhanperawatan = new Tbl_asuhan_keperawatan;
-        $Tbl_asuhanperawatan->id_pemeriksaan=$data_rm[0]->id_pemeriksaan;
-        $Tbl_asuhanperawatan->no_rm=$request->no_rm;
-        $Tbl_asuhanperawatan->tanggal=$tanggal;
-        $Tbl_asuhanperawatan->jam_mulai=$request->waktu_mulai;
-        $Tbl_asuhanperawatan->rpd=$request->rpd;
-        $Tbl_asuhanperawatan->rpk=$request->rpk;
-        $Tbl_asuhanperawatan->rps=$request->rps;
-        $Tbl_asuhanperawatan->nb_subjective=$request->s;
-        $Tbl_asuhanperawatan->tb=$request->tb;
-        $Tbl_asuhanperawatan->bb=$request->bb;
-        $Tbl_asuhanperawatan->imt=$request->imt;
-        $Tbl_asuhanperawatan->suhu=$request->suhu;
-        $Tbl_asuhanperawatan->rr=$request->nafas;
-        $Tbl_asuhanperawatan->sistol=$request->sistol;
-        $Tbl_asuhanperawatan->diastol=$request->diastol;
-        $Tbl_asuhanperawatan->nb_object=$request->o;
-        $Tbl_asuhanperawatan->nb_assessment=$request->a;
-        $Tbl_asuhanperawatan->nb_plan=$request->p;
-        $Tbl_asuhanperawatan->waktu_selesai=$waktu;
-        $Tbl_asuhanperawatan->penanggungjawab=session('user_data')[0]['nama'];
-        $Tbl_asuhanperawatan->save();
         
-        $this->proses($request->id_antrian);
-        return redirect ('/perawatumum');
+        // $Tbl_asuhanperawatan = new Tbl_asuhan_keperawatan;
+        // $Tbl_asuhanperawatan->id_pemeriksaan=$data_rm[0]->id_pemeriksaan;
+        // $Tbl_asuhanperawatan->no_rm=$request->no_rm;
+        // $Tbl_asuhanperawatan->tanggal=$tanggal;
+        // $Tbl_asuhanperawatan->jam_mulai=$request->waktu_mulai;
+        // $Tbl_asuhanperawatan->rpd=$request->rpd;
+        // $Tbl_asuhanperawatan->rpk=$request->rpk;
+        // $Tbl_asuhanperawatan->rps=$request->rps;
+        // $Tbl_asuhanperawatan->nb_subjective=$request->s;
+        // $Tbl_asuhanperawatan->tb=$request->tb;
+        // $Tbl_asuhanperawatan->bb=$request->bb;
+        // $Tbl_asuhanperawatan->imt=$request->imt;
+        // $Tbl_asuhanperawatan->suhu=$request->suhu;
+        // $Tbl_asuhanperawatan->rr=$request->nafas;
+        // $Tbl_asuhanperawatan->sistol=$request->sistol;
+        // $Tbl_asuhanperawatan->diastol=$request->diastol;
+        // $Tbl_asuhanperawatan->nb_object=$request->o;
+        // $Tbl_asuhanperawatan->nb_assessment=$request->a;
+        // $Tbl_asuhanperawatan->nb_plan=$request->p;
+        // $Tbl_asuhanperawatan->waktu_selesai=$waktu;
+        // $Tbl_asuhanperawatan->penanggungjawab=session('user_data')[0]['nama'];
+        // $Tbl_asuhanperawatan->save();
+        
+        // $this->proses($request->id_antrian);
+        // return redirect ('/perawatumum');
     }
 
     public function layani($id, $id2)
