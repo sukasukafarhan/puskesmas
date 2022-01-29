@@ -71,7 +71,13 @@
                                             <td>{{$datas->nama_diagnosa}}</td>
                                             <td>{{$datas->tindakan}}</td>
                                             <td>{{$datas->isi_penyuluhan}}</td>
-                                            <td>Jenis Resep: {{$datas->jenis_resep}} | Signa Obat: {{$datas->signa}} | Aturan Pakai: {{$datas->aturan_pakai}}</td>
+                                            <td> 
+                                                @foreach($dataobat as $do)
+                                                    @if($do->id_pemeriksaan == $datas->id_pemeriksaan)
+                                                    <b> Jenis Resep :</b> {{$do->jenis_resep}} || <b>Signa Obat:</b> {{$do->signa}} || <b>Aturan Pakai:</b> {{$do->aturan_pakai}} ||<b> Nama Obat:</b> {{$do->nama_obat}}<br>
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             <td>{{$datas->penanggung_jawab}}</td>
                                             <td>{{$datas->perawat}}</td>
                                             <!-- <td></td>

@@ -49,7 +49,7 @@
                                     <td>{{$a->jenis_asuransi}}</td>
                                     <td class="justify-center" style="width: 150px">
                                     <span>
-                                            <button type="button" class="btn btn-light" onclick="location.href='/datarekammedisdokter/viewdatapasien/rm/{{$a->no_index}}'" data-toggle="tooltip" data-placement="top" title="Buka">
+                                            <button type="button" class="btn btn-light" onclick="location.href='/datarekammedisdokter/viewdatapasien/rm/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Buka">
                                                 <i class="fa fa-folder"></i>
                                             </button>
                                     </span>

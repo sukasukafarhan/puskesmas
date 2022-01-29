@@ -34,14 +34,14 @@
                             <tbody>
                             @foreach($antrian as $a)
                                 <tr>
-                                    <td class=" text-center">{{$a->waktu}}</td>
+                                    <td class=" text-center">{{$a->jam_mulai}}</td>
                                     <td>{{$a->no_rm}}</td>
                                     <td>{{$a->rpk}}</td>
                                     <td>{{$a->rps}}</td>
                                     <td>{{$a->rpd}}</td>
                                     <td>{{$a->tb}}</td>
                                     <td>{{$a->bb}}</td>
-                                    <!-- <td>{{$a->status}}</td> -->
+                                    
                                     <td>
                                         <button type="button" class="btn btn-light"  onclick="location.href='/pelayanandokter/{{$a->no_rm}}/{{$a->id_pemeriksaan}}'" data-toggle="tooltip" data-placement="top" title="Open">
                                             <i class="fa fa-folder"></i>

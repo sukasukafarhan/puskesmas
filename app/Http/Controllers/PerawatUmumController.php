@@ -131,7 +131,7 @@ class PerawatUmumController extends Controller
             ]);
         }
         elseif($urutan_akhir==$count+1){
-            $id_akhir = $count;
+            // $id_akhir = $count;
             $urutan_akhir=$count;
             // $urutan_akhir1 = $count-3;
             $urutan_akhir2 = $count-2;   
@@ -163,7 +163,7 @@ class PerawatUmumController extends Controller
             ]);
         }
         elseif($urutan_akhir==$count+2){
-            $id_akhir=$count;
+            // $id_akhir=$count;
             $urutan_akhir=$count;
             $urutan_akhir1 = $urutan_awal;
             $urutan_akhir2 = $count-1;   
@@ -182,7 +182,7 @@ class PerawatUmumController extends Controller
             $updateidakhir =  DB::select("UPDATE tbl_antrian_poli_umums set id_antrian = $id_akhir where id_antrian=".$temp_id."");
             $updateidakhir1 =  DB::select("UPDATE tbl_antrian_poli_umums set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antrian_poli_umums set id_antrian = $id2_akhir where id_antrian=".$temp_id2."");            
-            
+            $updateidakhir3 =  DB::select("UPDATE tbl_antrian_poli_umums set id_antrian = $id_akhir-2 where id_antrian=".$id_akhir."");
             // $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
             return response()->json([
                 'success' => true,
@@ -225,7 +225,7 @@ class PerawatUmumController extends Controller
     {
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        $waktu=date("H:i:s");
+        $waktu=date("Y-m-d h:i:s");
         // echo ($tanggal);
         
         $data_rm = DB::select("select * from tbl_rekam_medis where no_rm='".$request->no_rm."' and tanggal_kunjungan='".$tanggal. "'");  
@@ -261,7 +261,7 @@ class PerawatUmumController extends Controller
     {
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        $waktu=date("H:i:s");
+        $waktu=date("Y-m-d H:i:s");
         $judul = 'Asuhan Keperawatan';
         // $family = DB::select("select * from tbl_datapasiens where no_rm = '".$id2."'");
         // $data_poli = DB::select("select * from tbl_antrian_poli_umums where id_antrian =".$id."");   
@@ -285,8 +285,10 @@ class PerawatUmumController extends Controller
     public function showlaporanrm()
     {
         $judul = 'Daftar Pelayanan Pasien';
-        $data = DB::select("SELECT tbl_resep_obat.jenis_resep,tbl_resep_obat.signa, tbl_resep_obat.aturan_pakai, tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat,tbl_penyuluhan.isi_penyuluhan, tbl_diagnosa_rm.nama_diagnosa, tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal ,tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan FROM tbl_rekam_medis,tbl_tindakan_rm,tbl_diagnosa_rm,tbl_pemeriksaan_rm,tbl_anamnesa_rm,tbl_datapasiens, tbl_antrian_poli_umums, tbl_pendaftarans, tbl_penyuluhan, tbl_resep_obat where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_pendaftarans.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_anamnesa_rm.no_rm && tbl_diagnosa_rm.no_rm = tbl_pemeriksaan_rm.no_rm && tbl_penyuluhan.no_rm = tbl_diagnosa_rm.no_rm && tbl_tindakan_rm.no_rm = tbl_penyuluhan.no_rm && tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan && tbl_rekam_medis.no_rm = tbl_penyuluhan.no_rm && tbl_antrian_poli_umums.no_rm");
-        // $pasien = DB::select("SELECT tbl_antrian_poli_umums.poli_asal, tbl_antrian_poli_umums.no_rm,tbl_datapasiens.nama,tbl_datapasiens.nama_kk,tbl_datapasiens.alamat,tbl_datapasiens.jenis_kelamin,tbl_datapasiens.umur FROM tbl_antrian_poli_umums,tbl_datapasiens where tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm");
+        $data = DB::select("SELECT tbl_resep_obat.jenis_resep,tbl_resep_obat.signa, tbl_resep_obat.aturan_pakai, tbl_tindakan_rm.tindakan, tbl_tindakan_rm.penanggung_jawab, tbl_tindakan_rm.perawat,tbl_penyuluhan.isi_penyuluhan, tbl_diagnosa_rm.nama_diagnosa, tbl_pemeriksaan_rm.tinggi_badan, tbl_pemeriksaan_rm.berat_badan,tbl_pemeriksaan_rm.imt,tbl_pemeriksaan_rm.suhu,tbl_pemeriksaan_rm.rr,tbl_pemeriksaan_rm.sistol,tbl_pemeriksaan_rm.diastol,tbl_anamnesa_rm.rpd,tbl_anamnesa_rm.rps,tbl_anamnesa_rm.rpk,tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_datapasiens.nama, tbl_datapasiens.no_rm, tbl_datapasiens.nama_kk, tbl_datapasiens.alamat, tbl_datapasiens.jenis_kelamin, tbl_datapasiens.umur, tbl_datapasiens.jenis_asuransi, tbl_datapasiens.pekerjaan,tbl_antrian_poli_umums.poli_asal ,tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan FROM tbl_rekam_medis,tbl_tindakan_rm,tbl_diagnosa_rm,tbl_pemeriksaan_rm,tbl_anamnesa_rm,tbl_datapasiens, tbl_antrian_poli_umums, tbl_pendaftarans, tbl_penyuluhan, tbl_resep_obat where tbl_datapasiens.no_rm = tbl_antrian_poli_umums.no_rm && tbl_pendaftarans.no_rm = tbl_antrian_poli_umums.no_rm && tbl_anamnesa_rm.no_rm = tbl_pendaftarans.no_rm && tbl_pemeriksaan_rm.no_rm = tbl_anamnesa_rm.no_rm && tbl_diagnosa_rm.no_rm = tbl_pemeriksaan_rm.no_rm && tbl_penyuluhan.no_rm = tbl_diagnosa_rm.no_rm && tbl_tindakan_rm.no_rm = tbl_penyuluhan.no_rm && tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan && tbl_rekam_medis.no_rm = tbl_penyuluhan.no_rm  && tbl_antrian_poli_umums.no_rm");
+        $dataobat = DB::select("SELECT * FROM tbl_resep_obat, tbl_resep_obats, tbl_rekam_medis WHERE tbl_resep_obat.id_resep = tbl_resep_obats.id_resep && tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan ");
+        // $pasien = DB::select("SELECT tbl_pendaftarans.*, tbl_rekam_medis.*, tbl_datapasiens.* FROM  tbl_pendaftarans, tbl_rekam_medis, tbl_datapasiens WHERE  tbl_pendaftarans.no_rm = tbl_rekam_medis.no_rm && tbl_rekam_medis.no_rm = tbl_datapasiens.no_rm ");
+        // print_r($dataobat);
         // $kunjungan = DB::select("SELECT tbl_pendaftarans.tipe_kunjungan FROM tbl_pendaftarans JOIN tbl_datapasiens ON tbl_datapasiens.no_rm = tbl_pendaftarans.no_rm");
         // $poli_asal = DB::select("SELECT poli_asal FROM tbl_antrian_poli_umums");
         // for($i = 0; $i<(count($poli_asal); $i++){
@@ -295,7 +297,7 @@ class PerawatUmumController extends Controller
         // $data = DB::select("SELECT * tbl_antrian_poli_umums.poli_asal,  FROM tbl_datapasiens , tbl_antrian_poli_umums, tbl_pendaftarans,tbl_anamnesa_rm,tbl_pemeriksaan_rm,tbl_diagnosa_rm,tbl_penyuluhan,tbl_tindakan_rm,tbl_resep_obats");
         // print_r($data);
         
-        return view('perawat/datalaporan/v_laporanrm', ['data' => $data, 'judul' => $judul]);
+        return view('perawat/datalaporan/v_laporanrm', ['dataobat' => $dataobat, 'data' => $data, 'judul' => $judul]);
     }
 
     public function exportCsv()

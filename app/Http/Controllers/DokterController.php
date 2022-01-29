@@ -81,10 +81,10 @@ class DokterController extends Controller
             date_default_timezone_set('Asia/jakarta');
             $tanggal=date('Y-m-d h:i:s');
             $data = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."' && id_pemeriksaan ='".$id2."'"); //perlu cek id_pemeriksaan
-            $askep = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."'");
+            $askep = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
             // $data = DB::select("SELECT * FROM tbl_asuhan_keperawatan JOIN tbl_rekam_medis on tbl_asuhan_keperawatan.no_rm=tbl_rekam_medis.no_rm where tbl_asuhan_keperawatan.id_pemeriksaan=tbl_rekam_medis.id_pemeriksaan");
-            $anamnesa = DB::select("select * from tbl_anamnesa_rm where no_rm='".$id."'");
-            $pemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."'");
+            $anamnesa = DB::select("select * from tbl_anamnesa_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
+            $pemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
             $poli_asal = DB::select("select poli_asal from tbl_antrian_poli_umums where no_rm='".$id."'"); 
             $pasien = DB::select("select * from tbl_datapasiens where no_rm='".$id."'"); 
             $diagnosa = DB::select("select * from tbl_diagnosa_rm where no_rm='".$id."' && status!='hapus' && id_pemeriksaan ='".$id2."'");  //perlu cek id_pemeriksaan
@@ -116,18 +116,29 @@ class DokterController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         //ganti ke antrian dokter
-        $antrian = DB::select("SELECT * FROM tbl_asuhan_keperawatan JOIN tbl_antrian_poli_umums on tbl_asuhan_keperawatan.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.status!='Masuk' AND tbl_antrian_poli_umums.status!='selesai' AND tbl_antrian_poli_umums.status!='pembayaran' AND tbl_asuhan_keperawatan.tanggal='".$tanggal."'");
-        // print_r($antrian);
-        $waktu=date('h:i:s');
-        $jdata = count($antrian);
+        $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums where status='proses' AND created_at='".$tanggal."'");
+        $askep = DB::select("SELECT * FROM tbl_asuhan_keperawatan where tanggal='".$tanggal."'");
+        
+        $jdata = count($askep);
         $i=0;
         for($a=0; $a<$jdata; $a++){
-            $antrian[$a]->waktu = $waktu;
-            // $antrian[$a]->status = "Masuk";
+            for($b=0; $b<count($antrian); $b++){
+                if($antrian[$b]->no_rm == $askep[$a]->no_rm){
+                    $askep[$a]->status = $antrian[$b]->status;
+                }
+            }
         }
+        // print_r($askep);
+        // $waktu=date('h:i:s');
+        // $jdata = count($antrian);
+        // $i=0;
+        // for($a=0; $a<$jdata; $a++){
+        //     $antrian[$a]->waktu = $waktu;
+        //     // $antrian[$a]->status = "Masuk";
+        // }
         // print_r($antrian);
         
-        return view('dokter/v_daftardatapasienmasuk',['antrian'=>$antrian,'judul' => $judul]);
+        return view('dokter/v_daftardatapasienmasuk',['antrian'=>$askep,'judul' => $judul]);
     }
     public function showicdx()
     {

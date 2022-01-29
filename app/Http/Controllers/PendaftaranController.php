@@ -155,7 +155,8 @@ class PendaftaranController extends Controller
             $updateidakhir =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id_akhir where id_antrian=".$temp_id."");
             // $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id2."");            
-            $updateidakhir3 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id2_akhir where id_antrian=".$temp_id3."");            
+            $updateidakhir3 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id2_akhir where id_antrian=".$temp_id3.""); 
+            $updateidakhir4 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id_akhir-2 where id_antrian=".$id_akhir."");           
             
             return response()->json([
                 'success' => true,
@@ -163,7 +164,7 @@ class PendaftaranController extends Controller
             ]);
         }
         elseif($urutan_akhir==$count+2){
-            $id_akhir=$count;
+            // $id_akhir=$count;
             $urutan_akhir=$count;
             $urutan_akhir1 = $urutan_awal;
             $urutan_akhir2 = $count-1;   
@@ -421,7 +422,7 @@ class PendaftaranController extends Controller
     {
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        $waktu=date("H:i:s");
+        $waktu=date("Y-m-d H:i:s");
 
         // print_r($request->noantrian); exit();
         $Tbl_pendaftaran = new Tbl_pendaftaran();
@@ -477,7 +478,7 @@ class PendaftaranController extends Controller
     }
 
     public function cekbpjs($id){
-        $data_bpjs =  DB::select("select *  from tbl_bpjs where nomor_asuransi='".$id."'");
+        $data_bpjs =  DB::select("select *  from tbl_datapasiens where no_asuransi='".$id."'");
         if(count($data_bpjs)==0){
             return ("Data tidak ditemukan");
         }

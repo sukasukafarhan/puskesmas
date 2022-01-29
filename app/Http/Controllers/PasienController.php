@@ -49,11 +49,17 @@ class PasienController extends Controller
         return view('datapasien/v_pasien2', ['pasien' => $pasien, 'judul' => $judul]);
     }
 
-    public function viewdatarmpendaftran()
+    public function viewdatarmpendaftran($id)
     {
         $judul = 'Rekam Medis Pasien';
-       
-        return view('datapasien/v_rekammedis', [ 'judul' => $judul]);
+        $pasien =  DB::select("SELECT * FROM tbl_datapasiens where no_rm='".$id."'");
+        $data_lab = DB::select("SELECT a.id_pemeriksaan, b.hasil_pemeriksaan_lab, c.nama_pemeriksaan  FROM tbl_rekam_medis a, tbl_hasil_lab b, tbl_nama_pemeriksaan c where a.no_rm='".$id."' AND a.id_pemeriksaan = b.id_pemeriksaan AND b.id_nama_pemeriksaan = c.id_nama_pemeriksaan ");
+        // print_r($data_lab);
+        $data_obat = DB::select("SELECT *  FROM tbl_resep_obats a, tbl_resep_obat b, tbl_rekam_medis c where c.no_rm='".$id."' AND b.id_pemeriksaan = c.id_pemeriksaan AND a.id_resep = b.id_resep");
+        // print_r($data_obat);
+        $rekammedis = DB::select("SELECT * FROM tbl_rekam_medis a, tbl_pemeriksaan_rm b, tbl_anamnesa_rm c, tbl_diagnosa_rm d, tbl_tindakan_rm e, tbl_penyuluhan f where a.no_rm='".$id."' AND b.no_rm ='".$id."' And c.no_rm='".$id."' AND d.no_rm='".$id."' AND e.no_rm ='".$id."' AND f.no_rm='".$id."'");
+        // print_r($rekammedis);
+        return view('datapasien/v_rekammedis', [ 'judul' => $judul, 'pasien' => $pasien, 'rekammedis' => $rekammedis, 'data_lab' => $data_lab, 'data_obat' => $data_obat]);
     }
 
     public function viewaddpasien($id)
@@ -229,11 +235,18 @@ class PasienController extends Controller
     }
 
     
-    public function viewdatarmdokter()
+    public function viewdatarmdokter($id)
     {
         $judul = 'Rekam Medis Pasien';
+        $pasien =  DB::select("SELECT * FROM tbl_datapasiens where no_rm='".$id."'");
+        $data_lab = DB::select("SELECT a.id_pemeriksaan, b.hasil_pemeriksaan_lab, c.nama_pemeriksaan  FROM tbl_rekam_medis a, tbl_hasil_lab b, tbl_nama_pemeriksaan c where a.no_rm='".$id."' AND a.id_pemeriksaan = b.id_pemeriksaan AND b.id_nama_pemeriksaan = c.id_nama_pemeriksaan ");
+        // print_r($data_lab);
+        $data_obat = DB::select("SELECT *  FROM tbl_resep_obats a, tbl_resep_obat b, tbl_rekam_medis c where c.no_rm='".$id."' AND b.id_pemeriksaan = c.id_pemeriksaan AND a.id_resep = b.id_resep");
+        // print_r($data_obat);
+        $rekammedis = DB::select("SELECT * FROM tbl_rekam_medis a, tbl_pemeriksaan_rm b, tbl_anamnesa_rm c, tbl_diagnosa_rm d, tbl_tindakan_rm e, tbl_penyuluhan f where a.no_rm='".$id."' AND b.no_rm ='".$id."' And c.no_rm='".$id."' AND d.no_rm='".$id."' AND e.no_rm ='".$id."' AND f.no_rm='".$id."'");
+        // print_r($rekammedis);
        
-        return view('dokter/datapasien/v_rekammedis', [ 'judul' => $judul]);
+        return view('dokter/datapasien/v_rekammedis', ['judul' => $judul, 'pasien' => $pasien, 'rekammedis' => $rekammedis, 'data_lab' => $data_lab, 'data_obat' => $data_obat]);
     }
 
     public function viewaddfamilyrmadmin()
@@ -272,18 +285,32 @@ class PasienController extends Controller
         return view('perawat/datapasien/v_pasien2', ['pasien' => $pasien, 'judul' => $judul]);
     }
 
-    public function viewaskepperawat()
+    public function viewaskepperawat($id)
     {
         $judul = 'Asuhan Keperawatan Pasien';
-        
-        return view('perawat/datapasien/v_askep', [ 'judul' => $judul]);
+        $pasien =  DB::select("SELECT * FROM tbl_datapasiens where no_rm='".$id."'");
+        $data_askep = DB::select("SELECT * FROM tbl_asuhan_keperawatan where no_rm='".$id."'");
+        // $data_lab = DB::select("SELECT a.id_pemeriksaan, b.hasil_pemeriksaan_lab, c.nama_pemeriksaan  FROM tbl_rekam_medis a, tbl_hasil_lab b, tbl_nama_pemeriksaan c where a.no_rm='".$id."' AND a.id_pemeriksaan = b.id_pemeriksaan AND b.id_nama_pemeriksaan = c.id_nama_pemeriksaan ");
+        // print_r($data_askep);
+        // $data_obat = DB::select("SELECT *  FROM tbl_resep_obats a, tbl_resep_obat b, tbl_rekam_medis c where c.no_rm='".$id."' AND b.id_pemeriksaan = c.id_pemeriksaan AND a.id_resep = b.id_resep");
+        // // print_r($data_obat);
+        // $rekammedis = DB::select("SELECT * FROM tbl_rekam_medis a, tbl_pemeriksaan_rm b, tbl_anamnesa_rm c, tbl_diagnosa_rm d, tbl_tindakan_rm e, tbl_penyuluhan f where a.no_rm='".$id."' AND b.no_rm ='".$id."' And c.no_rm='".$id."' AND d.no_rm='".$id."' AND e.no_rm ='".$id."' AND f.no_rm='".$id."'");
+        // // print_r($rekammedis);
+        return view('perawat/datapasien/v_askep',  [ 'judul' => $judul, 'pasien' => $pasien, 'askep' => $data_askep]);
     }
 
-    public function viewrmperawat()
+    public function viewrmperawat($id)
     {
         $judul = 'Rekam Medis Pasien';
+        $pasien =  DB::select("SELECT * FROM tbl_datapasiens where no_rm='".$id."'");
+        $data_lab = DB::select("SELECT a.id_pemeriksaan, b.hasil_pemeriksaan_lab, c.nama_pemeriksaan  FROM tbl_rekam_medis a, tbl_hasil_lab b, tbl_nama_pemeriksaan c where a.no_rm='".$id."' AND a.id_pemeriksaan = b.id_pemeriksaan AND b.id_nama_pemeriksaan = c.id_nama_pemeriksaan ");
+        // print_r($data_lab);
+        $data_obat = DB::select("SELECT *  FROM tbl_resep_obats a, tbl_resep_obat b, tbl_rekam_medis c where c.no_rm='".$id."' AND b.id_pemeriksaan = c.id_pemeriksaan AND a.id_resep = b.id_resep");
+        // print_r($data_obat);
+        $rekammedis = DB::select("SELECT * FROM tbl_rekam_medis a, tbl_pemeriksaan_rm b, tbl_anamnesa_rm c, tbl_diagnosa_rm d, tbl_tindakan_rm e, tbl_penyuluhan f where a.no_rm='".$id."' AND b.no_rm ='".$id."' And c.no_rm='".$id."' AND d.no_rm='".$id."' AND e.no_rm ='".$id."' AND f.no_rm='".$id."'");
+        // print_r($rekammedis);
        
-        return view('perawat/datapasien/v_rm', [ 'judul' => $judul]);
+        return view('perawat/datapasien/v_rm', [ 'judul' => $judul, 'pasien' => $pasien, 'rekammedis' => $rekammedis, 'data_lab' => $data_lab, 'data_obat' => $data_obat]);
     }
 
 }

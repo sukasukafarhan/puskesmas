@@ -72,8 +72,9 @@
                             <label class="col-sm-4 col-form-label">No. Asuransi</label>
                             <div class="col-sm-6">
                                 <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" value="{{ $data['data_pasien'][0]->no_asuransi }}" >
+                                <a onclick="cekbpjs()"class="btn btn-success text-white float-right mt-2" id="button_bpjs" >Cek Asuransi</a>            
                             </div>
-                            <span><button onclick="cekbpjs()"class="btn btn-success text-white float-right" id="button_bpjs" >Cek Asuransi</button></span>
+                           
                             <!-- <div class="col-sm-2">
                             <button type="" class="btn btn-dark">Cek</button>
                         </div> -->
@@ -127,16 +128,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary ">Simpan</button>
-                        </div>
-
+                    <button type="submit" class="btn btn-primary ">Simpan</button>
                 </form>
             </div>
         </div>
-
-    </div>    </div>
+    </div>
 </div>
 <script
     src="https://code.jquery.com/jquery-2.2.4.js"

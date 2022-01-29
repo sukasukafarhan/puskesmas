@@ -49,11 +49,11 @@
                                 <td>{{$a->jenis_asuransi}}</td>
                                 <td class="justify-center" style="width: 150px">
                                 <span>
-                                    <button type="button" onclick="location.href='/datarekammedisperawat/perawatrmdatapasien/perawatrm/{{$a->no_index}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                    <button type="button" onclick="location.href='/datarekammedisperawat/perawatrmdatapasien/perawatrm/{{$a->no_rm}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
                                         Data Rekam Medis
                                         </button>
                                     </span>
-                                    <button type="button" onclick="location.href='/datarekammedisperawat/perawatrmdatapasien/perawataskep/{{$a->no_index}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
+                                    <button type="button" onclick="location.href='/datarekammedisperawat/perawatrmdatapasien/perawataskep/{{$a->no_rm}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">
                                         Data Asuhan Keperawatan
                                         </button>
                                     </span>

@@ -19,6 +19,7 @@
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
                                 <tr>
+                                    <th class="text-center">No.</th>
                                     <th class="text-center">Nomor Antrian</th>
                                     <th>Nama </th>
                                     <th>Jenis Kelamin</th>
@@ -31,7 +32,11 @@
                             </thead>
                             <tbody>
                             @foreach($antrian as $a)
-                                <tr>
+                                @php
+                                    $no = $a->urutan; 
+                                @endphp
+                                <tr>    
+                                            <td class=" text-center">{{$a->urutan}}</td>
                                             <td class=" text-center">{{$a->no_antrian}}</td>
                                             <td>{{$a->nama}} </td>
                                             <td>{{$a->jenis_kelamin}} </td>
