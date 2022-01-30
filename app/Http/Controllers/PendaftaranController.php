@@ -131,7 +131,7 @@ class PendaftaranController extends Controller
             ]);
         }
         elseif($urutan_akhir==$count+1){
-            $id_akhir = $count;
+            // $id_akhir = $count;
             $urutan_akhir=$count;
             // $urutan_akhir1 = $count-3;
             $urutan_akhir2 = $count-2;   
@@ -156,7 +156,7 @@ class PendaftaranController extends Controller
             // $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id2."");            
             $updateidakhir3 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id2_akhir where id_antrian=".$temp_id3.""); 
-            $updateidakhir4 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id_akhir-2 where id_antrian=".$id_akhir."");           
+            $updateidakhir4 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id_akhir-1 where id_antrian=".$id_akhir."");           
             
             return response()->json([
                 'success' => true,
@@ -183,7 +183,7 @@ class PendaftaranController extends Controller
             $updateidakhir =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id_akhir where id_antrian=".$temp_id."");
             $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id2_akhir where id_antrian=".$temp_id2."");            
-            
+            $updateidakhir3 =  DB::select("UPDATE tbl_antrian_poli_umums set id_antrian = $id_akhir-2 where id_antrian=".$id_akhir."");
             // $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
             return response()->json([
                 'success' => true,

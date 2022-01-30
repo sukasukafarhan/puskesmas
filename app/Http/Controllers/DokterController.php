@@ -90,7 +90,7 @@ class DokterController extends Controller
             $diagnosa = DB::select("select * from tbl_diagnosa_rm where no_rm='".$id."' && status!='hapus' && id_pemeriksaan ='".$id2."'");  //perlu cek id_pemeriksaan
             $pilihandiagnosa = DB::select("select * from tbl_data_icdx");
             $tindakan = DB::select("select * from tbl_data_tindakan "); 
-            $tindakan_rm = DB::select("select * from tbl_tindakan_rm where no_rm='".$id."' && status!='hapus'"); 
+            $tindakan_rm = DB::select("select * from tbl_tindakan_rm where no_rm='".$id."' && status!='hapus' && id_pemeriksaan ='".$id2."'"); 
             $dataobat = DB::select("SELECT * FROM tbl_data_obat JOIN tbl_data_stock_obat on tbl_data_stock_obat.id_obat=tbl_data_obat.id_obat where tbl_data_stock_obat.jumlah_penerimaan!=0");
             $pasien[0]->poli_asal = $poli_asal[0]->poli_asal;
             $pasien[0]->tanggal = $tanggal;
@@ -128,7 +128,20 @@ class DokterController extends Controller
                 }
             }
         }
-        // print_r($askep);
+        $antrian_final = array();
+        $c=0;
+        for($a=0; $a<$jdata; $a++){
+            if(isset($askep[$a]->status)){
+                if($askep[$a]->status =="proses"){
+                    array_push($antrian_final, $askep[$a]);
+                        // echo($c);
+                        // $c++;
+                }
+            }    
+        }
+
+
+        // print_r($antrian_final);
         // $waktu=date('h:i:s');
         // $jdata = count($antrian);
         // $i=0;
@@ -138,7 +151,7 @@ class DokterController extends Controller
         // }
         // print_r($antrian);
         
-        return view('dokter/v_daftardatapasienmasuk',['antrian'=>$askep,'judul' => $judul]);
+        return view('dokter/v_daftardatapasienmasuk',['antrian'=>$antrian_final,'judul' => $judul]);
     }
     public function showicdx()
     {
@@ -248,7 +261,7 @@ class DokterController extends Controller
         $tanggal=date('Y-m-d');
         $cek = $Tbl_antrian_laboratorium
             // ->where('id_poli', '=', $id_poli)
-            ->where('created_at', '=', $tanggal)
+            ->where('tanggal', '=', $tanggal)
             ->count();
         $jumlah_antrian = $cek + 1;
         $Tbl_antrian_laboratorium->no_antrian=$data[0]->no_antrian;
@@ -257,6 +270,7 @@ class DokterController extends Controller
         $Tbl_antrian_laboratorium->status="permintaanlab";
         $Tbl_antrian_laboratorium->poli_asal="Poli Umum";
         $Tbl_antrian_laboratorium->urutan = $jumlah_antrian;
+        $Tbl_antrian_laboratorium->tanggal = $tanggal;
         $Tbl_antrian_laboratorium->save();
 
         

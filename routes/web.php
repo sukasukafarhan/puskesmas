@@ -56,6 +56,7 @@ Route::get('/laborat','LaboratoriumController@index');
 Route::get('/laboratpelayanan/{id1}/{id2}','LaboratoriumController@layani');
 Route::get('/laboratdatajenislab','LaboratoriumController@dataJenisPelayananLab');
 Route::get('/laboratdatajenisdokter/{id}','LaboratoriumController@dataJenisPelayananDokter');
+Route::get('/hapusantrianlaborat/hapus/{id}','LaboratoriumController@hapus');
 Route::get('/laboratjenisdokter','LaboratoriumController@dataJenisDokter');
 Route::get('/laboratdataujilab/{id}','LaboratoriumController@dataUjiLab');
 Route::get('/laboratlaporanlab','LaboratoriumController@dataLaporanLab');

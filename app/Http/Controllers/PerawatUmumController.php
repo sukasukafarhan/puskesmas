@@ -156,7 +156,7 @@ class PerawatUmumController extends Controller
             // $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antrian_poli_umums set id_antrian = $id1_akhir where id_antrian=".$temp_id2."");            
             $updateidakhir3 =  DB::select("UPDATE tbl_antrian_poli_umums set id_antrian = $id2_akhir where id_antrian=".$temp_id3."");            
-            
+            $updateidakhir4 =  DB::select("UPDATE tbl_antrian_poli_umums set id_antrian = $id_akhir-1 where id_antrian=".$id_akhir."");
             return response()->json([
                 'success' => true,
                 'message' => 'Pasien dilewati aa',

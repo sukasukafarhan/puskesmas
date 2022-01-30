@@ -35,7 +35,7 @@ class LaboratoriumController extends Controller
             
             // $antrian = DB::select("SELECT tbl_antri_pendaftaran.id_antrian,tbl_antri_pendaftaran.no_antrian,tbl_poli.kode_poli, tbl_antri_pendaftaran.status,tbl_antri_pendaftaran.id_poli,tbl_poli.nama_poli FROM tbl_antri_pendaftaran JOIN tbl_poli on tbl_poli.id=tbl_antri_pendaftaran.id_poli where tbl_antri_pendaftaran.tanggal_daftar='".$tanggal."' && tbl_antri_pendaftaran.status!='hapus' ");
             // $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_datapasiens.no_rm=tbl_antrian_poli_umums.no_rm where tbl_antrian_poli_umums.created_at='".$tanggal."' && tbl_antrian_poli_umums.status='proses'");
-            $antrian = DB::select("SELECT * FROM tbl_antrian_laboratorium, tbl_datapasiens, tbl_rekam_medis where  tbl_antrian_laboratorium.status='permintaanlab' AND tbl_antrian_laboratorium.no_rm = tbl_datapasiens.no_rm AND tbl_datapasiens.no_rm = tbl_rekam_medis.no_rm AND tbl_rekam_medis.tanggal_kunjungan='".$tanggal."'");
+            $antrian = DB::select("SELECT * FROM tbl_antrian_laboratorium, tbl_datapasiens, tbl_rekam_medis where  tbl_antrian_laboratorium.status!='selesai' AND tbl_antrian_laboratorium.status!='hapus'  AND tbl_antrian_laboratorium.no_rm = tbl_datapasiens.no_rm AND tbl_datapasiens.no_rm = tbl_rekam_medis.no_rm AND tbl_rekam_medis.tanggal_kunjungan='".$tanggal."'");
             
             // print_r($antrian);
             return view('laboratorium/v_antrianlaborat',[ 'antrian'=>$antrian ,'judul' => $judul]);
@@ -57,9 +57,9 @@ class LaboratoriumController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $datas = DB::table("tbl_antrian_laboratorium")
-                ->whereDate('created_at', '=', now())->get();
+                ->whereDate('tanggal', '=', now())->get();
         $count = DB::table("tbl_antrian_laboratorium")
-                ->whereDate('created_at', '=', now())->count();
+                ->whereDate('tanggal', '=', now())->count();
         $data = DB::select("select * from tbl_antrian_laboratorium where id_antrian=".$id."");        
         // print_r($data);
         $id1 = $id+1;
@@ -141,7 +141,7 @@ class LaboratoriumController extends Controller
             ]);
         }
         elseif($urutan_akhir==$count+1){
-            $id_akhir = $count;
+            // $id_akhir = $count;
             $urutan_akhir=$count;
             // $urutan_akhir1 = $count-3;
             $urutan_akhir2 = $count-2;   
@@ -166,14 +166,14 @@ class LaboratoriumController extends Controller
             // $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antrian_laboratorium set id_antrian = $id1_akhir where id_antrian=".$temp_id2."");            
             $updateidakhir3 =  DB::select("UPDATE tbl_antrian_laboratorium set id_antrian = $id2_akhir where id_antrian=".$temp_id3."");            
-            
+            $updateidakhir4 =  DB::select("UPDATE tbl_antrian_laboratorium set id_antrian = $id_akhir-1 where id_antrian=".$id_akhir."");
             return response()->json([
                 'success' => true,
                 'message' => 'Pasien dilewati aa',
             ]);
         }
         elseif($urutan_akhir==$count+2){
-            $id_akhir=$count;
+            // $id_akhir=$count;
             $urutan_akhir=$count;
             $urutan_akhir1 = $urutan_awal;
             $urutan_akhir2 = $count-1;   
@@ -192,7 +192,7 @@ class LaboratoriumController extends Controller
             $updateidakhir =  DB::select("UPDATE tbl_antrian_laboratorium set id_antrian = $id_akhir where id_antrian=".$temp_id."");
             $updateidakhir1 =  DB::select("UPDATE tbl_antrian_laboratorium set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antrian_laboratorium set id_antrian = $id2_akhir where id_antrian=".$temp_id2."");            
-            
+            $updateidakhir3 =  DB::select("UPDATE tbl_antrian_laboratorium set id_antrian = $id_akhir-2 where id_antrian=".$id_akhir."");
             // $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
             return response()->json([
                 'success' => true,
@@ -216,8 +216,8 @@ class LaboratoriumController extends Controller
 
     public function hapus($id)
     {
-        $antrian = DB::select("UPDATE tbl_antri_pendaftaran set status='hapus' where id_antrian=".$id."");
-        return redirect('/daftarantrian');
+        $antrian = DB::select("UPDATE tbl_antrian_laboratorium set status='hapus' where id_antrian=".$id."");
+        return redirect('/laborat');
     }
 
     public function layani($id1,$id2)
@@ -230,6 +230,7 @@ class LaboratoriumController extends Controller
         // print_r($pasien);
         // $permintaan = DB::select("SELECT * FROM tbl_permintaanlab JOIN tbl_data_laborat_dokter where id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter");
         $permintaan = DB::select("SELECT * FROM tbl_data_laborat_dokter, tbl_permintaanlab, tbl_pemeriksaan_dokter, tbl_nama_pemeriksaan, tbl_jenis_dokter  where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter = tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter=tbl_pemeriksaan_dokter.id_data_laborat_dokter AND tbl_pemeriksaan_dokter.id_nama=tbl_nama_pemeriksaan.id_nama_pemeriksaan AND tbl_pemeriksaan_dokter.id_jenis=tbl_jenis_dokter.id_jenis_dokter AND tbl_permintaanlab.tanggal='".$tanggal."'");
+        
         // $permintaan2 = DB::select("SELECT a.id_jenis_pemeriksaan, a.jenis_pemeriksaan, a.nama_pemeriksaan, a.nilai_nominal, a.satuan FROM tbl_nama_pemeriksaan a, tbl_permintaanlab b WHERE a.nama_pemeriksaan = b.");
         // $permintaan =  DB::select("SELECT * FROM tbl_permintaanlab, tbl_data_laborat_dokter, tbl_jenis_pemeriksaan where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter");
         // print_r($permintaan);
@@ -358,7 +359,7 @@ class LaboratoriumController extends Controller
         }
 
             $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='proses' where no_rm='".$request->no_rm."' AND created_at='".$tanggal."'");
-            $updatestatus2 = DB::select("UPDATE tbl_antrian_laboratorium set status ='selesai' where no_rm='".$request->no_rm."' AND created_at='".$tanggal."'");
+            $updatestatus2 = DB::select("UPDATE tbl_antrian_laboratorium set status ='selesai' where no_rm='".$request->no_rm."' AND tanggal='".$tanggal."'");
         // dd($request);
         return redirect ('/laborat');
     }

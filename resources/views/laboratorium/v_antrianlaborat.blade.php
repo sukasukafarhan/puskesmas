@@ -51,7 +51,7 @@
                                                 <button type="button" onclick="panggil({{$a->id_antrian}},{{$a->urutan}});" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Panggil" id="panggil">
                                                 Panggil
                                                 </button>
-                                                <button type="button" class="btn btn-danger" onclick="location.href=''" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                                <button type="button" class="btn btn-danger" onclick="location.href='hapusantrianlaborat/hapus/{{$a->id_antrian}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
                                                     Hapus
                                                 </button>
                                                 <button type="button" class="btn btn-warning"  onclick="lewati({{$a->id_antrian}},{{$a->urutan}});"  data-toggle="tooltip" data-placement="top" title="Lewati">
@@ -104,7 +104,7 @@
         var id = a;
         $.ajax({
                 type:'GET',
-                url: "{{ url('/antrianlaborat/panggil')}}"+'/'+id,               
+                url: "{{ url('/antrianlaborat/panggil')}}"+'/'+a,               
                 success: function( data ) {
                     console.log(data);
                 }  
