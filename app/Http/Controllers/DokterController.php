@@ -223,7 +223,7 @@ class DokterController extends Controller
         // $tanggal=date('Y-m-d');
         $cek = $Tbl_antrian_kasir
             // ->where('id_poli', '=', $id_poli)
-            ->where('created_at', '=', $tanggal)
+            ->where('tanggal', '=', $tanggal)
             ->count();
         $jumlah_antrian = $cek + 1;
         $Tbl_antrian_kasir->no_antrian=$data[0]->no_antrian;
@@ -232,6 +232,7 @@ class DokterController extends Controller
         $Tbl_antrian_kasir->status="pembayaran";
         $Tbl_antrian_kasir->poli_asal="Poli Umum";
         $Tbl_antrian_kasir->urutan = $jumlah_antrian;
+        $Tbl_antrian_kasir->tanggal = $tanggal;
         $Tbl_antrian_kasir->save();
 
         return redirect ('/daftarantriandokter');

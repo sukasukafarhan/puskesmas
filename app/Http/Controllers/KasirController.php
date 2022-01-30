@@ -20,9 +20,9 @@ class KasirController extends Controller
             $judul = 'PELAYANAN PASIEN';
             date_default_timezone_set('Asia/jakarta');
             $tanggal=date('Y-m-d');
-            $antrian = DB::select("SELECT * FROM tbl_antrian_kasir  where status='pembayaran' AND created_at='".$tanggal."'");
+            $antrian = DB::select("SELECT * FROM tbl_antrian_kasir  where status!='selesai' AND tanggal='".$tanggal."'");
             // $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums  where status='pembayaran' AND created_at='".$tanggal."'"); 
-            $pasien = DB::select("SELECT a.jenis_asuransi, a.no_rm, c.id_pemeriksaan  FROM tbl_datapasiens a JOIN tbl_antrian_kasir b on a.no_rm = b.no_rm JOIN tbl_rekam_medis c on a.no_rm = c.no_rm where b.status='pembayaran'");
+            $pasien = DB::select("SELECT a.jenis_asuransi, a.no_rm, c.id_pemeriksaan  FROM tbl_datapasiens a JOIN tbl_antrian_kasir b on a.no_rm = b.no_rm JOIN tbl_rekam_medis c on a.no_rm = c.no_rm where b.status!='selesai'");
             
              
             
@@ -37,7 +37,7 @@ class KasirController extends Controller
             // $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm JOIN tbl_rekam_medis on tbl_antrian_poli_umums.no_rm = tbl_rekam_medis.no_rm where tbl_antrian_poli_umums.status='pembayaran' AND tbl_antrian_poli_umums.created_at='2021-12-24'"); 
             // $dataobat = DB::select("SELECT * FROM tbl_data_obat JOIN tbl_data_stock_ obat on tbl_data_stock_obat.id_obat=tbl_data_obat.id_obat where tbl_data_stock_obat.jumlah_penerimaan!=0");
             // echo($tanggal);
-            // print_r($antrian);
+            // print_r($pasien);
 
             return view('kasir/v_daftarantriankasir',['antrian' => $antrian,'judul' => $judul]);
         }
@@ -48,9 +48,9 @@ class KasirController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $datas = DB::table("tbl_antrian_kasir")
-                ->whereDate('created_at', '=', now())->get();
+                ->whereDate('tanggal', '=', now())->get();
         $count = DB::table("tbl_antrian_kasir")
-                ->whereDate('created_at', '=', now())->count();
+                ->whereDate('tanggal', '=', now())->count();
         $data = DB::select("select * from tbl_antrian_kasir where id_antrian=".$id."");        
         // print_r($data);
         $id1 = $id+1;
@@ -132,7 +132,7 @@ class KasirController extends Controller
             ]);
         }
         elseif($urutan_akhir==$count+1){
-            $id_akhir = $count;
+            // $id_akhir = $count;
             $urutan_akhir=$count;
             // $urutan_akhir1 = $count-3;
             $urutan_akhir2 = $count-2;   
@@ -157,14 +157,14 @@ class KasirController extends Controller
             // $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antrian_kasir set id_antrian = $id1_akhir where id_antrian=".$temp_id2."");            
             $updateidakhir3 =  DB::select("UPDATE tbl_antrian_kasir set id_antrian = $id2_akhir where id_antrian=".$temp_id3."");            
-            
+            $updateidakhir4 =  DB::select("UPDATE tbl_antrian_kasir set id_antrian = $id_akhir-1 where id_antrian=".$id_akhir."");
             return response()->json([
                 'success' => true,
                 'message' => 'Pasien dilewati aa',
             ]);
         }
         elseif($urutan_akhir==$count+2){
-            $id_akhir=$count;
+            // $id_akhir=$count;
             $urutan_akhir=$count;
             $urutan_akhir1 = $urutan_awal;
             $urutan_akhir2 = $count-1;   
@@ -183,7 +183,7 @@ class KasirController extends Controller
             $updateidakhir =  DB::select("UPDATE tbl_antrian_kasir set id_antrian = $id_akhir where id_antrian=".$temp_id."");
             $updateidakhir1 =  DB::select("UPDATE tbl_antrian_kasir set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antrian_kasir set id_antrian = $id2_akhir where id_antrian=".$temp_id2."");            
-            
+            $updateidakhir3 =  DB::select("UPDATE tbl_antrian_kasir set id_antrian = $id_akhir-2 where id_antrian=".$id_akhir."");
             // $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
             return response()->json([
                 'success' => true,
