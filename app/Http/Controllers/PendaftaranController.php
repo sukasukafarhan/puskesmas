@@ -277,7 +277,6 @@ class PendaftaranController extends Controller
         return redirect ('/datapasienrm');
     }
 
-
     public function store(Request $request)
     {
         $tbl_ff = new Tbl_ff;
@@ -287,22 +286,22 @@ class PendaftaranController extends Controller
         $tbl_ff->kecamatan=$request->kecamatan;
         $tbl_ff->kabupaten=$request->kabupaten;
         $tbl_ff->telp=$request->telp;
-        $kode = $this->kode($request->kabupaten, $request->kecamatan, $request->desa);
+        $des = ucfirst($request->desa);
+        $kec = ucfirst($request->kecamatan);
+        $kab = ucfirst($request->kabupaten);
+        $kode = $this->kode($kab, $kec, $des);
         $char = substr($request->nama_kk, 0, 1);
         $c = strtoupper($char);
-        $data = DB::select("select * from tbl_ffs where desa='".$request->desa."'");
-        $no = 1;
-        foreach ($data as $row) {
-            $sub_kalimat = substr($row->nama_kk, 0, 1);
-            if ($sub_kalimat == $char) {
-                $no++;
-            }
-        }
+        $no = $this->getKK($c, $des,$kec,$kab);
         if ($no < 10) {
+            $no_index = $kode . '.' . $c . '00000' . $no;
+        } elseif ($no > 9 && $no < 100) {
+            $no_index = $kode . '.' . $c . '0000' . $no;
+        } elseif ($no > 99 && $no < 1000) {
             $no_index = $kode . '.' . $c . '000' . $no;
-        } elseif ($no > 9) {
+        } elseif ($no > 999 && $no < 10000) {
             $no_index = $kode . '.' . $c . '00' . $no;
-        } elseif ($no > 99) {
+        }elseif ($no > 9999 && $no < 100000) {
             $no_index = $kode . '.' . $c . '0' . $no;
         } else {
             $no_index = $kode . '.' . $c . $no;
@@ -312,6 +311,116 @@ class PendaftaranController extends Controller
 
         return redirect ('/daftarantrian/layani/'.$request->segment);
     }
+
+    private function getKK($char, $desa,$kecamatan,$kabupaten)
+    {
+        if($kecamatan === 'Trenggalek'&& $kabupaten === 'Trenggalek'){
+        $tbl_ffs = DB::select("select nama_kk from tbl_ffs where desa='".$desa."'&& kecamatan='".$kecamatan."'&& kabupaten='".$kabupaten."'");
+        $no = 1;
+        foreach ($tbl_ffs as $row) {
+            $sub_kalimat = substr($row->nama_kk, 0, 1);
+            if ($sub_kalimat == $char) {
+                $no++;
+            }
+        }
+        return $no++;}
+        elseif($kecamatan !== 'Trenggalek'&& $kabupaten === 'Trenggalek'){
+        $tbl_ffs = DB::select("select nama_kk from tbl_ffs where kecamatan !='".'Trenggalek'."'&& kabupaten='".'Trenggalek'."'");
+        $no = 1;
+        foreach ($tbl_ffs as $row) {
+            $sub_kalimat = substr($row->nama_kk, 0, 1);
+            if ($sub_kalimat == $char) {
+                $no++;
+            }
+        }
+        return $no++;
+        }
+        elseif($kabupaten !== 'Trenggalek'){
+        $tbl_ffs = DB::select("select nama_kk from tbl_ffs where kabupaten !='".'Trenggalek'."'");
+        $no = 1;
+        foreach ($tbl_ffs as $row) {
+            $sub_kalimat = substr($row->nama_kk, 0, 1);
+            if ($sub_kalimat == $char) {
+                $no++;
+            }
+        }
+        return $no++;
+        }
+    }
+
+    private function kode($kabupaten, $kecamatan, $desa)
+    {
+        $kode = 00;
+        if ($kecamatan === 'Trenggalek') {
+            if($kabupaten === 'Trenggalek'){
+                if ($desa === 'Dawuhan') {
+                    return $kode = '01';
+                } else if ($desa === 'Sukosari') {
+                    return $kode = '02';
+                } else if ($desa === 'Parakan') {
+                    return $kode = '03';
+                } else if ($desa === 'Rejowinangun') {
+                    return $kode = '04';
+                } else if ($desa === 'Surodakan') {
+                    return $kode = '05';
+                } else if ($desa === 'Ngares') {
+                    return $kode = '06';
+                } else if ($desa === 'Sumberdadi') {
+                    return $kode = '07';
+                } else {
+                    return $kode = '08';
+                }
+            }
+            else {
+                return $kode= '10';
+            }
+            
+        }        
+        else {
+            if($kabupaten === 'Trenggalek'){
+                return $kode = '09';
+                }
+                else{
+                    return $kode= '10';
+                }
+            
+        }
+    }
+
+    // public function store(Request $request)
+    // {
+    //     $tbl_ff = new Tbl_ff;
+    //     $tbl_ff->nama_kk=$request->nama_kk;
+    //     $tbl_ff->alamat=$request->alamat;
+    //     $tbl_ff->desa=$request->desa;
+    //     $tbl_ff->kecamatan=$request->kecamatan;
+    //     $tbl_ff->kabupaten=$request->kabupaten;
+    //     $tbl_ff->telp=$request->telp;
+    //     $kode = $this->kode($request->kabupaten, $request->kecamatan, $request->desa);
+    //     $char = substr($request->nama_kk, 0, 1);
+    //     $c = strtoupper($char);
+    //     $data = DB::select("select * from tbl_ffs where desa='".$request->desa."'");
+    //     $no = 1;
+    //     foreach ($data as $row) {
+    //         $sub_kalimat = substr($row->nama_kk, 0, 1);
+    //         if ($sub_kalimat == $char) {
+    //             $no++;
+    //         }
+    //     }
+    //     if ($no < 10) {
+    //         $no_index = $kode . '.' . $c . '000' . $no;
+    //     } elseif ($no > 9) {
+    //         $no_index = $kode . '.' . $c . '00' . $no;
+    //     } elseif ($no > 99) {
+    //         $no_index = $kode . '.' . $c . '0' . $no;
+    //     } else {
+    //         $no_index = $kode . '.' . $c . $no;
+    //     }
+    //     $tbl_ff->no_index=$no_index;
+    //     $tbl_ff->save();
+
+    //     return redirect ('/daftarantrian/layani/'.$request->segment);
+    // }
 
     public function storepasien(Request $request)
     {
@@ -361,38 +470,38 @@ class PendaftaranController extends Controller
         return redirect ('/datapasien/'.$request->seg1."/".$request->seg2);
     }
 
-    private function kode($kecamatan, $kabupaten, $desa)
-    {
-        $kode = 00;
-        if ($kabupaten == 'trenggalek' && $kecamatan == 'trenggalek') {
-            if ($desa == 'dawuhan') {
-                return $kode = '01';
-            } else if ($desa == 'sukosari') {
-                return $kode = '02';
-            } else if ($desa == 'parakan') {
-                return $kode = '03';
-            } else if ($desa == 'rejowinangun') {
-                return $kode = '04';
-            } else if ($desa == 'surodakan') {
-                return $kode = '05';
-            } else if ($desa == 'ngares') {
-                return $kode = '06';
-            } else if ($desa == 'sumberdadi') {
-                return $kode = '07';
-            } else {
-                return $kode = '08';
-            }
-        } elseif ($kabupaten == 'trenggalek' && $kecamatan == 'trenggalek') {
-            return $kode = '09';
-        } elseif ($kabupaten == 'trenggalek' && $kecamatan != 'trenggalek') {
-            return $kode = '09';
-        } elseif ($kabupaten != 'trenggalek' && $kecamatan != 'trenggalek') {
-            return $kode = '10';
-        }
-        else {
-            return $kode = '10';
-        }
-    }
+    // private function kode($kecamatan, $kabupaten, $desa)
+    // {
+    //     $kode = 00;
+    //     if ($kabupaten == 'trenggalek' && $kecamatan == 'trenggalek') {
+    //         if ($desa == 'dawuhan') {
+    //             return $kode = '01';
+    //         } else if ($desa == 'sukosari') {
+    //             return $kode = '02';
+    //         } else if ($desa == 'parakan') {
+    //             return $kode = '03';
+    //         } else if ($desa == 'rejowinangun') {
+    //             return $kode = '04';
+    //         } else if ($desa == 'surodakan') {
+    //             return $kode = '05';
+    //         } else if ($desa == 'ngares') {
+    //             return $kode = '06';
+    //         } else if ($desa == 'sumberdadi') {
+    //             return $kode = '07';
+    //         } else {
+    //             return $kode = '08';
+    //         }
+    //     } elseif ($kabupaten == 'trenggalek' && $kecamatan == 'trenggalek') {
+    //         return $kode = '09';
+    //     } elseif ($kabupaten == 'trenggalek' && $kecamatan != 'trenggalek') {
+    //         return $kode = '09';
+    //     } elseif ($kabupaten != 'trenggalek' && $kecamatan != 'trenggalek') {
+    //         return $kode = '10';
+    //     }
+    //     else {
+    //         return $kode = '10';
+    //     }
+    // }
 
     public function pendaftaran_pasien($id,$id2)
     {

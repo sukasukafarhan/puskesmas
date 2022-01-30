@@ -1,7 +1,8 @@
-@include('template.header')
+@include('antrian.template.header')
 <!-- row -->
 <div class="content-body">
-    <div class="row justify-content-center ">
+    <div class="card-body pb-0 d-flex justify-content-between">
+    <!-- <div class="row justify-content-center "> -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-sm-5">
@@ -27,11 +28,11 @@
                                         <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
                                     </div>
                                 </div>
-                                <div class="card gradient-1">
+                                <!-- <div class="card gradient-1">
                                     <div class="card-body">
                                         <h1 class="card-title text-white">Laboratorium</h1>
                                         <div class="d-inline-block">
-                                            <h2 class="card-title text-white" id="no_laboratorium">000</h2>
+                                            <h2 class="card-title text-white">A001</h2>
                                             <p>Total Antrian</p>
                                         </div>
                                         <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
@@ -39,9 +40,9 @@
                                 </div>
                                 <div class="card gradient-1">
                                     <div class="card-body">
-                                        <h1 class="card-title text-white" >Farmasi</h1>
+                                        <h1 class="card-title text-white">Farmasi</h1>
                                         <div class="d-inline-block">
-                                            <h2 class="card-title text-white" id="no_farmasi">000</h2>
+                                            <h2 class="card-title text-white">A001</h2>
                                             <p>Total Antrian</p>
                                         </div>
                                         <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
@@ -51,17 +52,17 @@
                                 <div class="card-body">
                                     <h1 class="card-title text-white">Kasir</h1>
                                     <div class="d-inline-block">
-                                        <h2 class="card-title text-white" id="no_kasir">000</h2>
+                                        <h2 class="card-title text-white">A001</h2>
                                         <p>Total Antrian</p>
                                     </div>
                                     <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
                                 </div> 
-                            </div>
+                            </div> -->
                         <!-- </div> -->
                     <!-- </div> -->
                 </div>
-                <div class="col-lg-8 col-xl-7 " id="panggilan">
-                    <div class="card gradient-1">
+                <div class="col-xl-6 " id="panggilan">
+                    <div class="card gradient-7">
                         <div class="card-body">
                             <div id="message"></div>
                             <h1 class="text-white" id="nama_poli">Poli</h1>
@@ -70,8 +71,47 @@
                                 <br>
                                 <h1 class="text-white" id="nomor_antrian">000</h1>
                             </div>
-                            <span class="float-right display-1 opacity-1"><i class="fa fa-users"></i></span>
+                            <span class="float-right display-4 opacity-4"><i class="fa fa-users"></i></span>
                         </div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card gradient-1">
+                        <div class="card-body">
+                           <h1 class="card-title text-white">Laboratorium</h1>
+                            <div class="d-inline-block">
+                                <h2 class="card-title text-white">A001</h2>
+                                <p>Total Antrian</p>
+                            </div>
+                            <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card gradient-1">
+                        <div class="card-body">
+                            <h1 class="card-title text-white">Farmasi</h1>
+                            <div class="d-inline-block">
+                                <h2 class="card-title text-white">A001</h2>
+                                <p>Total Antrian</p>
+                            </div>
+                            <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card gradient-1">
+                        <div class="card-body">
+                            <h1 class="card-title text-white">Kasir</h1>
+                            <div class="d-inline-block">
+                                <h2 class="card-title text-white">A001</h2>
+                                <p>Total Antrian</p>
+                            </div>
+                            <span class="float-right display-7 opacity-4"><i class="fa fa-users"></i></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,18 +159,6 @@
         else if(e[0].nama_poli == "Poli Umum"){
             nomor.innerHTML = e[0].no_antrian; 
             document.getElementById("no_poli_umum").innerHTML = e[0].no_antrian;
-        }
-        else if(e[0].nama_poli == "Kasir"){
-            nomor.innerHTML = e[0].no_antrian; 
-            document.getElementById("no_kasir").innerHTML = e[0].no_antrian;
-        }
-        else if(e[0].nama_poli == "Farmasi"){
-            nomor.innerHTML = e[0].no_antrian; 
-            document.getElementById("no_farmasi").innerHTML = e[0].no_antrian;
-        }
-        else if(e[0].nama_poli == "Laboratorium"){
-            nomor.innerHTML = e[0].no_antrian; 
-            document.getElementById("no_laboratorium").innerHTML = e[0].no_antrian;
         }
     })
 </script>

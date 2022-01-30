@@ -22,13 +22,13 @@ class FarmasiController extends Controller
             $tanggal=date('Y-m-d');
             // $pasien = 
             // $antrian = DB::select("SELECT tbl_rekam_medis.no_rm, tbl_rekam_medis.id_pemeriksaan, tbl_antrian_poli_umums.status FROM tbl_antrian_poli_umums JOIN tbl_rekam_medis on tbl_antrian_poli_umums.no_rm = tbl_rekam_medis.no_rm where tbl_antrian_poli_umums.status='farmasi' AND tbl_antrian_poli_umums.created_at='2021-12-24'"); 
-            $pasien = DB::select("SELECT * FROM tbl_rekam_medis a JOIN tbl_antrian_farmasi b on a.no_rm = b.no_rm where b.status='farmasi' AND b.created_at='".$tanggal."'");
+            $pasien = DB::select("SELECT * FROM tbl_rekam_medis a, tbl_antrian_farmasi b where a.no_rm = b.no_rm AND b.status = 'farmasi' AND a.tanggal_kunjungan='".$tanggal."'");
             $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep JOIN tbl_rekam_medis on tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan WHERE tbl_rekam_medis.tanggal_kunjungan = '".$tanggal."' ");
             // $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep "); 
             foreach($pasien as $pasiens){
                 $pasiens->obat = array();
                 foreach($obat as $obats){
-                    if($pasiens->no_rm = $obats->no_rm){
+                    if($pasiens->no_rm == $obats->no_rm){
                         array_push($pasiens->obat,$obats->nama_obat);
                     }
                 }
@@ -88,8 +88,8 @@ class FarmasiController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='selesai' where no_rm='".$id."' && created_at='".$tanggal."'");
-        $updatestatus2 = DB::select("UPDATE tbl_antrian_farmasi set status ='selesai' where no_rm='".$id."' && created_at='".$tanggal."'");
-        $pasien = DB::select("SELECT * FROM tbl_rekam_medis a JOIN tbl_antrian_farmasi b on a.no_rm = b.no_rm where b.status='farmasi' AND b.created_at='".$tanggal."'");
+        $updatestatus2 = DB::select("UPDATE tbl_antrian_farmasi set status ='selesai' where no_rm='".$id."' && tanggal='".$tanggal."'");
+        $pasien = DB::select("SELECT * FROM tbl_rekam_medis a JOIN tbl_antrian_farmasi b on a.no_rm = b.no_rm where b.status='farmasi' AND b.tanggal='".$tanggal."'");
         $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep JOIN tbl_rekam_medis on tbl_resep_obat.id_pemeriksaan = tbl_rekam_medis.id_pemeriksaan WHERE tbl_rekam_medis.tanggal_kunjungan = '".$tanggal."' ");
         $stokobat = DB::select("SELECT * FROM tbl_data_stock_obat");
         // print_r($obat);
@@ -109,7 +109,7 @@ class FarmasiController extends Controller
         
         // print_r($stokobat);
         
-        $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep "); 
+        // $obat = DB::select("SELECT * FROM tbl_resep_obats JOIN tbl_resep_obat on tbl_resep_obats.id_resep = tbl_resep_obat.id_resep "); 
         foreach($pasien as $pasiens){
             $pasiens->obat = array();
             foreach($obat as $obats){
@@ -119,7 +119,9 @@ class FarmasiController extends Controller
             }
         }
             // print_r($pasien);
-        return view('farmasi/pelayanan/v_daftar_data_farmasi',['pasien' => $pasien, 'judul' => $judul]);
+        // return view('farmasi/pelayanan/v_daftar_data_farmasi',['pasien' => $pasien, 'judul' => $judul]);
+        return  redirect ('/farmasi');
+    // }
         // return view('farmasi/pelayanan/v_telaah_resep',['obat' => $obat,'pasien' => $pasien,'judul' => $judul]);
     }
 
@@ -185,9 +187,9 @@ class FarmasiController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $datas = DB::table("tbl_antrian_farmasi")
-                ->whereDate('created_at', '=', now())->get();
+                ->whereDate('tanggal', '=', now())->get();
         $count = DB::table("tbl_antrian_farmasi")
-                ->whereDate('created_at', '=', now())->count();
+                ->whereDate('tanggal', '=', now())->count();
         $data = DB::select("select * from tbl_antrian_farmasi where id_antrian=".$id."");        
         // print_r($data);
         $id1 = $id+1;
@@ -269,7 +271,7 @@ class FarmasiController extends Controller
             ]);
         }
         elseif($urutan_akhir==$count+1){
-            $id_akhir = $count;
+            // $id_akhir = $count;
             $urutan_akhir=$count;
             // $urutan_akhir1 = $count-3;
             $urutan_akhir2 = $count-2;   
@@ -294,14 +296,15 @@ class FarmasiController extends Controller
             // $updateidakhir1 =  DB::select("UPDATE tbl_antri_pendaftaran set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antrian_farmasi set id_antrian = $id1_akhir where id_antrian=".$temp_id2."");            
             $updateidakhir3 =  DB::select("UPDATE tbl_antrian_farmasi set id_antrian = $id2_akhir where id_antrian=".$temp_id3."");            
-            
+            $updateidakhir4 =  DB::select("UPDATE tbl_antrian_farmasi set id_antrian = $id_akhir-1 where id_antrian=".$id_akhir."");    
+
             return response()->json([
                 'success' => true,
                 'message' => 'Pasien dilewati aa',
             ]);
         }
         elseif($urutan_akhir==$count+2){
-            $id_akhir=$count;
+            // $id_akhir=$count;
             $urutan_akhir=$count;
             $urutan_akhir1 = $urutan_awal;
             $urutan_akhir2 = $count-1;   
@@ -320,7 +323,7 @@ class FarmasiController extends Controller
             $updateidakhir =  DB::select("UPDATE tbl_antrian_farmasi set id_antrian = $id_akhir where id_antrian=".$temp_id."");
             $updateidakhir1 =  DB::select("UPDATE tbl_antrian_farmasi set id_antrian = $id1_akhir where id_antrian=".$temp_id1."");
             $updateidakhir2 =  DB::select("UPDATE tbl_antrian_farmasi set id_antrian = $id2_akhir where id_antrian=".$temp_id2."");            
-            
+            $updateidakhir4 =  DB::select("UPDATE tbl_antrian_farmasi set id_antrian = $id_akhir-2 where id_antrian=".$id_akhir."");
             // $updatedata2 =  DB::select("UPDATE tbl_antri_pendaftaran set urutan = $urutan_akhir2 where id_antrian=".$id2."");
             return response()->json([
                 'success' => true,

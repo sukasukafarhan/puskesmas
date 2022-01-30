@@ -22,13 +22,19 @@ class KasirController extends Controller
             $tanggal=date('Y-m-d');
             $antrian = DB::select("SELECT * FROM tbl_antrian_kasir  where status!='selesai' AND tanggal='".$tanggal."'");
             // $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums  where status='pembayaran' AND created_at='".$tanggal."'"); 
-            $pasien = DB::select("SELECT a.jenis_asuransi, a.no_rm, c.id_pemeriksaan  FROM tbl_datapasiens a JOIN tbl_antrian_kasir b on a.no_rm = b.no_rm JOIN tbl_rekam_medis c on a.no_rm = c.no_rm where b.status!='selesai'");
-            
-             
+            $pasien = DB::select("SELECT a.jenis_asuransi, a.no_rm  FROM tbl_datapasiens a JOIN tbl_antrian_kasir b on a.no_rm = b.no_rm  where b.status!='selesai'");
+            $ambil_id = DB::select("SELECT a.id_pemeriksaan, a.no_rm  FROM tbl_rekam_medis a, tbl_antrian_kasir b where a.no_rm = b.no_rm AND b.status!='selesai' AND a.tanggal_kunjungan='".$tanggal."'");
+            foreach($pasien as $pasiens){
+                foreach($ambil_id as $ambil_ids){
+                    if($pasiens->no_rm == $ambil_ids->no_rm){
+                        $pasiens->id_pemeriksaan = $ambil_ids->id_pemeriksaan;
+                    }
+                }
+            }
             
             foreach($antrian as $antrians){
                 foreach($pasien as $pasiens){
-                    if($pasiens->no_rm = $antrians->no_rm){
+                    if($pasiens->no_rm == $antrians->no_rm){
                         $antrians->jenis_asuransi = $pasiens->jenis_asuransi;
                         $antrians->id_pemeriksaan = $pasiens->id_pemeriksaan;
                     }
@@ -37,7 +43,7 @@ class KasirController extends Controller
             // $antrian = DB::select("SELECT * FROM tbl_antrian_poli_umums JOIN tbl_datapasiens on tbl_antrian_poli_umums.no_rm = tbl_datapasiens.no_rm JOIN tbl_rekam_medis on tbl_antrian_poli_umums.no_rm = tbl_rekam_medis.no_rm where tbl_antrian_poli_umums.status='pembayaran' AND tbl_antrian_poli_umums.created_at='2021-12-24'"); 
             // $dataobat = DB::select("SELECT * FROM tbl_data_obat JOIN tbl_data_stock_ obat on tbl_data_stock_obat.id_obat=tbl_data_obat.id_obat where tbl_data_stock_obat.jumlah_penerimaan!=0");
             // echo($tanggal);
-            // print_r($pasien);
+            // print_r($antrian);
 
             return view('kasir/v_daftarantriankasir',['antrian' => $antrian,'judul' => $judul]);
         }
@@ -223,6 +229,8 @@ class KasirController extends Controller
         $data = DB::select("select id_pemeriksaan from tbl_asuhan_keperawatan where no_rm='".$id2."' && id_pemeriksaan ='".$id1."'");
         $poli_asal = DB::select("select poli_asal, no_antrian from tbl_antrian_poli_umums where no_rm='".$id2."' && created_at ='".$tanggal."'"); 
         $pasien = DB::select("select * from tbl_datapasiens where no_rm='".$id2."'"); 
+        // echo ($id2);
+        // print_r($data);
         $pasien[0]->poli_asal = $poli_asal[0]->poli_asal;
         $pasien[0]->no_antrian = $poli_asal[0]->no_antrian;
         $pasien[0]->tanggal = $tanggal;
@@ -278,15 +286,15 @@ class KasirController extends Controller
         // dd($request);
 
         $updatestatus = DB::select("UPDATE tbl_antrian_poli_umums set status ='farmasi' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
-        $updatestatus2 = DB::select("UPDATE tbl_antrian_kasir set status ='selesai' where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
+        $updatestatus2 = DB::select("UPDATE tbl_antrian_kasir set status ='selesai' where no_rm='".$request->no_rm."' && tanggal='".$tanggal."'");
 
-        $data = DB::select("SELECT * FROM tbl_antrian_kasir where no_rm='".$request->no_rm."' && created_at='".$tanggal."'");
+        $data = DB::select("SELECT * FROM tbl_antrian_kasir where no_rm='".$request->no_rm."' && tanggal='".$tanggal."'");
         
         $Tbl_antrian_farmasi = new Tbl_antrian_farmasi();
         // $tanggal=date('Y-m-d');
         $cek = $Tbl_antrian_farmasi
             // ->where('id_poli', '=', $id_poli)
-            ->where('created_at', '=', $tanggal)
+            ->where('tanggal', '=', $tanggal)
             ->count();
         $jumlah_antrian = $cek + 1;
         $Tbl_antrian_farmasi->no_antrian=$data[0]->no_antrian;
@@ -295,6 +303,7 @@ class KasirController extends Controller
         $Tbl_antrian_farmasi->status="farmasi";
         $Tbl_antrian_farmasi->poli_asal="Poli Umum";
         $Tbl_antrian_farmasi->urutan = $jumlah_antrian;
+        $Tbl_antrian_farmasi->tanggal = $tanggal;
         $Tbl_antrian_farmasi->save();
 
         return redirect ('/kasir');

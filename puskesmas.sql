@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2022 at 07:55 AM
+-- Generation Time: Jan 30, 2022 at 01:49 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -41,7 +41,11 @@ CREATE TABLE `kasir` (
 
 INSERT INTO `kasir` (`id`, `no_rm`, `id_pemeriksaan`, `total_pembayaran`, `status`) VALUES
 (6, '10.S0001.2', 17, '50000', 'Pembayaran'),
-(7, '10.G0001.4', 19, '175000', 'Pembayaran');
+(7, '10.G0001.4', 19, '175000', 'Pembayaran'),
+(8, '10.S0001.2', 28, '250000', 'Pembayaran'),
+(9, '10.S0001.2', 28, '250000', 'Pembayaran'),
+(10, '10.S0001.2', 28, '250000', 'Pembayaran'),
+(11, '10.K0001.1', 29, '0', 'Pembayaran');
 
 -- --------------------------------------------------------
 
@@ -129,16 +133,19 @@ CREATE TABLE `tbl_antrian_farmasi` (
   `poli_asal` varchar(255) NOT NULL,
   `urutan` int(11) NOT NULL,
   `created_at` date NOT NULL,
-  `updated_at` varchar(255) NOT NULL
+  `updated_at` varchar(255) NOT NULL,
+  `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_antrian_farmasi`
 --
 
-INSERT INTO `tbl_antrian_farmasi` (`id_antrian`, `no_antrian`, `no_rm`, `waktu`, `status`, `poli_asal`, `urutan`, `created_at`, `updated_at`) VALUES
-(1, 'A 00 1', '10.S0001.2', '08:18:58', 'selesai', 'Poli Umum', 1, '2022-01-02', ''),
-(2, 'A 00 1', '10.G0001.4', '08:27:11', 'selesai', 'Poli Umum', 1, '2022-01-06', '');
+INSERT INTO `tbl_antrian_farmasi` (`id_antrian`, `no_antrian`, `no_rm`, `waktu`, `status`, `poli_asal`, `urutan`, `created_at`, `updated_at`, `tanggal`) VALUES
+(1, 'A 00 1', '10.S0001.2', '08:18:58', 'selesai', 'Poli Umum', 1, '2022-01-02', '', NULL),
+(2, 'A 00 1', '10.G0001.4', '08:27:11', 'selesai', 'Poli Umum', 1, '2022-01-06', '', NULL),
+(5, 'A 00 1', '10.S0001.2', '07:13:56', 'selesai', 'Poli Umum', 1, '0000-00-00', '', '2022-01-30'),
+(6, 'A 00 2', '10.K0001.1', '07:16:44', 'selesai', 'Poli Umum', 2, '0000-00-00', '', '2022-01-30');
 
 -- --------------------------------------------------------
 
@@ -166,8 +173,8 @@ CREATE TABLE `tbl_antrian_kasir` (
 INSERT INTO `tbl_antrian_kasir` (`id_antrian`, `no_antrian`, `no_rm`, `waktu`, `status`, `poli_asal`, `urutan`, `created_at`, `updated_at`, `tanggal`) VALUES
 (1, 'A 00 1', '10.S0001.2', '07:42:15', 'selesai', 'Poli Umum', 1, '2022-01-02', '', '2022-01-06'),
 (2, 'A 00 1', '10.G0001.4', '08:22:40', 'selesai', 'Poli Umum', 1, '2022-01-06', '', '2022-01-06'),
-(3, 'A 00 2', '10.K0001.1', '12:56:23', 'lewati', 'Poli Umum', 1, '0000-00-00', '', '2022-01-30'),
-(4, 'A 00 1', '10.S0001.2', '01:19:11', 'lewati', 'Poli Umum', 2, '0000-00-00', '', '2022-01-30');
+(3, 'A 00 1', '10.S0001.2', '01:19:11', 'selesai', 'Poli Umum', 1, '0000-00-00', '', '2022-01-30'),
+(4, 'A 00 2', '10.K0001.1', '12:56:23', 'selesai', 'Poli Umum', 2, '0000-00-00', '', '2022-01-30');
 
 -- --------------------------------------------------------
 
@@ -304,8 +311,8 @@ INSERT INTO `tbl_antrian_poli_umums` (`id_antrian`, `no_antrian`, `no_rm`, `wakt
 (44, 'A 00 3', '10.U0001.1', '18:53:23', 'proses', 'Poli Umum', 1, '2022-01-29', '2022-01-29 18:53:24'),
 (45, 'A 00 2', '10.L0001.5', '18:46:19', 'proses', 'Poli Umum', 2, '2022-01-29', '2022-01-29 18:46:19'),
 (47, 'A 00 1', '10.C0001.1', '18:42:50', 'proses', 'Poli Umum', 3, '2022-01-29', '2022-01-29 18:42:51'),
-(100000001, 'A 00 2', '10.K0001.1', '2022-01-30 11:23:52', 'pembayaran', 'Poli Umum', 1, '2022-01-30', '2022-01-30 11:23:52'),
-(100000002, 'A 00 1', '10.S0001.2', '2022-01-30 11:23:34', 'pembayaran', 'Poli Umum', 2, '2022-01-30', '2022-01-30 11:23:34'),
+(100000001, 'A 00 2', '10.K0001.1', '2022-01-30 11:23:52', 'selesai', 'Poli Umum', 1, '2022-01-30', '2022-01-30 11:23:52'),
+(100000002, 'A 00 1', '10.S0001.2', '2022-01-30 11:23:34', 'selesai', 'Poli Umum', 2, '2022-01-30', '2022-01-30 11:23:34'),
 (100000003, 'A 00 3', '10.H0001.1', '2022-01-30 11:23:14', 'proses', 'Poli Umum', 3, '2022-01-30', '2022-01-30 11:23:14'),
 (100000004, 'A 00 4', '10.A0001.7', '2022-01-30 11:21:48', 'proses', 'Poli Umum', 4, '2022-01-30', '2022-01-30 11:21:49'),
 (100000005, 'A 00 5', '10.N0001.2', '2022-01-30 11:22:28', 'proses', 'Poli Umum', 5, '2022-01-30', '2022-01-30 11:22:29');
@@ -603,8 +610,8 @@ CREATE TABLE `tbl_data_stock_obat` (
 --
 
 INSERT INTO `tbl_data_stock_obat` (`id`, `id_obat`, `tanggal_masuk`, `jumlah_penerimaan`, `tanggal_kadaluarsa`, `pemakaian`, `sisa`) VALUES
-(1, 2, '2021-12-14', 12, '2021-12-30', 2, 8),
-(2, 1, '2021-12-14', 100, '2022-01-07', 0, 100);
+(1, 2, '2021-12-14', 12, '2021-12-30', 162, -152),
+(2, 1, '2021-12-14', 100, '2022-01-07', 20, 80);
 
 -- --------------------------------------------------------
 
@@ -1319,9 +1326,9 @@ INSERT INTO `tbl_resep_obats` (`id`, `nama_obat`, `jumlah`, `id_resep`, `status`
 (18, 'paracetamol', 2, 39, 'tersedia', 1),
 (19, 'paracetamol', 1, 40, 'tersedia', 2),
 (20, 'paracetamol', 2, 41, 'tersedia', 2),
-(21, 'paracetamol', 2, 42, 'tersedia', 2),
-(22, 'obh herbal', 32, 42, 'tersedia', 0),
-(23, 'paracetamol', 2, 43, 'tersedia', 2);
+(21, 'paracetamol', 2, 42, 'tersedia', 1),
+(22, 'obh herbal', 32, 42, 'tersedia', 2),
+(23, 'paracetamol', 2, 43, 'tersedia', 1);
 
 -- --------------------------------------------------------
 
@@ -1741,7 +1748,7 @@ ALTER TABLE `tbl_user_role`
 -- AUTO_INCREMENT for table `kasir`
 --
 ALTER TABLE `kasir`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1759,13 +1766,13 @@ ALTER TABLE `tbl_anamnesa_rm`
 -- AUTO_INCREMENT for table `tbl_antrian_farmasi`
 --
 ALTER TABLE `tbl_antrian_farmasi`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_antrian_kasir`
 --
 ALTER TABLE `tbl_antrian_kasir`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99999998;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99999999;
 
 --
 -- AUTO_INCREMENT for table `tbl_antrian_laborat`
@@ -1777,19 +1784,19 @@ ALTER TABLE `tbl_antrian_laborat`
 -- AUTO_INCREMENT for table `tbl_antrian_laboratorium`
 --
 ALTER TABLE `tbl_antrian_laboratorium`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000000;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000001;
 
 --
 -- AUTO_INCREMENT for table `tbl_antrian_poli_umums`
 --
 ALTER TABLE `tbl_antrian_poli_umums`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000008;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000009;
 
 --
 -- AUTO_INCREMENT for table `tbl_antri_pendaftaran`
 --
 ALTER TABLE `tbl_antri_pendaftaran`
-  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000084;
+  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000085;
 
 --
 -- AUTO_INCREMENT for table `tbl_asuhan_keperawatan`

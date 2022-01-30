@@ -29,11 +29,13 @@
     <link href="/template/plugins/jquery-steps/css/jquery.steps.css" rel="stylesheet">
     <link href="/template/css/style.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-    <script src="{{url('server_io/socket.io.js')}}"></script>
+    <!-- <script src="{{url('server_io/socket.io.js')}}"></script> -->
+    <script type="application/javascript" src="{{ asset('js/app.js') }}"></script>
 </head>
 
 <body>
 
+<!-- <div id="main-wrapper"> -->
 <!--*******************
     Preloader start
 ********************-->
