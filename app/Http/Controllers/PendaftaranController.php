@@ -587,7 +587,7 @@ class PendaftaranController extends Controller
     }
 
     public function cekbpjs($id){
-        $data_bpjs =  DB::select("select *  from tbl_datapasiens where no_asuransi='".$id."'");
+        $data_bpjs =  DB::select("select *  from tbl_asuransi where nomor_asuransi='".$id."' AND tipe_asuransi ='BPJS'");
         if(count($data_bpjs)==0){
             return ("Data tidak ditemukan");
         }

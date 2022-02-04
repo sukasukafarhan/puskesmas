@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2022 at 01:49 PM
+-- Generation Time: Feb 04, 2022 at 03:27 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -315,7 +315,8 @@ INSERT INTO `tbl_antrian_poli_umums` (`id_antrian`, `no_antrian`, `no_rm`, `wakt
 (100000002, 'A 00 1', '10.S0001.2', '2022-01-30 11:23:34', 'selesai', 'Poli Umum', 2, '2022-01-30', '2022-01-30 11:23:34'),
 (100000003, 'A 00 3', '10.H0001.1', '2022-01-30 11:23:14', 'proses', 'Poli Umum', 3, '2022-01-30', '2022-01-30 11:23:14'),
 (100000004, 'A 00 4', '10.A0001.7', '2022-01-30 11:21:48', 'proses', 'Poli Umum', 4, '2022-01-30', '2022-01-30 11:21:49'),
-(100000005, 'A 00 5', '10.N0001.2', '2022-01-30 11:22:28', 'proses', 'Poli Umum', 5, '2022-01-30', '2022-01-30 11:22:29');
+(100000005, 'A 00 5', '10.N0001.2', '2022-01-30 11:22:28', 'proses', 'Poli Umum', 5, '2022-01-30', '2022-01-30 11:22:29'),
+(100000009, 'A 00 1', '10.A0001.3', '2022-02-04 21:25:49', 'Masuk', 'Poli Umum', 1, '2022-02-04', '2022-02-04 21:25:49');
 
 -- --------------------------------------------------------
 
@@ -412,7 +413,8 @@ INSERT INTO `tbl_antri_pendaftaran` (`id_antrian`, `no_antrian`, `id_poli`, `tan
 (100000078, '5', 1, '2022-01-30', 'hapus', 2),
 (100000079, '3', 1, '2022-01-30', 'hapus', 3),
 (100000080, '1', 1, '2022-01-30', 'hapus', 4),
-(100000081, '2', 1, '2022-01-30', 'hapus', 5);
+(100000081, '2', 1, '2022-01-30', 'hapus', 5),
+(100000085, '1', 1, '2022-02-04', 'hapus', 1);
 
 -- --------------------------------------------------------
 
@@ -474,6 +476,30 @@ INSERT INTO `tbl_asuhan_keperawatan` (`id_askep`, `id_pemeriksaan`, `no_rm`, `ta
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_asuransi`
+--
+
+CREATE TABLE `tbl_asuransi` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(250) NOT NULL,
+  `tipe_asuransi` varchar(250) NOT NULL,
+  `nomor_asuransi` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_asuransi`
+--
+
+INSERT INTO `tbl_asuransi` (`id`, `nama`, `tipe_asuransi`, `nomor_asuransi`) VALUES
+(1, 'abdullah nama ayahnya', 'BPJS', 12345),
+(2, 'gilang ramadan', 'BPJS', 12347),
+(3, 'hamid rusdi', 'BPJS', 123457),
+(4, 'koko ari', 'BPJS', 123458),
+(5, 'Andre Stinky', 'SKTM', 99999);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_datapasiens`
 --
 
@@ -507,14 +533,14 @@ INSERT INTO `tbl_datapasiens` (`id`, `nama`, `jenis_kelamin`, `nama_kk`, `no_ind
 (6, 'siti aminah', 'Perempuan', 'abdullah', '10.A0001', 'malang', 'guru', '1999-10-22', 22, 'Umum', '1222', 'islam', '081235444566', 'Lainnya', '10.A0001.4', '2021-12-12 13:49:57', '2021-12-12 13:49:57'),
 (7, 'susan', 'Perempuan', 'abdullah', '10.A0001', 'malang', 'pedagang', '2020-01-30', 1, 'Umum', '111', 'islam', '081235444555', 'Lainnya', '10.A0001.5', '2021-12-12 20:59:27', '2021-12-12 20:59:27'),
 (8, 'susan', 'Perempuan', 'abdullah', '10.A0001', 'malang', 'pedagang', '2020-01-30', 1, 'Umum', '111', 'islam', '081235444555', 'Lainnya', '10.A0001.6', '2021-12-12 20:59:39', '2021-12-12 20:59:39'),
-(9, 'jimin', 'Laki-laki', 'abdullah', '10.A0001', 'malang', 'guru', '2005-06-15', 16, 'Umum', '12345', 'islam', '081235444566', 'Lainnya', '10.A0001.7', '2021-12-12 21:01:40', '2021-12-12 21:01:40'),
+(9, 'jimin', 'Laki-laki', 'abdullah', '10.A0001', 'malang', 'guru', '2005-06-15', 16, 'Umum', '12346', 'islam', '081235444566', 'Lainnya', '10.A0001.7', '2021-12-12 21:01:40', '2021-12-12 21:01:40'),
 (10, 'jimin', 'Laki-laki', 'abdullah', '10.A0001', 'malang', 'guru', '2005-06-15', 16, 'Umum', '12345', 'islam', '081235444566', 'Lainnya', '10.A0001.8', '2021-12-12 21:01:58', '2021-12-12 21:01:58'),
 (11, 'jeje', 'Perempuan', 'abdullah', '10.A0001', 'malang', 'pedagang', '1998-12-12', 23, 'Umum', '1111', 'islam', '081235444555', 'Lainnya', '10.A0001.9', '2021-12-12 21:04:48', '2021-12-12 21:04:48'),
 (24, 'cika', 'Perempuan', 'cika', '10.C0001', 'mojolangu, lowokwaru, malang', 'guru', '1998-12-12', 23, 'Umum', NULL, 'islam', '081235444566', 'Kepala Keluarga', '10.C0001.1', '2022-01-12 12:34:32', '2022-01-12 12:34:32'),
-(19, 'gilang ramadan', 'Laki-laki', 'gilang', '10.G0001', 'klojen, malang', 'pedagang', '1998-02-05', 23, 'BPJS', '12345', 'islam', '081235444555', 'Kepala Keluarga', '10.G0001.1', '2021-12-22 19:49:33', '2021-12-22 19:49:33'),
+(19, 'gilang ramadan', 'Laki-laki', 'gilang', '10.G0001', 'klojen, malang', 'pedagang', '1998-02-05', 23, 'BPJS', '12347', 'islam', '081235444555', 'Kepala Keluarga', '10.G0001.1', '2021-12-22 19:49:33', '2021-12-22 19:49:33'),
 (23, 'emerson', 'Laki-laki', 'gilang', '10.G0001', 'klojen, malang', 'mahasiswa', '1997-02-22', 24, 'Umum', NULL, 'islam', '081235444566', 'Lainnya', '10.G0001.4', '2022-01-06 07:27:51', '2022-01-06 07:27:51'),
 (5, 'hamid rusdi', 'Laki-laki', 'hamid', '10.H0001', 'samaan', 'guru', '1996-02-08', 25, 'BPJS', '123457', 'islam', '081235444', 'Kepala Keluarga', '10.H0001.1', '2021-12-08 14:31:41', '2021-12-08 14:31:41'),
-(18, 'koko ari', 'Laki-laki', 'koko', '10.K0001', 'klojen, malang', 'guru', '1985-01-02', 36, 'BPJS', '12345', 'islam', '081235444555', 'Kepala Keluarga', '10.K0001.1', '2021-12-22 07:36:29', '2021-12-22 07:36:29'),
+(18, 'koko ari', 'Laki-laki', 'koko', '10.K0001', 'klojen, malang', 'guru', '1985-01-02', 36, 'BPJS', '123458', 'islam', '081235444555', 'Kepala Keluarga', '10.K0001.1', '2021-12-22 07:36:29', '2021-12-22 07:36:29'),
 (14, 'lisa yulianti', 'Perempuan', 'lisa yulianti', '10.L0001', 'klojen, malang', 'marketing', '1989-08-18', 32, 'Umum', '0000', 'islam', '081235444555', 'Kepala Keluarga', '10.L0001.1', '2021-12-16 09:30:58', '2021-12-16 09:30:58'),
 (15, 'alisa', 'Perempuan', 'lisa yulianti', '10.L0001', 'klojen, malang', 'guru', '1998-02-01', 23, 'Umum', '111222', 'islam', '081235444566', 'Lainnya', '10.L0001.4', '2021-12-16 20:03:15', '2021-12-16 20:03:15'),
 (17, 'bambang', 'Perempuan', 'lisa yulianti', '10.L0001', 'klojen, malang', 'pedagang', '1990-12-01', 31, 'Umum', '00000', 'islam', '081235444566', 'Lainnya', '10.L0001.5', '2021-12-19 06:12:46', '2021-12-19 06:12:46'),
@@ -1071,7 +1097,8 @@ INSERT INTO `tbl_pendaftarans` (`no_antrian`, `nama`, `no_rm`, `tanggal`, `tipe_
 ('A 00 5', 'nurfarida', '10.N0001.2', '2022-01-30', 'Lama', 'Poli Umum', '11:22:28', '2022-01-30 11:22:29', '2022-01-30 11:22:29'),
 ('A 00 3', 'hamid rusdi', '10.H0001.1', '2022-01-30', 'Baru', 'Poli Umum', '11:23:14', '2022-01-30 11:23:14', '2022-01-30 11:23:14'),
 ('A 00 1', 'boby', '10.S0001.2', '2022-01-30', 'Lama', 'Poli Umum', '11:23:34', '2022-01-30 11:23:34', '2022-01-30 11:23:34'),
-('A 00 2', 'koko ari', '10.K0001.1', '2022-01-30', 'Lama', 'Poli Umum', '11:23:52', '2022-01-30 11:23:52', '2022-01-30 11:23:52');
+('A 00 2', 'koko ari', '10.K0001.1', '2022-01-30', 'Lama', 'Poli Umum', '11:23:52', '2022-01-30 11:23:52', '2022-01-30 11:23:52'),
+('A 00 1', 'abdullah nama ayahnya', '10.A0001.3', '2022-02-04', 'Baru', 'Poli Umum', '21:25:49', '2022-02-04 21:25:49', '2022-02-04 21:25:49');
 
 -- --------------------------------------------------------
 
@@ -1252,7 +1279,8 @@ INSERT INTO `tbl_rekam_medis` (`id_pemeriksaan`, `tanggal_kunjungan`, `waktu_mul
 (26, '2022-01-30', '2022-01-30 11:22:28', '2022-01-30 11:22:28', 'ciiiia', 'Yulia Rahayu Putri', '10.N0001.2'),
 (27, '2022-01-30', '2022-01-30 11:23:14', '2022-01-30 11:23:14', 'ciiiia', 'Yulia Rahayu Putri', '10.H0001.1'),
 (28, '2022-01-30', '2022-01-30 11:23:34', '2022-01-30 11:23:34', 'ciiiia', 'Yulia Rahayu Putri', '10.S0001.2'),
-(29, '2022-01-30', '2022-01-30 11:23:52', '2022-01-30 11:23:52', 'ciiiia', 'Yulia Rahayu Putri', '10.K0001.1');
+(29, '2022-01-30', '2022-01-30 11:23:52', '2022-01-30 11:23:52', 'ciiiia', 'Yulia Rahayu Putri', '10.K0001.1'),
+(30, '2022-02-04', '2022-02-04 21:25:49', '2022-02-04 21:25:49', NULL, 'Yulia Rahayu Putri', '10.A0001.3');
 
 -- --------------------------------------------------------
 
@@ -1538,6 +1566,12 @@ ALTER TABLE `tbl_asuhan_keperawatan`
   ADD KEY `id_pemeriksaan` (`id_pemeriksaan`);
 
 --
+-- Indexes for table `tbl_asuransi`
+--
+ALTER TABLE `tbl_asuransi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_datapasiens`
 --
 ALTER TABLE `tbl_datapasiens`
@@ -1790,19 +1824,25 @@ ALTER TABLE `tbl_antrian_laboratorium`
 -- AUTO_INCREMENT for table `tbl_antrian_poli_umums`
 --
 ALTER TABLE `tbl_antrian_poli_umums`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000009;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000010;
 
 --
 -- AUTO_INCREMENT for table `tbl_antri_pendaftaran`
 --
 ALTER TABLE `tbl_antri_pendaftaran`
-  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000085;
+  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000086;
 
 --
 -- AUTO_INCREMENT for table `tbl_asuhan_keperawatan`
 --
 ALTER TABLE `tbl_asuhan_keperawatan`
   MODIFY `id_askep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `tbl_asuransi`
+--
+ALTER TABLE `tbl_asuransi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_datapasiens`
@@ -1928,7 +1968,7 @@ ALTER TABLE `tbl_poli`
 -- AUTO_INCREMENT for table `tbl_rekam_medis`
 --
 ALTER TABLE `tbl_rekam_medis`
-  MODIFY `id_pemeriksaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_pemeriksaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `tbl_resep_obat`
