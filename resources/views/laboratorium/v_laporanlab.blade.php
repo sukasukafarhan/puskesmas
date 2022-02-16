@@ -34,30 +34,65 @@
                                     <th>Jenis Kelamin</th>
                                     <th>Jam Datang</th>
                                     <th>Jam Selesai</th>
-                                    <th>Jumlah Waktu</th>
+                                    <!-- <th>Jumlah Waktu</th> -->
                                     <th>Jenis Kunjungan Dalam 1 Tahun(baru/lama)</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no=1 ?>
+                                @foreach($data as $datas)
                                 <tr>
-                                            <td class=" text-center"></td>
-                                             <td class=" text-center"></td>
-                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            
+                                    <td class=" text-center">{{$no}}</td>
+                                    <td class=" text-center">{{$datas->tanggal}}</td>
+                                    <td>{{$datas->poli_asal}}</td>
+                                    <td>{{$datas->nama}}</td>
+                                    <td>{{$datas->jenis_kelamin}}</td>
+                                    <td>{{$datas->umur}}</td>
+                                    <td>
+                                        <?php
+                                            for($i=0;$i<count($datas->jenislab);$i++){
+                                                if($i!=0){
+                                                    if($datas->jenislab[$i]!=$datas->jenislab[$i-1])
+                                                    echo ("-".$datas->jenislab[$i]."\n") ;
+                                                }else{
+                                                    echo ("-".$datas->jenislab[$i]."\n") ;
+                                                }
+                                            }
+                                        ?>
+                                    </td>
+                                    <td>                                        
+                                        <?php
+                                            for($i=0;$i<count($datas->permintaan);$i++){
+                                                if($i!=0){
+                                                    if($datas->permintaan[$i]!=$datas->permintaan[$i-1])
+                                                    echo ("-".$datas->permintaan[$i]."\n") ;
+                                                }else{
+                                                    echo ("-".$datas->permintaan[$i]."\n") ;
+                                                }
+                                            }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                            for($i=0;$i<count($datas->namalab);$i++){
+                                                if($i!=0){
+                                                    if($datas->namalab[$i]!=$datas->namalab[$i-1])
+                                                    echo ("-".$datas->namalab[$i]."\n") ;
+                                                }else{
+                                                    echo ("-".$datas->namalab[$i]."\n") ;
+                                                }
+                                            }
+                                        ?>
+                                    </td>
+                                    <td>{{$datas->jenis_asuransi}}</td>
+                                    <td>{{$datas->jenis_kelamin}}</td>
+                                    <td>{{$datas->created_at}}</td>
+                                    <td>{{$datas->waktu_selesai}}</td>
+                                    <!-- <td></td> -->
+                                    <td>Baru</td>                                         
                                 </tr>
-                            
+                                <?$no++?>
+                            @endforeach
 
                             </tbody>
                             <!-- <tfoot>

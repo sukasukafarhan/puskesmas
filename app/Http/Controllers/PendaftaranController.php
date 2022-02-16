@@ -263,14 +263,27 @@ class PendaftaranController extends Controller
             }
         }
         if ($no < 10) {
+            $no_index = $kode . '.' . $c . '00000' . $no;
+        } elseif ($no > 9 && $no < 100) {
+            $no_index = $kode . '.' . $c . '0000' . $no;
+        } elseif ($no > 99 && $no < 1000) {
             $no_index = $kode . '.' . $c . '000' . $no;
-        } elseif ($no > 9) {
+        } elseif ($no > 999 && $no < 10000) {
             $no_index = $kode . '.' . $c . '00' . $no;
-        } elseif ($no > 99) {
+        }elseif ($no > 9999 && $no < 100000) {
             $no_index = $kode . '.' . $c . '0' . $no;
         } else {
             $no_index = $kode . '.' . $c . $no;
         }
+        // if ($no < 10) {
+        //     $no_index = $kode . '.' . $c . '000' . $no;
+        // } elseif ($no > 9) {
+        //     $no_index = $kode . '.' . $c . '00' . $no;
+        // } elseif ($no > 99) {
+        //     $no_index = $kode . '.' . $c . '0' . $no;
+        // } else {
+        //     $no_index = $kode . '.' . $c . $no;
+        // }
         $tbl_ff->no_index=$no_index;
         $tbl_ff->save();
 
@@ -532,12 +545,12 @@ class PendaftaranController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $waktu=date("Y-m-d H:i:s");
-
+        // echo($request->no_rm);
         // print_r($request->noantrian); exit();
         $Tbl_pendaftaran = new Tbl_pendaftaran();
         $Tbl_pendaftaran->no_antrian=$request->noantrian;
         $Tbl_pendaftaran->nama=$request->nama;
-        $Tbl_pendaftaran->no_rm=$request->no_rm;
+        $Tbl_pendaftaran->no_rm=$request->rm;
         $Tbl_pendaftaran->tanggal=$tanggal;
         $Tbl_pendaftaran->tipe_kunjungan=$request->tipe_kunjungan;
         $Tbl_pendaftaran->poli_yang_dituju="Poli Umum";
@@ -592,7 +605,7 @@ class PendaftaranController extends Controller
             return ("Data tidak ditemukan");
         }
         else{
-            $kalimat = "Data ditemukan : ".$data_bpjs[0]->nama." adalah pasien BPJS";
+            $kalimat = "Data ditemukan : ".$data_bpjs[0]->nama." adalah pasien ".$data_bpjs[0]->tipe_asuransi;
             return ( $kalimat);
         }
     }

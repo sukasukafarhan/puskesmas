@@ -77,7 +77,7 @@
                                                         @if($a->no_antrian >= 10)
                                                             0
                                                         @endif
-                                                        @if($a->no_antrian <= 10)
+                                                        @if($a->no_antrian < 10)
                                                             00
                                                         @endif
                                                         {{$a->no_antrian}}
@@ -95,10 +95,10 @@
                                                         @if($a->no_antrian >= 10)
                                                             0
                                                         @endif
-                                                        @if($a->no_antrian <= 10)
+                                                        @if($a->no_antrian < 10)
                                                             00
                                                         @endif
-                                                        {{$a->no_antrian+1}}
+                                                        {{$a->no_antrian}}
                                                     </h2>
                                                     <p class="text-white mb-0">{{ date('l, d F Y')}}</p>
                                                 </div>

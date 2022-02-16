@@ -33,7 +33,7 @@
                     <li><a href="/laporanlidi">Data LIDI</a></li>
                     <li><a href="/laporanlplpo">Data LPLPO</a></li>
                     <li><a href="/laporanstock">Data Stock</a></li>
-                    <li><a href="/laporantelaah">Data Telaah</a></li>
+                    <!-- <li><a href="/laporantelaah">Data Telaah</a></li> -->
                 </ul>
             </li>
 

@@ -129,7 +129,7 @@
     function isbpjs() {
         var asuransi = document.getElementById('jenis_asuransi').value;
         
-        if(asuransi==="BPJS"){
+        if(asuransi==="BPJS" || asuransi==="SKTM"){
             // $('#button_bpjs').attr('disabled','disabled');
             $("#button_bpjs").removeAttr('disabled');
             $("#no_asuransi").removeAttr('readonly');

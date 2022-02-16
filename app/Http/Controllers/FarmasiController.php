@@ -345,14 +345,16 @@ class FarmasiController extends Controller
         $tanggal=date('Y-m-d');
         // Jenis Kunjungan Dalam 1 Tahun(baru/lama),Tanggal, poli_yang_dituju
         $data = $dataobat = DB::select("SELECT tbl_datapasiens.nama,tbl_datapasiens.jenis_kelamin,tbl_datapasiens.umur,tbl_datapasiens.jenis_asuransi, kasir.total_pembayaran, kasir.id_pemeriksaan, tbl_pendaftarans.tanggal, tbl_pendaftarans.tipe_kunjungan, tbl_pendaftarans.poli_yang_dituju  FROM tbl_pendaftarans,tbl_datapasiens,kasir where tbl_datapasiens.no_rm = kasir.no_rm && tbl_datapasiens.no_rm = tbl_pendaftarans.no_rm");
-        $dataobats = DB::select("SELECT tbl_resep_obats.nama_obat,kasir.id_pemeriksaan FROM tbl_resep_obats,tbl_resep_obat,kasir where tbl_resep_obats.id_resep = tbl_resep_obat.id_resep && tbl_resep_obat.id_pemeriksaan = kasir.id_pemeriksaan ");
+        $dataobats = DB::select("SELECT tbl_resep_obats.nama_obat,tbl_resep_obats.jumlah,kasir.id_pemeriksaan FROM tbl_resep_obats,tbl_resep_obat,kasir where tbl_resep_obats.id_resep = tbl_resep_obat.id_resep && tbl_resep_obat.id_pemeriksaan = kasir.id_pemeriksaan ");
         $j=0;
         
         for($i=0; $i<count($dataobats); $i++){
             for($j=0; $j<count($data); $j++){
                 $data[$j]->obat = array();
+                $data[$j]->jumlah = array();
                 if($data[$j]->id_pemeriksaan ==  $dataobats[$i]->id_pemeriksaan){
                     array_push($data[$j]->obat, $dataobats[$i]->nama_obat);
+                    array_push($data[$j]->jumlah, $dataobats[$i]->jumlah);
                 }
             }
         }

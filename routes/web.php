@@ -36,7 +36,7 @@ Route::get('/datapasienrm/viewdatapasien/{id}','PasienController@viewdatapasien'
 Route::get('/datapasienrm/viewaddpasien/{id}','PasienController@viewaddpasien');
 Route::get('/datapasienrm/viewaddfamily','PasienController@viewaddfamily');
 Route::post('/datapasienrm/createfamily','PendaftaranController@tambahFF');
-Route::post('/datapasienrm/createpasien','PendaftaranController@tambahpasien');
+Route::post('/datapasienrm/createpasien','PasienController@tambahpasien');
 
 
 Route::get('/perawatumum','PerawatUmumController@index');

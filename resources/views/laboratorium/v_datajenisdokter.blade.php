@@ -39,11 +39,11 @@
                                             Data Pelayanan Dokter
                                             </button>
                                         </span>
-                                        <span>
+                                        <!-- <span>
                                         <button type="button" class="btn btn-danger" onclick="location.href=''" data-toggle="tooltip" data-placement="top" title="Hapus">
                                                 Hapus
                                         </button>
-                                        </span>
+                                        </span> -->
                                     </td>
                                 </tr>
                                 <?php $no++; ?>

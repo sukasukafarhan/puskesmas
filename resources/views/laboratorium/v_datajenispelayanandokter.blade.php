@@ -37,12 +37,13 @@
                                     <td> {{$datas->jenis_dokter}}</td>
                                     <td> {{$datas->tarif}}</td>
                                     <td>
-                                        <span>
+                                        <!-- <span>
                                         <button type="button" class="btn btn-danger" onclick="location.href='/laborat/deletepelayanandokter/{{$datajenis[0]->id_jenis_dokter}}/{{$datas->id_data_laborat_dokter}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
                                                 Hapus
                                         </button>
-                                        </span><span>
-                                        <button type="button" class="btn btn-info" onclick="location.href='/showpemeriksaandokter/{{$datas->id_data_laborat_dokter}}'" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                        </span> -->
+                                        <span>
+                                        <button type="button" class="btn btn-info" onclick="location.href='/showpemeriksaandokter/{{$datas->id_data_laborat_dokter}}'" data-toggle="tooltip" data-placement="top" title="Detail">
                                                 Detail
                                         </button>
                                         </span>
@@ -90,7 +91,8 @@
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label">Nama Jenis Pemeriksaan Lab</label>
                         <div class="col-lg-6">
-                            <input readonly type="text" class="form-control" name="jenis_lab" value="{{$datajenis[0]->id_jenis_dokter}} " placeholder="Jenis Pemeriksaan Lab" required autofocuse>
+                            <input readonly type="text" class="form-control" name="nama_jenis_lab" value="{{$datajenis[0]->jenis_dokter}} " placeholder="Jenis Pemeriksaan Lab" required autofocuse>
+                            <input type="hidden" class="form-control" name="jenis_lab" value="{{$datajenis[0]->id_jenis_dokter}} " placeholder="Jenis Pemeriksaan Lab" required autofocuse>
                     </div>
                     </div>
                     <div class="form-group row">

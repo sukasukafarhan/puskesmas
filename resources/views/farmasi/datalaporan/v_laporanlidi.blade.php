@@ -48,7 +48,7 @@
                                     <td>{{$datas->jenis_kelamin}}</td>
                                     <td>{{$datas->umur}}</td>
                                     <td>{{implode(', ',$datas->obat)}}</td>
-                                    <td>{{$datas->total_pembayaran}}</td>
+                                    <td>{{implode(', ',$datas->jumlah)}}</td>
                                     <td>{{$datas->jenis_asuransi}}</td>
                                     <!-- <td></td>
                                     <td></td>

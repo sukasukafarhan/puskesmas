@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Index Family Folder</label>
-                                    <input readonly type="text" name="no_index" class="form-control" value="{{$data['data_ff'][0]->no_index}}" placeholder="Index Family Folder" required autofocuse>
+                                    <input readonly type="text" name="index" class="form-control" value="{{$data['data_ff'][0]->no_index}}" placeholder="Index Family Folder" required autofocuse>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group ">
                                 <label>Asuransi</label>
-                                <select id="jenis_asuransi" name="jenis_asuransi" class="form-control"  onkeyup="getassurance();" required autofocuse>
+                                <select id="jenis_asuransi" name="jenis_asuransi" class="form-control" onchange="isbpjs()" required autofocuse>
                                     <option selected="selected">Choose...</option>
                                     <option value="Umum">Umum</option>
                                     <option value="BPJS" >BPJS</option>
@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <label>No. Asuransi</label>
-                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" >
+                                <input type="text" name="no_asuransi" id="no_asuransi" class="form-control" placeholder="Nomor Asuransi" readonly><br><span><a onclick="cekbpjs()"class="btn btn-success text-white" id="button_bpjs" disabled >Cek Asuransi</a></span>
                             </div>
                             <div class="form-group">
                                 <label>Agama</label>
@@ -109,7 +109,50 @@
         </div>
     </div>
 </div>
-<script>
+<script
+    src="https://code.jquery.com/jquery-2.2.4.js"
+    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous">
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    })
+ </script>
+ <script>   
+ 
+    function isbpjs() {
+        var asuransi = document.getElementById('jenis_asuransi').value;
+        
+        if(asuransi==="BPJS" || asuransi==="SKTM"){
+            // $('#button_bpjs').attr('disabled','disabled');
+            $("#button_bpjs").removeAttr('disabled');
+            $("#no_asuransi").removeAttr('readonly');
+        }else{
+            $("#button_bpjs").attr('disabled', 'true');
+            $("#no_asuransi").attr('readonly', 'false');
+        }
+    }
+
+    function cekbpjs() {
+        var no_asuransi = document.getElementById("no_asuransi");
+        if (no_asuransi && no_asuransi.value) {
+            $.ajax({
+                type:'GET',
+                url: "{{ url('/cekbpjs/')}}"+'/'+no_asuransi.value,               
+                success: function( data ) {
+                    alert(data);
+                }  
+            });
+        }else{
+            alert("nomor asuransi belum diisi");
+        }
+    }
+    
+   
     function cari() {
         var date = document.getElementById('tanggal_lahir').value;
 
@@ -137,8 +180,6 @@
             document.getElementById('no_asuransi').value = asuransi;
         }else{
             document.getElementById('no_asuransi').value = "";
-
-
 
         }
     }

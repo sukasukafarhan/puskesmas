@@ -33,18 +33,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $no = 1; ?>
+                                @foreach($data as $datas)
                                 <tr>
-                                            <td class=" text-center"></td>
-                                             <td class=" text-center"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                    <td class=" text-center">{{$no}}</td>
+                                    <td class=" text-center">{{$datas->tanggal}}</td>
+                                    <td>{{$datas->nama}}</td>
+                                    <td>{{$datas->jenis_kelamin}}</td>
+                                    <td>{{$datas->no_rm}}</td>                                        
+                                    <td>{{$datas->umur}}</td>
+                                    <td>{{$datas->jenis_asuransi}}</td>
+                                    <td>{{$datas->poli_asal}}</td>
                                 </tr>
-                            
-
+                                <?php $no++ ?>
+                                @endforeach
                             </tbody>
                             <!-- <tfoot>
                                 <tr>

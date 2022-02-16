@@ -48,7 +48,7 @@
                         <div class="col-12 text-center">
                             <div class="btn-group-vertical">
                                 <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalRM">Riwayat Rekam Medis</button>
-                                <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalPemeriksaan">Riwayat Pemeriksaan</button>
+                                <!-- <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalPemeriksaan">Riwayat Pemeriksaan</button> -->
                                 <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalHasilLab">Hasil Lab</button>
                                 <button class="btn btn-secondary mb-2 px-4" data-toggle="modal" data-target="#modalAskep">Askep Pasien</button>
                             </div>
@@ -126,7 +126,7 @@
                                 <div class="col-lg-6">
                                     <label>TB</label>
                                     <div class="input-group">
-                                        <input type="text" name="tb" value="{{$datas->tb}}" class="form-control" placeholder="Tinggi Badan" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" id="tb" name="tb" value="{{$datas->tb}}" class="form-control" placeholder="Tinggi Badan" required><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">m</a>
                                             </span></span>
                                     </div>
@@ -144,7 +144,7 @@
                                 <div class="col-lg-6">
                                     <label>BB</label>
                                     <div class="input-group">
-                                        <input type="text" name="bb" value="{{$datas->bb}}" class="form-control" placeholder="Berat Badan" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" id="bb" name="bb" value="{{$datas->bb}}" class="form-control" placeholder="Berat Badan" onkeyup="cari();" required><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">Kg</a>
                                             </span></span>
                                     </div>
@@ -162,7 +162,7 @@
                                 <div class="col-lg-6">
                                     <label>IMT</label>
                                     <div class="input-group">
-                                        <input type="text" name="imt" value="{{$datas->imt}}" class="form-control" placeholder="Index Massa" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" id="imt" name="imt" value="{{$datas->imt}}" class="form-control" placeholder="Index Massa" required ><span class="input-group-append"><span class="input-group-text" >
                                                 <a class="text-muted">Kg/m2</a>
                                             </span></span>
                                     </div>
@@ -368,13 +368,8 @@
                             <button type="submit" class="btn btn-primary ">Selesai</button>
                         </form>
                     </div>
-
-
                 </div>
             </div>
-
-
-           
             </div>
         </div>
     </div>
@@ -407,21 +402,10 @@
                                     <option value="{{$diagnosas->icd_x}}">{{$diagnosas->nama_diagnosa}}</option>
                                 @endforeach
                             </select>   
-                        
-                        <!-- <input type="text" class="form-control" id="icdx" name="icdx" placeholder=""> -->
                         </div>
                     </div>
-                    <!-- <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="diagnosa">Diagnosa </label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="diagnosa" name="diagnosa" placeholder="">
-                        </div>
-                    </div> -->
-
                     <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="jenis">Jenis
-                            <!-- <span class="text-danger">*</span> -->
-                        </label>
+                        <label class="col-lg-4 col-form-label" for="jenis">Jenis</label>
                         <div class="col-lg-6">
                             <select class="form-control" id="jenis" name="jenis">
                                 <option value="">Please select</option>
@@ -433,9 +417,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="kasus">Kasus
-                            <!-- <span class="text-danger">*</span> -->
-                        </label>
+                        <label class="col-lg-4 col-form-label" for="kasus">Kasus</label>
                         <div class="col-lg-6">
                             <select class="form-control" id="kasus" name="kasus">
                                 <option value="">Please select</option>
@@ -456,15 +438,12 @@
     </div>
 </div>
  
-
 <div class="modal" id="basicModal1" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-
                 <h5 class="modal-title">Tambah Tindakan</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <form class="form-horizontal" method="post" action="/savetindakan">
                 @csrf
@@ -500,7 +479,6 @@
                                 <option value="{{$perawats->full_name}}">{{$perawats->full_name}}</option>
                                 @endforeach
                             </select>
-                            <!-- <input type="text" class="form-control" id="tindakan" name="tindakan" placeholder="Masukkan tindakan"> -->
                         </div>
                     </div>
                 <div class="modal-footer">
@@ -583,6 +561,41 @@
                             <td>{{$anamnesas->rpk}}</td>   
                             <td>{{$anamnesas->rps}}</td>
                             <td>{{$anamnesas->rpd}}</td>
+                        </tr>
+                        <?php $no++;?>
+                        @endforeach
+                    </table>
+            </div>
+
+            <br><br>
+            <h5 class="modal-title ml-2">Riwayat Pemeriksaan</h5>
+            <br>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>TB</th>
+                            <th>BB</th>
+                            <th>Sistol</th>
+                            <th>Diastol</th>
+                            <th>IMT</th>
+                            <th>Suhu</th>
+                            <th>RR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1;?>
+                        @foreach($pemeriksaan as $pemeriksaans)
+                        <tr>
+                            <td>{{$no}}</td>
+                            <td>{{$pemeriksaans->tinggi_badan}}</td>   
+                            <td>{{$pemeriksaans->berat_badan}}</td>
+                            <td>{{$pemeriksaans->sistol}}</td>
+                            <td>{{$pemeriksaans->diastol}}</td>   
+                            <td>{{$pemeriksaans->imt}}</td>
+                            <td>{{$pemeriksaans->suhu}}</td>
+                            <td>{{$pemeriksaans->rr}}<span> /Menit</span></td>
                         </tr>
                         <?php $no++;?>
                         @endforeach
@@ -689,7 +702,7 @@
         </div>
     </div>
 </div>
-<div class="modal" id="modalPemeriksaan" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+<!-- <div class="modal" id="modalPemeriksaan" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -712,7 +725,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $no=1;?>
+                    
                         @foreach($pemeriksaan as $pemeriksaans)
                         <tr>
                             <td>{{$no}}</td>
@@ -724,13 +737,13 @@
                             <td>{{$pemeriksaans->suhu}}</td>
                             <td>{{$pemeriksaans->rr}}<span> /Menit</span></td>
                         </tr>
-                        <?php $no++;?>
+                        
                         @endforeach
                     </table>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <div class="modal" id="basicModalRujukan" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -751,16 +764,13 @@
                         </div>
                     </div>
                 </div>
-                  
-             
-
-               <div class="modal-footer">
+                <div class="modal-footer">
                     </br>
                     <input type="hidden" name="id_pesan">
                     <button class="btn btn-default btn-md" data-dismiss="modal" aria-hidden="true">Batal</button>
                     <button class="btn btn-primary btn-md">Simpan</button>
                 </div>
-    </form>
+            </form>
         </div>
     </div>
 </div>
@@ -775,33 +785,32 @@
             </div>
             <form class="form-horizontal" method="post" action="/dokteraddobat">
                 @csrf
-                
                 <input type="hidden" value="{{$data[0]->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
                 <input type="hidden" value="{{$data[0]->no_rm}}" name="no_rm" class="form-control">
                 <div class="modal-body">
-                <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="jenis">Jenis
-                                    <!-- <span class="text-danger">*</span> -->
-                    </label>
-                    <div class="col-lg-6">
-                        <select class="form-control" id="jenisresep" onchange="jadi();" name="jenis">
-                            <option value="Racikan">Racikan</option>
-                            <option value="Jadi">Jadi</option>
-                        </select>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" for="jenis">Jenis
+                                        <!-- <span class="text-danger">*</span> -->
+                        </label>
+                        <div class="col-lg-6">
+                            <select class="form-control" id="jenisresep" onchange="jadi();" name="jenis">
+                                <option value="Racikan">Racikan</option>
+                                <option value="Jadi">Jadi</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="control-group after-add-more">
-                    <label>Nama Obat</label>
-                        <select class="form-control" id="nama_obat" name="nama_obat[]">
-                            @foreach($dataobat as $dataobats)
-                            <option value="{{$dataobats->id_obat}}">{{$dataobats->nama_obat}}</option>
-                            <!-- <input type="hidden" value="{{$dataobats->id_obat}}" name="id_obat[]" class="form-control"> -->
-                             @endforeach
-                        </select>
-                    <label>Jumlah</label>
-                        <input type="text" name="jk[]" class="form-control">
-                </div>
-                <button class="btn btn-success add-more" id="add" type="button">
+                    <div class="control-group after-add-more">
+                        <label>Nama Obat</label>
+                            <select class="form-control" id="nama_obat" name="nama_obat[]">
+                                @foreach($dataobat as $dataobats)
+                                <option value="{{$dataobats->id_obat}}">{{$dataobats->nama_obat}}</option>
+                                <!-- <input type="hidden" value="{{$dataobats->id_obat}}" name="id_obat[]" class="form-control"> -->
+                                 @endforeach
+                            </select>
+                        <label>Jumlah</label>
+                            <input type="text" name="jk[]" class="form-control">
+                    </div>
+                    <button class="btn btn-success add-more" id="add" type="button">
                     <i class="glyphicon glyphicon-plus"></i> Add
                 </button>
                     <div class="form-group row">
@@ -868,7 +877,35 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script>
-
+    function cari() {
+      var txtFirstNumberValue = document.getElementById("tb").value;
+      var txtSecondNumberValue = document.getElementById("bb").value;
+      var tb = txtFirstNumberValue*0.01;
+      var result = (txtSecondNumberValue)/(tb*tb);
+      var finalresult = result.toFixed(1)
+         
+         if(result < 17){
+          document.getElementById("imt").value = finalresult;
+        //   document.getElementById("ket").value = "sangat kurus";
+         }
+        else if(result > 17 && result <=18.4){
+          document.getElementById("imt").value = finalresult;
+        //   document.getElementById("ket").value = "kurus";
+         }
+        else if(result > 18.4 && result <=25){
+          document.getElementById("imt").value = finalresult;
+        //   document.getElementById("ket").value = "normal";
+         }
+          else if(result > 25 && result <=27){
+            document.getElementById("imt").value = finalresult;
+        //   document.getElementById("ket").value = "gemuk";
+         }
+         else{
+          document.getElementById("imt").value = finalresult;
+        //    document.getElementById("ket").value = "sangat gemuk";
+         }
+      }
+      
      $(document).ready(function() {
         var nilai=1;
         $(".copy").hide()        

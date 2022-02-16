@@ -3,7 +3,7 @@
 <div class="row page-titles mx-0">
     <div class="col p-md-0">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Family Folder</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Data Obat</a></li>
         </ol>
     </div>
 </div>
@@ -22,7 +22,6 @@
                                     <th class="text-center">No.</th>
                                     <th>Nama Obat</th>
                                     <th>Jenis Obat</th>
-                                     <th>Harga</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -33,7 +32,7 @@
                                     <td class=" text-center">{{$no}}</td>
                                     <td>{{$dataobats->nama_obat}}</td>
                                     <td>{{$dataobats->jenis_obat}}</td>
-                                    <td>{{$dataobats->harga}}</td>
+
                                     <td>
                                         <span>
                                             <button type="button" class="btn btn-light"  data-toggle="tooltip" data-placement="top" title="Buka">
@@ -102,9 +101,9 @@
                     </div>
                     
                     <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="harga">Harga (Rp.)</label>
+                        <!-- <label class="col-lg-4 col-form-label" for="harga">Harga (Rp.)</label> -->
                         <div class="col-lg-6">
-                            <input type="number" class="form-control" id="harga" name="harga" placeholder="Harga Obat">
+                            <input type="hidden" class="form-control" id="harga" name="harga" placeholder="Harga Obat" value="0">
                         </div>
                     </div>
                 </div>

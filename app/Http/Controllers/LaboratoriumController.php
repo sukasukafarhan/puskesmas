@@ -229,7 +229,8 @@ class LaboratoriumController extends Controller
         // echo($id1);
         // print_r($pasien);
         // $permintaan = DB::select("SELECT * FROM tbl_permintaanlab JOIN tbl_data_laborat_dokter where id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter");
-        $permintaan = DB::select("SELECT * FROM tbl_data_laborat_dokter, tbl_permintaanlab, tbl_pemeriksaan_dokter, tbl_nama_pemeriksaan, tbl_jenis_dokter  where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter = tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter=tbl_pemeriksaan_dokter.id_data_laborat_dokter AND tbl_pemeriksaan_dokter.id_nama=tbl_nama_pemeriksaan.id_nama_pemeriksaan AND tbl_pemeriksaan_dokter.id_jenis=tbl_jenis_dokter.id_jenis_dokter AND tbl_permintaanlab.tanggal='".$tanggal."'");
+        // $permintaan = DB::select("SELECT * FROM tbl_data_laborat_dokter, tbl_permintaanlab, tbl_pemeriksaan_dokter, tbl_nama_pemeriksaan, tbl_jenis_dokter  where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter = tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter=tbl_pemeriksaan_dokter.id_data_laborat_dokter AND tbl_pemeriksaan_dokter.id_nama=tbl_nama_pemeriksaan.id_nama_pemeriksaan AND tbl_pemeriksaan_dokter.id_jenis=tbl_jenis_dokter.id_jenis_dokter AND tbl_permintaanlab.tanggal='".$tanggal."'");
+        $permintaan = DB::select("SELECT * FROM tbl_data_laborat_dokter, tbl_permintaanlab, tbl_pemeriksaan_dokter, tbl_nama_pemeriksaan, tbl_jenis_dokter  where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter = tbl_data_laborat_dokter.id_data_laborat_dokter AND tbl_data_laborat_dokter.id_data_laborat_dokter=tbl_pemeriksaan_dokter.id_data_laborat_dokter AND tbl_pemeriksaan_dokter.id_nama=tbl_nama_pemeriksaan.id_nama_pemeriksaan AND tbl_pemeriksaan_dokter.id_jenis=tbl_jenis_dokter.id_jenis_dokter ");
         
         // $permintaan2 = DB::select("SELECT a.id_jenis_pemeriksaan, a.jenis_pemeriksaan, a.nama_pemeriksaan, a.nilai_nominal, a.satuan FROM tbl_nama_pemeriksaan a, tbl_permintaanlab b WHERE a.nama_pemeriksaan = b.");
         // $permintaan =  DB::select("SELECT * FROM tbl_permintaanlab, tbl_data_laborat_dokter, tbl_jenis_pemeriksaan where tbl_permintaanlab.id_pemeriksaan='".$id1."' AND tbl_permintaanlab.id_data_laborat_dokter=tbl_data_laborat_dokter.id_data_laborat_dokter");
@@ -292,8 +293,8 @@ class LaboratoriumController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $data = DB::select("select * from tbl_nama_pemeriksaan where id_jenis_pemeriksaan = ".$id); 
-        
-        return view('laboratorium/v_dataujilab',['data'=> $data, 'judul' => $judul]);
+        $jenis = DB::select("select * from tbl_jenis_pemeriksaan where id_jenis_pemeriksaan = ".$id); 
+        return view('laboratorium/v_dataujilab',['data'=> $data, 'jenis'=> $jenis, 'judul' => $judul]);
     }
 
     public function dataLaporanLab()
@@ -301,7 +302,24 @@ class LaboratoriumController extends Controller
         $judul = 'Daftar Pelayanan Pasien';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        return view('laboratorium/v_laporanlab',[ 'judul' => $judul]);
+        $data = DB::select("SELECT * FROM tbl_antrian_laboratorium a JOIN tbl_datapasiens b on a.no_rm = b.no_rm JOIN tbl_rekam_medis c ON a.no_rm=c.no_rm where a.status = 'selesai' ");
+        $datalab = DB::select("SELECT * FROM tbl_hasil_lab a, tbl_jenis_dokter b, tbl_nama_pemeriksaan c, tbl_rekam_medis d, tbl_permintaanlab e, tbl_data_laborat_dokter f where a.id_pemeriksaan = d.id_pemeriksaan AND a.id_jenis_pemeriksaan = b.id_jenis_dokter AND a.id_nama_pemeriksaan = c.id_nama_pemeriksaan AND e.id_data_laborat_dokter = f.id_data_laborat_dokter");  
+        // $data
+        foreach($data as $datas){
+            $datas->jenislab = array();
+            $datas->namalab = array();
+            $datas->permintaan = array();
+            foreach($datalab as $labs){
+                if($datas->id_pemeriksaan == $labs->id_pemeriksaan){
+                    array_push($datas->jenislab, $labs->jenis_dokter);
+                    array_push($datas->namalab, $labs->nama_pemeriksaan);
+                    array_push($datas->permintaan, $labs->nama);
+                }
+            }
+            
+        }
+        // print_r($data);
+        return view('laboratorium/v_laporanlab',[ 'data' =>$data, 'judul' => $judul]);
     }
 
     public function history()
@@ -309,7 +327,9 @@ class LaboratoriumController extends Controller
         $judul = 'Daftar Pelayanan Pasien';
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
-        return view('laboratorium/v_history',[ 'judul' => $judul]);
+        $data = DB::select("SELECT * FROM tbl_antrian_laboratorium a JOIN tbl_datapasiens b on a.no_rm = b.no_rm where a.status = 'selesai'");
+        // print_r($data);
+        return view('laboratorium/v_history',[ 'data' => $data, 'judul' => $judul]);
     }
 
     public function storepelayanandokter(Request $request)

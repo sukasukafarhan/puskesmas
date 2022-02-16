@@ -23,6 +23,7 @@ class DokterController extends Controller
 {
     //
     public function tambahObat(Request $request){
+        
         $Tbl_resep_obat = new Tbl_resep_obat;
         $Tbl_resep_obat->id_pemeriksaan=$request->id_pemeriksaan;
         $Tbl_resep_obat->jenis_resep=$request->jenis;
@@ -91,7 +92,7 @@ class DokterController extends Controller
             $pilihandiagnosa = DB::select("select * from tbl_data_icdx");
             $tindakan = DB::select("select * from tbl_data_tindakan "); 
             $tindakan_rm = DB::select("select * from tbl_tindakan_rm where no_rm='".$id."' && status!='hapus' && id_pemeriksaan ='".$id2."'"); 
-            $dataobat = DB::select("SELECT * FROM tbl_data_obat JOIN tbl_data_stock_obat on tbl_data_stock_obat.id_obat=tbl_data_obat.id_obat where tbl_data_stock_obat.jumlah_penerimaan!=0");
+            $dataobat = DB::select("SELECT * FROM tbl_data_obat JOIN tbl_data_stock_obat on tbl_data_stock_obat.id_obat=tbl_data_obat.id_obat where tbl_data_stock_obat.sisa!=0");
             $pasien[0]->poli_asal = $poli_asal[0]->poli_asal;
             $pasien[0]->tanggal = $tanggal;
             $pasien[0]->id_pemeriksaan = $data[0]->id_pemeriksaan;

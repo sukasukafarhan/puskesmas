@@ -94,14 +94,27 @@ class PasienController extends Controller
             }
         }
         if ($no < 10) {
+            $no_index = $kode . '.' . $c . '00000' . $no;
+        } elseif ($no > 9 && $no < 100) {
+            $no_index = $kode . '.' . $c . '0000' . $no;
+        } elseif ($no > 99 && $no < 1000) {
             $no_index = $kode . '.' . $c . '000' . $no;
-        } elseif ($no > 9) {
+        } elseif ($no > 999 && $no < 10000) {
             $no_index = $kode . '.' . $c . '00' . $no;
-        } elseif ($no > 99) {
+        }elseif ($no > 9999 && $no < 100000) {
             $no_index = $kode . '.' . $c . '0' . $no;
         } else {
             $no_index = $kode . '.' . $c . $no;
         }
+        // if ($no < 10) {
+        //     $no_index = $kode . '.' . $c . '000' . $no;
+        // } elseif ($no > 9) {
+        //     $no_index = $kode . '.' . $c . '00' . $no;
+        // } elseif ($no > 99) {
+        //     $no_index = $kode . '.' . $c . '0' . $no;
+        // } else {
+        //     $no_index = $kode . '.' . $c . $no;
+        // }
         $tbl_ff->no_index=$no_index;
         $tbl_ff->save();
 
@@ -111,7 +124,7 @@ class PasienController extends Controller
     public function tambahpasien(Request $request)
     {
 
-        $index = $request->seg2;
+        $index = $request->index;
         $silsilah=$request->silsilah;
         if($silsilah=='Kepala Keluarga'){
             $no_rm=$index . '.' . '1';
@@ -125,10 +138,11 @@ class PasienController extends Controller
             $no_rm=$index . '.'  . $no;
         }
 
+        // echo $request->index;
         $Tbl_datapasien = new Tbl_datapasien;
         $Tbl_datapasien->nama=$request->nama;
         $Tbl_datapasien->jenis_kelamin=$request->jenis_kelamin;
-        $Tbl_datapasien->no_index=$request->seg2;
+        $Tbl_datapasien->no_index=$request->index;
         $Tbl_datapasien->nama_kk=$request->nama_kk;
         $Tbl_datapasien->alamat=$request->alamat;
         $Tbl_datapasien->pekerjaan=$request->pekerjaan;
@@ -142,7 +156,7 @@ class PasienController extends Controller
         $Tbl_datapasien->no_rm=$no_rm;
         $Tbl_datapasien->save();
 
-        return redirect ('/datapasien/'.$request->seg1);
+        return redirect ('datapasienrm/viewdatapasien/'.$request->seg1);
     }
 
     private function kode($kecamatan, $kabupaten, $desa)
@@ -192,11 +206,17 @@ class PasienController extends Controller
         return view('laboratorium/datapasien/v_pasien2', ['pasien' => $pasien, 'judul' => $judul]);
     }
 
-    public function viewdatarmlaborat()
+    public function viewdatarmlaborat($id)
     {
         $judul = 'Rekam Medis Pasien';
-       
-        return view('laboratorium/datapasien/v_rekammedis', [ 'judul' => $judul]);
+        $pasien =  DB::select("SELECT * FROM tbl_datapasiens where no_rm='".$id."'");
+        $data_lab = DB::select("SELECT a.id_pemeriksaan, b.hasil_pemeriksaan_lab, c.nama_pemeriksaan  FROM tbl_rekam_medis a, tbl_hasil_lab b, tbl_nama_pemeriksaan c where a.no_rm='".$id."' AND a.id_pemeriksaan = b.id_pemeriksaan AND b.id_nama_pemeriksaan = c.id_nama_pemeriksaan ");
+        // print_r($data_lab);
+        $data_obat = DB::select("SELECT *  FROM tbl_resep_obats a, tbl_resep_obat b, tbl_rekam_medis c where c.no_rm='".$id."' AND b.id_pemeriksaan = c.id_pemeriksaan AND a.id_resep = b.id_resep");
+        // print_r($data_obat);
+        $rekammedis = DB::select("SELECT * FROM tbl_rekam_medis a, tbl_pemeriksaan_rm b, tbl_anamnesa_rm c, tbl_diagnosa_rm d, tbl_tindakan_rm e, tbl_penyuluhan f where a.no_rm='".$id."' AND b.no_rm ='".$id."' And c.no_rm='".$id."' AND d.no_rm='".$id."' AND e.no_rm ='".$id."' AND f.no_rm='".$id."'");
+        // print_r($rekammedis);
+        return view('laboratorium/datapasien/v_rekammedis', [ 'judul' => $judul,  'pasien' => $pasien, 'rekammedis' => $rekammedis, 'data_lab' => $data_lab, 'data_obat' => $data_obat]);
     }
 
     public function viewaddfamilyrmfarmasi()

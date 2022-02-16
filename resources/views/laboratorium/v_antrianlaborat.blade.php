@@ -40,6 +40,7 @@
                                             <td>{{$a->umur}} </td>
                                             <td>{{$a->jenis_asuransi}} </td>
                                             <td>{{$a->poli_asal}} </td>
+                                            <td>{{$a->status}}</td>
                                             <td>
                                                 <span>
                                                 <button type="button" onclick="location.href='laboratpelayanan/{{$a->id_pemeriksaan}}/{{$a->no_rm}}'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Layani">

@@ -24,7 +24,7 @@
                                 <th class="text-center">No.</th>
                                 <th>Nama Pemeriksaan</th>
                                 <th>Nilai Normal</th>
-                                <th>Tarif</th>
+                                <!-- <th>Tarif</th> -->
                                 <th>Satuan</th>
                                 <th>Action</th>
                             </tr>
@@ -36,7 +36,7 @@
                                     <td class="text-center" style="width: 1px;">{{$no}} </td>
                                     <td> {{$datas->nama_pemeriksaan}}</td>
                                     <td> {{$datas->nilai_normal}}</td>
-                                    <td> {{$datas->tarif_pemeriksaan}}</td>
+                                    <!-- <td> {{$datas->tarif_pemeriksaan}}</td> -->
                                     <td> {{$datas->satuan}}</td>
                                     <td>
                                         <span>
@@ -78,13 +78,13 @@
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label">Kode</label>
                         <div class="col-lg-6">
-                            <input readonly type="text" class="form-control" name="kode" value=" " placeholder="Kode" required autofocuse>
+                            <input readonly type="text" class="form-control" name="kode" value="{{$jenis[0]->id_jenis_pemeriksaan}} " placeholder="Kode" required autofocuse>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label">Nama Jenis Pemeriksaan Lab</label>
                         <div class="col-lg-6">
-                            <input readonly type="text" name="jenis_lab" class="form-control" value=" " placeholder="Jenis Pemeriksaan Lab" required autofocuse>
+                            <input readonly type="text" name="jenis_lab" class="form-control" value=" {{$jenis[0]->jenis_pemeriksaan}}" placeholder="Jenis Pemeriksaan Lab" required autofocuse>
                     </div>
                     </div>
                     <div class="form-group row">

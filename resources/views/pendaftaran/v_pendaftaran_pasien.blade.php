@@ -100,7 +100,7 @@
                         <div class="form-group row col-md-6">
                             <label class="col-sm-4 col-form-label">Nomor Rekam Medis</label>
                             <div class="col-sm-6">
-                                <input type="text" name="no_rm" class="form-control" placeholder="Nomor Rekam Medis" value="{{ $data['data_pasien'][0]->no_rm }}" required autofocuse>
+                                <input type="text" name="rm" class="form-control" placeholder="Nomor Rekam Medis" value="{{ $data['no_rm'] }}" required autofocuse>
                             </div>
                         </div>
                         <div class="form-group row col-md-6">
