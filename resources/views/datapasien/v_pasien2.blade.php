@@ -52,6 +52,7 @@
                                         <button type="button" class="btn btn-light" onclick="location.href='/datarekammedis/viewdatapasien/rm/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Buka">
                                                 <i class="fa fa-folder"></i>
                                         </button>
+                                        
                                     </span>
                                     </td>
                                 </tr>

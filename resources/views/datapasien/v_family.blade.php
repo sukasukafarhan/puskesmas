@@ -52,6 +52,11 @@
                                                 <i class="fa fa-folder"></i>
                                             </button>
                                         </span>
+                                        <span>                    
+                                        <button type="button" class="btn btn-secondary text-white" onclick="location.href='{{$a->foto_KK}}'" data-toggle="tooltip" data-placement="top" title="Lihat KK">
+                                            Lihat KK
+                                        </button> 
+                                        </span>
                                     </td>
                                 </tr>
                             @endforeach

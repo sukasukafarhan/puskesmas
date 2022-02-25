@@ -75,6 +75,12 @@ class PasienController extends Controller
     
     public function tambahFF(Request $request)
     {
+        // $waktu=date("H:i:s");
+        $kk = $request()->file('kk');
+        $kkname = time().'.'.$kk->getClientOriginalExtension();
+        $path = public_path('/images/');
+        $kk->move($path, $kkname);
+
         $tbl_ff = new Tbl_ff;
         $tbl_ff->nama_kk=$request->nama_kk;
         $tbl_ff->alamat=$request->alamat;
@@ -82,6 +88,7 @@ class PasienController extends Controller
         $tbl_ff->kecamatan=$request->kecamatan;
         $tbl_ff->kabupaten=$request->kabupaten;
         $tbl_ff->telp=$request->telp;
+        $tbl_ff->foto_KK='/images/' . $kkname;
         $kode = $this->kode($request->kabupaten, $request->kecamatan, $request->desa);
         $char = substr($request->nama_kk, 0, 1);
         $c = strtoupper($char);

@@ -126,12 +126,17 @@
       window.location.href = _url;
    }
 </script>
-<script>
-    
-    // function deleteConfirm(url) {
-    //     $('#btn-delete').attr('href', url);
-    //     $('#deleteModal').modal();
-    // }
+<script type="text/javascript">
+    window.Echo.channel('PanggilanPerawatChannel')
+    .listen('.PanggilanMessage', function (e) {
+        if (typeof e !== 'undefined') {
+            console.log(e[0].panggil_perawat);
+            alert(e[0].panggil_perawat);
+        }else{
+            console.log("foo");
+        }
+        // document.getElementById("message").innerHTML = e.message.nama_poli;
+    })
 </script>
 <!--**********************************
             Content body end

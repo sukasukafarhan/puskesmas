@@ -22,3 +22,7 @@ Broadcast::channel('EveryoneChannel', function () {
 Broadcast::channel('PanggilanChannel', function () {
     return true;
 });
+
+Broadcast::channel('PanggilanPerawatChannel', function () {
+    return true;
+});

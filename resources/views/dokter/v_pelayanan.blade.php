@@ -272,7 +272,6 @@
                                 <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#basicModal1"> Tambah
                                 </button>
                     </div>
-
                 </div>
             </div>
 
@@ -811,8 +810,8 @@
                             <input type="text" name="jk[]" class="form-control">
                     </div>
                     <button class="btn btn-success add-more" id="add" type="button">
-                    <i class="glyphicon glyphicon-plus"></i> Add
-                </button>
+                        <i class="glyphicon glyphicon-plus"></i> Add
+                    </button>
                     <div class="form-group row">
                         <label class="col-lg-4 col-form-label" for="signa">Signa </label>
                         <div class="col-lg-6">

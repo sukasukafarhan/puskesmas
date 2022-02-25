@@ -24,7 +24,7 @@
                             </div>
 
 
-                            <form class="ui form" action="/daftarantrian/createfamily" method="post">
+                            <form class="ui form" action="/daftarantrian/createfamily" method="post" enctype="multipart/form-data">
                             @csrf <!-- {{ csrf_field() }} -->
 
                                 <input type="hidden" name="segment" id="segment" class="form-control" value="{{ Request::segment(3) }}"  autofocuse>
@@ -46,6 +46,9 @@
                                 <br>
                                 <label for="inputHP">No. Telp./HP.</label>
                                 <input type="text" name="telp" id="inputHP" class="form-control" placeholder="Nomor Telpon / HP" required autofocuse>
+                                <br>
+                                <label for="kk">Upload gambar KK</label>
+                                <input type="file" name="kk" id="kk" class="form-control" placeholder="Upload gambar KK" required autofocuse>
                                 <br>
 
                                 <!-- <label for="inputIndex">Foto Dokumen Kartu Keluarga</label>

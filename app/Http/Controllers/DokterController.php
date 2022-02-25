@@ -19,6 +19,7 @@ use App\Tbl_antrian_kasir;
 use App\Tbl_antrian_laboratorium;
 use Session;
 use Illuminate\Support\Facades\DB;
+use App\Events\PanggilPerawatEvent;
 class DokterController extends Controller
 {
     //
@@ -325,6 +326,9 @@ class DokterController extends Controller
         $Tbl_tindakan->no_rm = $request->no_rm;
         $Tbl_tindakan->perawat = $request->perawat;
         $Tbl_tindakan->save();
+
+        $perawat = $request->perawat;
+        broadcast(new PanggilPerawatEvent($perawat));
         
         return redirect ('/pelayanandokter/'.$request->no_rm.'/'.$request->id_pemeriksaan);
     }

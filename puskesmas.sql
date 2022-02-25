@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2022 at 06:49 PM
+-- Generation Time: Feb 25, 2022 at 03:27 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -34,13 +34,6 @@ CREATE TABLE `kasir` (
   `total_pembayaran` varchar(255) NOT NULL,
   `status` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `kasir`
---
-
-INSERT INTO `kasir` (`id`, `no_rm`, `id_pemeriksaan`, `total_pembayaran`, `status`) VALUES
-(12, '10.U000001.2', 36, '100000', 'Pembayaran');
 
 -- --------------------------------------------------------
 
@@ -91,15 +84,6 @@ CREATE TABLE `tbl_anamnesa_rm` (
   `no_rm` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_anamnesa_rm`
---
-
-INSERT INTO `tbl_anamnesa_rm` (`id_anamnesa`, `id_pemeriksaan`, `rpd`, `rpk`, `rps`, `no_rm`) VALUES
-(23, 31, 'kanker serviks', 'kista', 'kista', '10.U000001.3'),
-(24, 32, 'asma', 'covid', 'covid', '10.U000001.1'),
-(25, 36, 'rpd astrid', 'rpk astrid', 'rps astrid', '10.U000001.2');
-
 -- --------------------------------------------------------
 
 --
@@ -119,13 +103,6 @@ CREATE TABLE `tbl_antrian_farmasi` (
   `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tbl_antrian_farmasi`
---
-
-INSERT INTO `tbl_antrian_farmasi` (`id_antrian`, `no_antrian`, `no_rm`, `waktu`, `status`, `poli_asal`, `urutan`, `created_at`, `updated_at`, `tanggal`) VALUES
-(7, 'A 00 1', '10.U000001.2', '12:35:47', 'selesai', 'Poli Umum', 1, '0000-00-00', '', '2022-02-17');
-
 -- --------------------------------------------------------
 
 --
@@ -144,14 +121,6 @@ CREATE TABLE `tbl_antrian_kasir` (
   `updated_at` varchar(255) NOT NULL,
   `tanggal` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_antrian_kasir`
---
-
-INSERT INTO `tbl_antrian_kasir` (`id_antrian`, `no_antrian`, `no_rm`, `waktu`, `status`, `poli_asal`, `urutan`, `created_at`, `updated_at`, `tanggal`) VALUES
-(99999999, 'A 00 1', '10.U000001.3', '03:46:02', 'pembayaran', 'Poli Umum', 1, '0000-00-00', '', '2022-02-15'),
-(100000000, 'A 00 1', '10.U000001.2', '12:34:00', 'selesai', 'Poli Umum', 1, '0000-00-00', '', '2022-02-17');
 
 -- --------------------------------------------------------
 
@@ -189,14 +158,6 @@ CREATE TABLE `tbl_antrian_laboratorium` (
   `updated_at` varchar(255) NOT NULL,
   `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_antrian_laboratorium`
---
-
-INSERT INTO `tbl_antrian_laboratorium` (`id_antrian`, `no_antrian`, `no_rm`, `waktu`, `status`, `poli_asal`, `urutan`, `created_at`, `updated_at`, `tanggal`) VALUES
-(100000001, 'A 00 1', '10.U000001.1', '07:04:53', 'selesai', 'Poli Umum', 1, '0000-00-00', '', '2022-02-16'),
-(100000002, 'A 00 1', '10.U000001.2', '12:20:36', 'selesai', 'Poli Umum', 1, '0000-00-00', '', '2022-02-17');
 
 -- --------------------------------------------------------
 
@@ -237,9 +198,7 @@ CREATE TABLE `tbl_antrian_poli_umums` (
 --
 
 INSERT INTO `tbl_antrian_poli_umums` (`id_antrian`, `no_antrian`, `no_rm`, `waktu`, `status`, `poli_asal`, `urutan`, `created_at`, `updated_at`) VALUES
-(100000010, 'A 00 1', '10.U000001.3', '2022-02-15 14:07:16', 'pembayaran', 'Poli Umum', 1, '2022-02-15', '2022-02-15 14:07:16'),
-(100000011, 'A 00 1', '10.U000001.1', '2022-02-16 06:58:09', 'proses', 'Poli Umum', 1, '2022-02-16', '2022-02-16 06:58:09'),
-(100000015, 'A 00 1', '10.U000001.2', '2022-02-17 00:16:37', 'selesai', 'Poli Umum', 1, '2022-02-17', '2022-02-17 00:16:37');
+(100000016, 'A 00 1', '10.B000001.1', '2022-02-25 09:05:02', 'proses', 'Poli Umum', 1, '2022-02-25', '2022-02-25 09:05:02');
 
 -- --------------------------------------------------------
 
@@ -261,9 +220,8 @@ CREATE TABLE `tbl_antri_pendaftaran` (
 --
 
 INSERT INTO `tbl_antri_pendaftaran` (`id_antrian`, `no_antrian`, `id_poli`, `tanggal_daftar`, `status`, `urutan`) VALUES
-(100000097, '1', 1, '2022-02-15', 'hapus', 1),
-(100000098, '1', 1, '2022-02-16', 'hapus', 1),
-(100000099, '1', 1, '2022-02-17', 'hapus', 1);
+(100000100, '1', 1, '2022-02-24', 'masuk', 1),
+(100000101, '1', 1, '2022-02-25', 'hapus', 1);
 
 -- --------------------------------------------------------
 
@@ -300,9 +258,7 @@ CREATE TABLE `tbl_asuhan_keperawatan` (
 --
 
 INSERT INTO `tbl_asuhan_keperawatan` (`id_askep`, `id_pemeriksaan`, `no_rm`, `tanggal`, `jam_mulai`, `rpd`, `rpk`, `rps`, `nb_subjective`, `tb`, `bb`, `imt`, `suhu`, `rr`, `sistol`, `diastol`, `nb_object`, `nb_assessment`, `nb_plan`, `waktu_selesai`, `penanggungjawab`) VALUES
-(24, 31, '10.U000001.3', '2022-02-15', '2022-02-15 14:10:41', 'kanker serviks', 'kista', 'kista', 'subjective cinta', 175, 85, 27.8, 35, 60, 95, 130, 'objective cinta', 'Analysis cinta', 'Planning cinta', '2022-02-15 02:13:26', 'hihi'),
-(25, 32, '10.U000001.1', '2022-02-16', '2022-02-16 06:59:02', 'asma', 'covid', 'covid', 'subjective uya', 165, 85, 31.2, 35, 60, 90, 130, 'objective uya', 'Analysis uya', 'Planning uya', '2022-02-16 07:00:08', 'hihi'),
-(26, 36, '10.U000001.2', '2022-02-17', '2022-02-17 00:17:48', 'rpd astrid', 'rpk astrid', 'rps astrid', 'subjective astrid', 187, 65, 18.6, 35, 65, 110, 90, 'objective astrid', 'analysis astrid', 'planning astrid', '2022-02-17 12:18:50', 'hihi');
+(27, 37, '10.B000001.1', '2022-02-25', '2022-02-25 09:09:52', 'asma', 'covid', 'batuk', 'subjective babe', 175, 50, 16.3, 35, 65, 95, 130, 'objective babe', 'Analysis babe', 'Planning babe', '2022-02-25 09:10:31', 'hihi');
 
 -- --------------------------------------------------------
 
@@ -360,10 +316,7 @@ CREATE TABLE `tbl_datapasiens` (
 --
 
 INSERT INTO `tbl_datapasiens` (`id`, `nama`, `jenis_kelamin`, `nama_kk`, `no_index`, `alamat`, `pekerjaan`, `tanggal_lahir`, `umur`, `jenis_asuransi`, `no_asuransi`, `agama`, `telp`, `silsilah`, `no_rm`, `updated_at`, `created_at`) VALUES
-(26, 'bambang bin abdullah', 'Laki-laki', 'abdullah', '10.A000001', 'jalan mangga no.12, samaan, kecamatan klojen, kota malang', 'pedagang', '1997-02-11', 25, 'BPJS', '111115', 'islam', '081235444555', 'Lainnya', '10.A000001.3', '2022-02-14 08:53:50', '2022-02-14 08:53:50'),
-(28, 'uya kuya', 'Laki-laki', 'uya kuya', '10.U000001', 'jalan jambu no.133, mojolangu, kecamatan lowokwaru, kota malang', 'artis', '1989-02-15', 33, 'Umum', NULL, 'islam', '081235444566', 'Kepala Keluarga', '10.U000001.1', '2022-02-16 06:57:50', '2022-02-16 06:57:50'),
-(29, 'astrid', 'Perempuan', 'uya kuya', '10.U000001', 'jalan jambu no.133, mojolangu, kecamatan lowokwaru, kota malang', 'guru', '1978-02-08', 44, 'Umum', NULL, 'islam', '081235444566', 'Ibu', '10.U000001.2', '2022-02-17 00:03:52', '2022-02-17 00:03:52'),
-(27, 'cinta kuya', 'Perempuan', 'uya kuya', '10.U000001', 'jalan jambu no.133, mojolangu, kecamatan lowokwaru, kota malang', 'artis', '2006-02-09', 16, 'Umum', NULL, 'islam', '081222333444', 'Lainnya', '10.U000001.3', '2022-02-15 14:04:57', '2022-02-15 14:04:57');
+(30, 'babe cabita', 'Laki-laki', 'babe cabita', '10.B000001', 'jalan jambu no.133, kebayoran baru, jakarta', 'artis', '1988-02-09', 34, 'Umum', NULL, 'islam', '081235444555', 'Kepala Keluarga', '10.B000001.1', '2022-02-24 12:12:15', '2022-02-24 12:12:15');
 
 -- --------------------------------------------------------
 
@@ -489,15 +442,6 @@ CREATE TABLE `tbl_diagnosa_rm` (
   `status` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_diagnosa_rm`
---
-
-INSERT INTO `tbl_diagnosa_rm` (`id_diagnosa`, `id_pemeriksaan`, `icd_x`, `nama_diagnosa`, `jenis`, `kasus`, `no_rm`, `status`) VALUES
-(13, 31, '1-00', 'paru-paru basah', 'Primer', 'Baru', '10.U000001.3', 'tersedia'),
-(14, 32, '1-00', 'paru-paru basah', 'Primer', 'Baru', '10.U000001.1', 'tersedia'),
-(15, 36, '1-00', 'paru-paru basah', 'Primer', 'Baru', '10.U000001.2', 'tersedia');
-
 -- --------------------------------------------------------
 
 --
@@ -535,8 +479,8 @@ CREATE TABLE `tbl_ffs` (
 --
 
 INSERT INTO `tbl_ffs` (`nama_kk`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `telp`, `foto_KK`, `no_index`, `updated_at`, `created_at`) VALUES
-('abdullah', 'jalan mangga no.12, samaan, kecamatan klojen, kota malang', 'samaan', 'klojen', 'malang', '081235252321', NULL, '10.A000001', '2022-02-14 07:46:34', '2022-02-14 07:46:34'),
-('uya kuya', 'jalan jambu no.133, mojolangu, kecamatan lowokwaru, kota malang', 'mojolangu', 'lowokwaru', 'malang', '081222999111', NULL, '10.U000001', '2022-02-15 07:04:06', '2022-02-15 07:04:06');
+('abdullah', 'klojen, malang', 'samaan', 'klojen', 'malang', '08122333444', 0x2f696d616765732f313634353636353632332e6a7067, '10.A000001', '2022-02-24 01:20:23', '2022-02-24 01:20:23'),
+('babe cabita', 'jalan jambu no.133, kebayoran baru, jakarta', 'kebayoran baru', 'kebayoran baru', 'jakarta selatan', '081235252321', 0x2f696d616765732f313634353637363439382e706e67, '10.B000001', '2022-02-24 04:21:38', '2022-02-24 04:21:38');
 
 -- --------------------------------------------------------
 
@@ -552,16 +496,6 @@ CREATE TABLE `tbl_hasil_lab` (
   `hasil_pemeriksaan_lab` float NOT NULL,
   `penanggung_jawab` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_hasil_lab`
---
-
-INSERT INTO `tbl_hasil_lab` (`id_pemeriksaan_lab`, `id_pemeriksaan`, `id_nama_pemeriksaan`, `id_jenis_pemeriksaan`, `hasil_pemeriksaan_lab`, `penanggung_jawab`) VALUES
-(57, 32, 1, 3, 22000, 'hahaha'),
-(58, 32, 3, 3, 22000, 'hahaha'),
-(59, 36, 1, 3, 22000, 'hahaha'),
-(60, 36, 3, 3, 22000, 'hahaha');
 
 -- --------------------------------------------------------
 
@@ -719,15 +653,6 @@ CREATE TABLE `tbl_pemeriksaan_rm` (
   `no_rm` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_pemeriksaan_rm`
---
-
-INSERT INTO `tbl_pemeriksaan_rm` (`id_pemeriksaan_objek`, `id_pemeriksaan`, `tinggi_badan`, `berat_badan`, `imt`, `suhu`, `rr`, `sistol`, `diastol`, `no_rm`) VALUES
-(19, 31, 175, 85, 27.8, 35, 60, 95, 130, '10.U000001.3'),
-(20, 32, 165, 85, 31.2, 35, 60, 90, 130, '10.U000001.1'),
-(21, 36, 187, 65, 18.6, 35, 65, 110, 90, '10.U000001.2');
-
 -- --------------------------------------------------------
 
 --
@@ -752,9 +677,7 @@ CREATE TABLE `tbl_pendaftarans` (
 --
 
 INSERT INTO `tbl_pendaftarans` (`id`, `no_antrian`, `nama`, `no_rm`, `tanggal`, `tipe_kunjungan`, `poli_yang_dituju`, `waktu_pelayanan`, `updated_at`, `created_at`) VALUES
-(70, 'A 00 1', 'cinta kuya', '10.U000001', '2022-02-15', 'Baru', 'Poli Umum', '14:07:16', '2022-02-15 14:07:16', '2022-02-15 14:07:16'),
-(71, 'A 00 1', 'uya kuya', '10.U000001', '2022-02-16', 'Baru', 'Poli Umum', '06:58:09', '2022-02-16 06:58:09', '2022-02-16 06:58:09'),
-(75, 'A 00 1', 'astrid', '10.U000001.2', '2022-02-17', 'Baru', 'Poli Umum', '00:16:37', '2022-02-17 00:16:37', '2022-02-17 00:16:37');
+(76, 'A 00 1', 'babe cabita', '10.B000001.1', '2022-02-25', 'Baru', 'Poli Umum', '09:05:02', '2022-02-25 09:05:02', '2022-02-25 09:05:02');
 
 -- --------------------------------------------------------
 
@@ -816,14 +739,6 @@ CREATE TABLE `tbl_penyuluhan` (
   `id_pemeriksaan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_penyuluhan`
---
-
-INSERT INTO `tbl_penyuluhan` (`id_penyuluhan`, `isi_penyuluhan`, `no_rm`, `id_pemeriksaan`) VALUES
-(20, 'edukasi cinta', '10.U000001.3', 31),
-(21, 'edukasi astrid', '10.U000001.2', 36);
-
 -- --------------------------------------------------------
 
 --
@@ -839,14 +754,6 @@ CREATE TABLE `tbl_permintaanlab` (
   `tanggal` varchar(25) NOT NULL,
   `dokter_penanggungjawab` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_permintaanlab`
---
-
-INSERT INTO `tbl_permintaanlab` (`id_permintaan`, `id_pemeriksaan`, `id_data_laborat_dokter`, `status_permintaan`, `waktu`, `tanggal`, `dokter_penanggungjawab`) VALUES
-(38, 32, 20, 'Baru', '07:04:53', '2022-02-16', 'ciiiia'),
-(39, 36, 20, 'Baru', '12:20:36', '2022-02-17', 'ciiiia');
 
 -- --------------------------------------------------------
 
@@ -888,9 +795,7 @@ CREATE TABLE `tbl_rekam_medis` (
 --
 
 INSERT INTO `tbl_rekam_medis` (`id_pemeriksaan`, `tanggal_kunjungan`, `waktu_mulai`, `waktu_selesai`, `dokter_penanggung_jawab`, `perawat_penanggung_jawab`, `no_rm`) VALUES
-(31, '2022-02-15', '2022-02-15 14:07:16', '2022-02-15 14:07:16', 'ciiiia', 'Yulia Rahayu Putri', '10.U000001.3'),
-(32, '2022-02-16', '2022-02-16 06:58:09', '2022-02-16 06:58:09', 'ciiiia', 'Yulia Rahayu Putri', '10.U000001.1'),
-(36, '2022-02-17', '2022-02-17 00:16:37', '2022-02-17 00:16:37', 'ciiiia', 'Yulia Rahayu Putri', '10.U000001.2');
+(37, '2022-02-25', '2022-02-25 09:05:02', '2022-02-25 09:05:02', NULL, 'Yulia Rahayu Putri', '10.B000001.1');
 
 -- --------------------------------------------------------
 
@@ -906,15 +811,6 @@ CREATE TABLE `tbl_resep_obat` (
   `aturan_pakai` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_resep_obat`
---
-
-INSERT INTO `tbl_resep_obat` (`id_resep`, `id_pemeriksaan`, `jenis_resep`, `signa`, `aturan_pakai`) VALUES
-(44, 31, 'Racikan', 'signa obat cinta', '3x2'),
-(45, 32, 'Jadi', 'signa obat uya', '3x1'),
-(46, 36, 'Jadi', 'signa obat astrid', '3x1');
-
 -- --------------------------------------------------------
 
 --
@@ -929,16 +825,6 @@ CREATE TABLE `tbl_resep_obats` (
   `status` varchar(250) NOT NULL,
   `id_obat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_resep_obats`
---
-
-INSERT INTO `tbl_resep_obats` (`id`, `nama_obat`, `jumlah`, `id_resep`, `status`, `id_obat`) VALUES
-(24, 'paracetamol', 2, 44, 'tersedia', 2),
-(25, 'obh herbal', 32, 44, 'tersedia', 0),
-(26, 'paracetamol', 2, 45, 'tersedia', 1),
-(27, 'paracetamol', 2, 46, 'tersedia', 1);
 
 -- --------------------------------------------------------
 
@@ -1025,9 +911,12 @@ CREATE TABLE `tbl_tindakan_rm` (
 --
 
 INSERT INTO `tbl_tindakan_rm` (`id_tindakan`, `id_pemeriksaan`, `tindakan`, `keterangan`, `waktu_tindakan`, `status`, `penanggung_jawab`, `no_rm`, `perawat`) VALUES
-(11, 31, 'rewrw', 'keterangan tindakan rewrw cinta', '2022-02-15 03:07:27', 'Masuk', 'ciiiia', '10.U000001.3', 'hihi'),
-(12, 32, 'rewrw899', 'keterangan tindakan rewrw uya', '2022-02-16 07:02:55', 'Masuk', 'ciiiia', '10.U000001.1', 'hihi'),
-(13, 36, 'rewrw', 'keterangan tindakan rewrw astrid', '2022-02-17 12:19:56', 'Masuk', 'ciiiia', '10.U000001.2', 'hihi');
+(14, 37, 'rewrw', 'keterangan babe', '2022-02-25 09:11:58', 'hapus', 'ciiiia', '10.B000001.1', 'hihi'),
+(15, 37, 'rewrw899', 'keterangan babe', '2022-02-25 09:15:27', 'hapus', 'ciiiia', '10.B000001.1', 'hihi'),
+(16, 37, 'rewrw', 'keterangan babe', '2022-02-25 09:18:27', 'hapus', 'ciiiia', '10.B000001.1', 'hihi'),
+(17, 37, 'rewrw899', 'keterangan babe', '2022-02-25 09:20:22', 'hapus', 'ciiiia', '10.B000001.1', 'hihi'),
+(18, 37, 'rewrw899', 'keterangan babe', '2022-02-25 09:21:03', 'hapus', 'ciiiia', '10.B000001.1', 'hihi'),
+(19, 37, 'rewrw', 'keterangan babe', '2022-02-25 09:21:37', 'Masuk', 'ciiiia', '10.B000001.1', 'hihi');
 
 -- --------------------------------------------------------
 
@@ -1400,19 +1289,19 @@ ALTER TABLE `tbl_antrian_laboratorium`
 -- AUTO_INCREMENT for table `tbl_antrian_poli_umums`
 --
 ALTER TABLE `tbl_antrian_poli_umums`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000016;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000017;
 
 --
 -- AUTO_INCREMENT for table `tbl_antri_pendaftaran`
 --
 ALTER TABLE `tbl_antri_pendaftaran`
-  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000100;
+  MODIFY `id_antrian` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000102;
 
 --
 -- AUTO_INCREMENT for table `tbl_asuhan_keperawatan`
 --
 ALTER TABLE `tbl_asuhan_keperawatan`
-  MODIFY `id_askep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_askep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `tbl_asuransi`
@@ -1424,7 +1313,7 @@ ALTER TABLE `tbl_asuransi`
 -- AUTO_INCREMENT for table `tbl_datapasiens`
 --
 ALTER TABLE `tbl_datapasiens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `tbl_data_icdx`
@@ -1514,7 +1403,7 @@ ALTER TABLE `tbl_pemeriksaan_rm`
 -- AUTO_INCREMENT for table `tbl_pendaftarans`
 --
 ALTER TABLE `tbl_pendaftarans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengguna`
@@ -1550,7 +1439,7 @@ ALTER TABLE `tbl_poli`
 -- AUTO_INCREMENT for table `tbl_rekam_medis`
 --
 ALTER TABLE `tbl_rekam_medis`
-  MODIFY `id_pemeriksaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_pemeriksaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `tbl_resep_obat`
@@ -1580,7 +1469,7 @@ ALTER TABLE `tbl_telaah_resep`
 -- AUTO_INCREMENT for table `tbl_tindakan_rm`
 --
 ALTER TABLE `tbl_tindakan_rm`
-  MODIFY `id_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_role`
