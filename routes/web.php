@@ -23,19 +23,27 @@ Route::post('/daftarantrian/createfamily','PendaftaranController@store');
 Route::get('/history','PendaftaranController@history');
 
 Route::get('/datapasien/{id}/{id2}','PendaftaranController@datapasien');
+Route::get('/datapasien/vieweditfamily/{id1}/{id2}','PendaftaranController@vieweditfamily');
 Route::get('/datapasien/addpasien/{id}/{id2}','PendaftaranController@addpasien');
 Route::post('/datapasien/createpasien','PendaftaranController@storepasien');
 Route::get('/cekbpjs/{id}','PendaftaranController@cekbpjs');
 
 Route::get('/pendaftaranpasien/{id}/{id2}','PendaftaranController@pendaftaran_pasien');
+Route::get('/editpasien/{id}/{id2}','PendaftaranController@vieweditpasien');
 Route::post('/pendaftaranpasien','PendaftaranController@save_pendaftaran');
+// Route::post('/editpasien','PendaftaranController@save_editpasien');
+Route::post('/saveeditpasien','PendaftaranController@saveeditPasien');
 
 
 Route::get('/datapasienrm','PasienController@viewdataFF');
 Route::get('/datapasienrm/viewdatapasien/{id}','PasienController@viewdatapasien');
 Route::get('/datapasienrm/viewaddpasien/{id}','PasienController@viewaddpasien');
 Route::get('/datapasienrm/viewaddfamily','PasienController@viewaddfamily');
+Route::get('/datapasienrm/vieweditfamily/{id}','PasienController@vieweditfamily');
 Route::post('/datapasienrm/createfamily','PendaftaranController@tambahFF');
+Route::post('/datapasienrm/editfamily','PendaftaranController@editFF');
+Route::post('/datapasienrm/editpasien','PasienController@editPasien');
+Route::post('/datapasien/editfamilypendaftaran','PendaftaranController@editFFPendaftaran');
 Route::post('/datapasienrm/createpasien','PasienController@tambahpasien');
 
 
@@ -136,6 +144,7 @@ Route::get('/datarekammedislab/laboratrmdatapasien/{id}','PasienController@viewd
 Route::get('/datarekammedislab/laboratrmdatapasien/rm/{id}','PasienController@viewdatarmlaborat');
 Route::get('/datarekammedis','PasienController@viewaddfamilyrm');
 Route::get('/datarekammedis/viewdatapasien/{id}','PasienController@viewdatapasienrm');
+Route::get('/datarekammedis/editdatapasien/{id}','PasienController@vieweditpasien');
 Route::get('/datarekammedis/viewdatapasien/rm/{id}','PasienController@viewdatarmpendaftran');
 Route::get('/datarekammedisperawat','PasienController@viewaddfamilyrmperawat');
 Route::get('/datarekammedisperawat/perawatrmdatapasien/{id}','PasienController@viewdatapasienrmperawat');

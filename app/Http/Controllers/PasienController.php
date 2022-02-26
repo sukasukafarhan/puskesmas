@@ -35,6 +35,22 @@ class PasienController extends Controller
         return view('datapasien/v_pasien', ['pasien' => $pasien, 'judul' => $judul]);
     }
 
+    public function vieweditfamily($id)
+    {
+        $judul = 'Edit Data Family';
+        $family = DB::select("SELECT * FROM tbl_ffs where no_index='".$id."'");
+        // print_r($family);
+        return view('datapasien/v_editfamily', ['family' => $family, 'judul' => $judul]);
+    }
+
+    public function vieweditpasien($id)
+    {
+        $judul = 'Edit Data Pasien';
+        $pasien = DB::select("SELECT * FROM tbl_datapasiens where no_rm='".$id."'");
+        // print_r($pasien);
+        return view('datapasien/v_editpasien', ['pasien' => $pasien, 'judul' => $judul]);
+    }
+
     public function viewaddfamilyrm()
     {
         $judul = 'Daftar Family Folder';
@@ -164,6 +180,28 @@ class PasienController extends Controller
         $Tbl_datapasien->save();
 
         return redirect ('datapasienrm/viewdatapasien/'.$request->seg1);
+    }
+
+    public function editPasien(Request $request)
+    {
+        // echo($request->index);
+        DB::table('tbl_datapasiens')->where('no_rm', $request->no_rm)->update([
+            'nama'=>$request->nama,
+            'jenis_kelamin'=>$request->jenis_kelamin,
+            // 'no_index'=>$request->no_index,
+            'nama_kk'=>$request->nama_kk,
+            'alamat'=>$request->alamat,
+            'pekerjaan'=>$request->pekerjaan,
+            'tanggal_lahir'=>$request->tanggal_lahir,
+            'umur'=>$request->umur,
+            'jenis_asuransi'=>$request->jenis_asuransi,
+            'no_asuransi'=>$request->no_asuransi,
+            'agama'=>$request->agama,
+            'telp'=>$request->no_hp,
+            'silsilah'=>$request->silsilah,
+        ]);
+        
+        return redirect ('datarekammedis/viewdatapasien/'.$request->index);
     }
 
     private function kode($kecamatan, $kabupaten, $desa)

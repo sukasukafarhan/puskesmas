@@ -215,9 +215,16 @@ class PendaftaranController extends Controller
     { 
         $judul = 'Daftar Family Folder';
         $family = DB::select("select * from tbl_ffs");
-        return view('pendaftaran/v_family',['family' => $family, 'judul' => $judul]);
+        return view('pendaftaran/v_family',['family' => $family, 'judul' => $judul, 'segment' => $id]);
     }
 
+    public function vieweditfamily($id1,$id2)
+    {
+        $judul = 'Edit Data Family';
+        $family = DB::select("SELECT * FROM tbl_ffs where no_index='".$id2."'");
+        // print_r($family);
+        return view('pendaftaran/v_editfamily', ['family' => $family, 'judul' => $judul, 'segment'=>$id1]);
+    }
     public function addfamily()
     {
         $judul = 'Tambah Data Family Folder';
@@ -240,6 +247,98 @@ class PendaftaranController extends Controller
         $data['jenkel'] = ['Laki-laki', 'Perempuan'];
         $data['no_index'] = $id2;
         return view('pendaftaran/v_addpasien', ['data' => $data,'judul' => $judul]);
+    }
+
+    public function vieweditpasien($id1,$id2)
+    {
+        $judul = 'Edit Data Pasien';
+        $pasien = DB::select("SELECT * FROM tbl_datapasiens where no_rm='".$id2."'");
+        // print_r($pasien);
+        return view('pendaftaran/v_editpasien', ['pasien' => $pasien, 'judul' => $judul, 'segment'=>$id1]);
+    }
+
+    public function saveeditPasien(Request $request)
+    {
+        // echo($request->index);
+        DB::table('tbl_datapasiens')->where('no_rm', $request->no_rm)->update([
+            'nama'=>$request->nama,
+            'jenis_kelamin'=>$request->jenis_kelamin,
+            // 'no_index'=>$request->no_index,
+            'nama_kk'=>$request->nama_kk,
+            'alamat'=>$request->alamat,
+            'pekerjaan'=>$request->pekerjaan,
+            'tanggal_lahir'=>$request->tanggal_lahir,
+            'umur'=>$request->umur,
+            'jenis_asuransi'=>$request->jenis_asuransi,
+            'no_asuransi'=>$request->no_asuransi,
+            'agama'=>$request->agama,
+            'telp'=>$request->no_hp,
+            'silsilah'=>$request->silsilah,
+        ]);
+        
+        return redirect ('datapasien/'.$request->seg1.'/'.$request->index);
+    }
+    
+    public function editFF(Request $request)
+    {
+        $kk = request()->file('kk');
+        if(isset($kk)){
+            $kkname = time().'.'.$kk->getClientOriginalExtension();
+            $path = public_path('/images/');
+            $kk->move($path, $kkname);
+            // echo($kkname);                
+            DB::table('tbl_ffs')->where('no_index', $request->index)->update([
+                'nama_kk'=>$request->nama_kk,
+                'alamat'=>$request->alamat,
+                'desa'=>$request->desa,
+                'kecamatan'=>$request->kecamatan,
+                'kabupaten'=>$request->kabupaten,
+                'telp'=>$request->telp,
+                'foto_KK'=>'/images/' . $kkname,
+            ]);
+        }
+        else{
+            DB::table('tbl_ffs')->where('no_index', $request->index)->update([
+                'nama_kk'=>$request->nama_kk,
+                'alamat'=>$request->alamat,
+                'desa'=>$request->desa,
+                'kecamatan'=>$request->kecamatan,
+                'kabupaten'=>$request->kabupaten,
+                'telp'=>$request->telp
+            ]);
+        }
+        return redirect ('/datarekammedis');
+    }
+
+    public function editFFPendaftaran(Request $request)
+    {
+        $kk = request()->file('kk');
+        if(isset($kk)){
+            $kkname = time().'.'.$kk->getClientOriginalExtension();
+            $path = public_path('/images/');
+            $kk->move($path, $kkname);
+            // echo($kkname);                
+            DB::table('tbl_ffs')->where('no_index', $request->index)->update([
+                'nama_kk'=>$request->nama_kk,
+                'alamat'=>$request->alamat,
+                'desa'=>$request->desa,
+                'kecamatan'=>$request->kecamatan,
+                'kabupaten'=>$request->kabupaten,
+                'telp'=>$request->telp,
+                'foto_KK'=>'/images/' . $kkname,
+            ]);
+        }
+        else{
+            DB::table('tbl_ffs')->where('no_index', $request->index)->update([
+                'nama_kk'=>$request->nama_kk,
+                'alamat'=>$request->alamat,
+                'desa'=>$request->desa,
+                'kecamatan'=>$request->kecamatan,
+                'kabupaten'=>$request->kabupaten,
+                'telp'=>$request->telp
+            ]);
+        }
+        return redirect ('daftarantrian/layani/'.$request->segment);
     }
 
     public function tambahFF(Request $request)

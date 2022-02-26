@@ -53,6 +53,11 @@
                                                 <i class="fa fa-check-circle"></i>
                                             </button>
                                     </span>
+                                    <span>
+                                            <button type="button" class="btn btn-light" onclick="location.href='/editpasien/{{ Request::segment(2) }}/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Buka">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                    </span>
                                     </td>
                                 </tr>
                             @endforeach

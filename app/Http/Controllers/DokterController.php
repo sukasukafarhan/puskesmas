@@ -86,7 +86,11 @@ class DokterController extends Controller
             $askep = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
             // $data = DB::select("SELECT * FROM tbl_asuhan_keperawatan JOIN tbl_rekam_medis on tbl_asuhan_keperawatan.no_rm=tbl_rekam_medis.no_rm where tbl_asuhan_keperawatan.id_pemeriksaan=tbl_rekam_medis.id_pemeriksaan");
             $anamnesa = DB::select("select * from tbl_anamnesa_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
-            $pemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
+            
+            // $checkpemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'") 
+            // if(isset($checkpemeriksaan)){
+            //     $pemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
+            // }
             $poli_asal = DB::select("select poli_asal from tbl_antrian_poli_umums where no_rm='".$id."'"); 
             $pasien = DB::select("select * from tbl_datapasiens where no_rm='".$id."'"); 
             $diagnosa = DB::select("select * from tbl_diagnosa_rm where no_rm='".$id."' && status!='hapus' && id_pemeriksaan ='".$id2."'");  //perlu cek id_pemeriksaan

@@ -51,8 +51,12 @@
                                     <span>
                                         <button type="button" class="btn btn-light" onclick="location.href='/datarekammedis/viewdatapasien/rm/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Buka">
                                                 <i class="fa fa-folder"></i>
-                                        </button>
-                                        
+                                        </button>    
+                                    </span>
+                                    <span>
+                                        <button type="button" class="btn btn-light" onclick="location.href='/datarekammedis/editdatapasien/{{$a->no_rm}}'" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                <i class="fa fa-pencil"></i>
+                                        </button>    
                                     </span>
                                     </td>
                                 </tr>

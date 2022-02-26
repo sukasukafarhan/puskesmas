@@ -51,6 +51,14 @@
                                             <button type="button" class="btn btn-light" onclick="location.href='/datarekammedis/viewdatapasien/{{$a->no_index}}'" data-toggle="tooltip" data-placement="top" title="Buka">
                                                 <i class="fa fa-folder"></i>
                                             </button>
+                                        </span>
+                                        <span>
+                                            <button type="button" class="btn btn-light" onclick="location.href='/datapasienrm/vieweditfamily/{{$a->no_index}}'" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <br>    
                                             <button type="button" class="btn btn-secondary text-white" onclick="location.href='{{$a->foto_KK}}'" data-toggle="tooltip" data-placement="top" title="Lihat KK">
                                                Lihat KK
                                             </button> 
