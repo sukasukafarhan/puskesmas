@@ -82,15 +82,27 @@ class DokterController extends Controller
             $judul = 'PELAYANAN PASIEN';
             date_default_timezone_set('Asia/jakarta');
             $tanggal=date('Y-m-d h:i:s');
-            $data = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."' && id_pemeriksaan ='".$id2."'"); //perlu cek id_pemeriksaan
+            // $data = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."' && id_pemeriksaan ='".$id2."'"); //perlu cek id_pemeriksaan
             $askep = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
             // $data = DB::select("SELECT * FROM tbl_asuhan_keperawatan JOIN tbl_rekam_medis on tbl_asuhan_keperawatan.no_rm=tbl_rekam_medis.no_rm where tbl_asuhan_keperawatan.id_pemeriksaan=tbl_rekam_medis.id_pemeriksaan");
             $anamnesa = DB::select("select * from tbl_anamnesa_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
+            $pemeriksaan2 = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
             
-            // $checkpemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'") 
-            // if(isset($checkpemeriksaan)){
-            //     $pemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
-            // }
+            $checkanamnesa = DB::select("select * from tbl_anamnesa_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'"); 
+            if(count($checkanamnesa)!=0){
+                // echo("1");
+                $data = DB::select("select * from tbl_anamnesa_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
+            }else{
+                $data = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
+            }
+            
+            $checkpemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'"); 
+            if(count($checkpemeriksaan)!=0){
+                // echo("1");
+                $pemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
+            }else{
+                $pemeriksaan = DB::select("select * from tbl_asuhan_keperawatan where no_rm='".$id."' && id_pemeriksaan ='".$id2."'");
+            }
             $poli_asal = DB::select("select poli_asal from tbl_antrian_poli_umums where no_rm='".$id."'"); 
             $pasien = DB::select("select * from tbl_datapasiens where no_rm='".$id."'"); 
             $diagnosa = DB::select("select * from tbl_diagnosa_rm where no_rm='".$id."' && status!='hapus' && id_pemeriksaan ='".$id2."'");  //perlu cek id_pemeriksaan
@@ -108,10 +120,12 @@ class DokterController extends Controller
             // $data[0]->waktu = $waktu;
             // print_r($dataobatpasien);
             // print_r($pilihandiagnosa);
-            // print_r($datahasillab);
-            return view('dokter/v_pelayanan',['pilihandiagnosa'=>$pilihandiagnosa, 'hasillab'=>$datahasillab, 'laborat'=>$datalaborat,'perawat'=>$dataperawat,'askep'=>$askep,'anamnesa'=>$anamnesa, 'pemeriksaan'=>$pemeriksaan, 'dataobatpasien' => $dataobatpasien,'dataobat' => $dataobat,'tindakan_rm' => $tindakan_rm, 'tindakan'=> $tindakan, 'diagnosa' => $diagnosa,'pasien' => $pasien, 'data' => $data, 'judul' => $judul]);
+            // print_r($pemeriksaan);
+            // echo($id);
+            // echo($id2);
+            return view('dokter/v_pelayanan',['pilihandiagnosa'=>$pilihandiagnosa, 'hasillab'=>$datahasillab, 'laborat'=>$datalaborat,'perawat'=>$dataperawat,'askep'=>$askep,'anamnesa'=>$anamnesa, 'pemeriksaan'=>$pemeriksaan, 'pemeriksaan2'=>$pemeriksaan2, 'dataobatpasien' => $dataobatpasien,'dataobat' => $dataobat,'tindakan_rm' => $tindakan_rm, 'tindakan'=> $tindakan, 'diagnosa' => $diagnosa,'pasien' => $pasien, 'data' => $data, 'judul' => $judul]);
             // }else{
-            //     return view('dokter/v_pelayanan',['pasien' => $pasien, 'data' => $data, 'judul' => $judul]);
+                // return view('dokter/v_pelayanan',['pasien' => $pasien, 'data' => $data, 'judul' => $judul]);
             // }
         }
     }
@@ -146,17 +160,6 @@ class DokterController extends Controller
             }    
         }
 
-
-        // print_r($antrian_final);
-        // $waktu=date('h:i:s');
-        // $jdata = count($antrian);
-        // $i=0;
-        // for($a=0; $a<$jdata; $a++){
-        //     $antrian[$a]->waktu = $waktu;
-        //     // $antrian[$a]->status = "Masuk";
-        // }
-        // print_r($antrian);
-        
         return view('dokter/v_daftardatapasienmasuk',['antrian'=>$antrian_final,'judul' => $judul]);
     }
     public function showicdx()
@@ -294,16 +297,23 @@ class DokterController extends Controller
         $tanggal=date('Y-m-d');
         $waktu=date("H:i:s");
         
-        // $data_rm = DB::select("select * from tbl_rekam_medis where no_rm='".$request->no_rm."'");  
-
-        $Tbl_anamnesa = new Tbl_anamnesa;
-        $Tbl_anamnesa->id_pemeriksaan=$request->id_pemeriksaan;
-        $Tbl_anamnesa->rpd=$request->rpd;
-        $Tbl_anamnesa->rpk=$request->rpk;
-        $Tbl_anamnesa->rps=$request->rps;
-        $Tbl_anamnesa->no_rm=$request->no_rm;
-        $Tbl_anamnesa->save();
-
+        $checkanamnesa = DB::select("select * from tbl_anamnesa_rm where no_rm='".$request->no_rm."' && id_pemeriksaan ='".$request->id_pemeriksaan."'"); 
+       
+        if(count($checkanamnesa)!=0){
+            DB::table('tbl_anamnesa_rm')->where('id_pemeriksaan', $request->id_pemeriksaan)->update([
+                'rpd'=>$request->rpd,
+                'rpk'=>$request->rpk,
+                'rps'=>$request->rps,
+            ]);
+        }else if(count($checkanamnesa)==0){
+            $Tbl_anamnesa = new Tbl_anamnesa;
+            $Tbl_anamnesa->id_pemeriksaan=$request->id_pemeriksaan;
+            $Tbl_anamnesa->rpd=$request->rpd;
+            $Tbl_anamnesa->rpk=$request->rpk;
+            $Tbl_anamnesa->rps=$request->rps;
+            $Tbl_anamnesa->no_rm=$request->no_rm;
+            $Tbl_anamnesa->save();
+        }
         $updatedokter = DB::select("UPDATE tbl_rekam_medis set dokter_penanggung_jawab ='".session('user_data')[0]['nama']."' where id_pemeriksaan=".$request->id_pemeriksaan."");
         // $Tbl_rekammedis = new Tbl_RekamMedis;
         // $Tbl_rekammedis->dokter_penanggung_jawab = session('user_data')[0]['nama'];
@@ -342,21 +352,36 @@ class DokterController extends Controller
         date_default_timezone_set('Asia/jakarta');
         $tanggal=date('Y-m-d');
         $waktu=date("H:i:s");
+
+        $checkpemeriksaan = DB::select("select * from tbl_pemeriksaan_rm where no_rm='".$request->no_rm."' && id_pemeriksaan ='".$request->id_pemeriksaan."'"); 
+       
+        if(count($checkpemeriksaan)!=0){
+            DB::table('tbl_pemeriksaan_rm')->where('id_pemeriksaan', $request->id_pemeriksaan)->update([
+                'tinggi_badan'=>$request->tb,
+                'berat_badan'=>$request->bb,
+                // 'no_index'=>$request->no_index,
+                'sistol'=>$request->sistol,
+                'imt'=>$request->imt,
+                'suhu'=>$request->suhu,
+                'rr'=>$request->nafas,
+                'diastol'=>$request->diastol,
+            ]);
+        }else if(count($checkpemeriksaan)==0){
+            $Tbl_pemeriksaan = new Tbl_pemeriksaan;
+            $Tbl_pemeriksaan->id_pemeriksaan=$request->id_pemeriksaan;
+            $Tbl_pemeriksaan->tinggi_badan=$request->tb;
+            $Tbl_pemeriksaan->berat_badan=$request->bb;
+            $Tbl_pemeriksaan->sistol=$request->sistol;
+            $Tbl_pemeriksaan->imt=$request->imt;
+            $Tbl_pemeriksaan->suhu=$request->suhu;
+            $Tbl_pemeriksaan->rr=$request->nafas;
+            $Tbl_pemeriksaan->diastol=$request->diastol;
+            $Tbl_pemeriksaan->no_rm=$request->no_rm;
+            $Tbl_pemeriksaan->save();
+            
+        }
         
         // $data_rm = DB::select("select * from tbl_rekam_medis where no_rm='".$request->no_rm."'");  
-
-        $Tbl_pemeriksaan = new Tbl_pemeriksaan;
-        $Tbl_pemeriksaan->id_pemeriksaan=$request->id_pemeriksaan;
-        $Tbl_pemeriksaan->tinggi_badan=$request->tb;
-        $Tbl_pemeriksaan->berat_badan=$request->bb;
-        $Tbl_pemeriksaan->sistol=$request->sistol;
-        $Tbl_pemeriksaan->imt=$request->imt;
-        $Tbl_pemeriksaan->suhu=$request->suhu;
-        $Tbl_pemeriksaan->rr=$request->nafas;
-        $Tbl_pemeriksaan->diastol=$request->diastol;
-        $Tbl_pemeriksaan->no_rm=$request->no_rm;
-        
-        $Tbl_pemeriksaan->save();
         
         return redirect ('/pelayanandokter/'.$request->no_rm.'/'.$request->id_pemeriksaan);
     }

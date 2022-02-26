@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="col-lg-12 col-xl-9">
-        @foreach($data as $datas)
+        
             <div class="card">
                 <!-- <section> -->
                 <div class="card-body">
@@ -85,6 +85,7 @@
                   
                         <form action="/saveanamnesa" method="post">
                         @csrf  
+                        @foreach($data as $datas)
                         <input type="hidden" value="{{$datas->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
                         <input type="hidden" value="{{$datas->no_rm}}" name="no_rm" class="form-control">
                             <div class="row">
@@ -108,6 +109,7 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary mt-5">Simpan</button>
+                            @endforeach
                         </form>
                 </div>
             </div>
@@ -120,22 +122,37 @@
                         </div>
                         <form action="/savepemeriksaan" method="post">
                         @csrf  
-                        <input type="hidden" value="{{$datas->no_rm}}" name="no_rm" class="form-control">
-                        <input type="hidden" value="{{$datas->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
+                        @foreach($pemeriksaan as $periksa)
+                        <input type="hidden" value="{{$periksa->no_rm}}" name="no_rm" class="form-control">
+                        <input type="hidden" value="{{$periksa->id_pemeriksaan}}" name="id_pemeriksaan" class="form-control">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <label>TB</label>
-                                    <div class="input-group">
-                                        <input type="text" id="tb" name="tb" value="{{$datas->tb}}" class="form-control" placeholder="Tinggi Badan" required><span class="input-group-append"><span class="input-group-text">
+                                     <?php 
+                                        if(isset($periksa->tb)){
+                                     ?>
+                                     <div class="input-group">
+                                        <input type="text" id="tb" name="tb" value="{{$periksa->tb}}" class="form-control" placeholder="Tinggi Badan" required><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">m</a>
                                             </span></span>
                                     </div>
+                                     <?php
+                                        }else{
+                                     ?>
+                                     <div class="input-group">
+                                        <input type="text" id="tb" name="tb" value="{{$periksa->tinggi_badan}}" class="form-control" placeholder="Tinggi Badan" required><span class="input-group-append"><span class="input-group-text">
+                                                <a class="text-muted">m</a>
+                                            </span></span>
+                                    </div>
+                                     <?php
+                                        } 
+                                     ?>           
                                 </div>
-
                                 <div class="col-lg-6">
                                     <label>Sistol</label>
+
                                     <div class="input-group">
-                                        <input type="text" name="sistol" value="{{$datas->sistol}}" class="form-control" placeholder="Sistol" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" name="sistol" value="{{$periksa->sistol}}" class="form-control" placeholder="Sistol" required><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">mmHg</a>
                                             </span></span>
                                     </div>
@@ -143,17 +160,32 @@
 
                                 <div class="col-lg-6">
                                     <label>BB</label>
+                                    <?php if(isset($periksa->bb))
+                                        {
+                                    ?>
                                     <div class="input-group">
-                                        <input type="text" id="bb" name="bb" value="{{$datas->bb}}" class="form-control" placeholder="Berat Badan" onkeyup="cari();" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" id="bb" name="bb" value="{{$periksa->bb}}" class="form-control" placeholder="Berat Badan" onkeyup="cari();" required><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">Kg</a>
                                             </span></span>
                                     </div>
+                                    <?php
+                                        }else{
+                                    ?>
+                                    <div class="input-group">
+                                        <input type="text" id="bb" name="bb" value="{{$periksa->berat_badan}}" class="form-control" placeholder="Berat Badan" onkeyup="cari();" required><span class="input-group-append"><span class="input-group-text">
+                                                <a class="text-muted">Kg</a>
+                                            </span></span>
+                                    </div>
+                                    <?php
+                                        }
+                                    ?>
+                                    
                                 </div>
 
                                 <div class="col-lg-6">
                                     <label>Diastol</label>
                                     <div class="input-group">
-                                        <input type="text" name="diastol" value="{{$datas->diastol}}" class="form-control" placeholder="Diastol" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" name="diastol" value="{{$periksa->diastol}}" class="form-control" placeholder="Diastol" required><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">mmHg</a>
                                             </span></span>
                                     </div>
@@ -162,7 +194,7 @@
                                 <div class="col-lg-6">
                                     <label>IMT</label>
                                     <div class="input-group">
-                                        <input type="text" id="imt" name="imt" value="{{$datas->imt}}" class="form-control" placeholder="Index Massa" required ><span class="input-group-append"><span class="input-group-text" >
+                                        <input type="text" id="imt" name="imt" value="{{$periksa->imt}}" class="form-control" placeholder="Index Massa" required ><span class="input-group-append"><span class="input-group-text" >
                                                 <a class="text-muted">Kg/m2</a>
                                             </span></span>
                                     </div>
@@ -171,7 +203,7 @@
                                 <div class="col-lg-6">
                                     <label>Suhu</label>
                                     <div class="input-group">
-                                        <input type="text" name="suhu" value="{{$datas->suhu}}" class="form-control" placeholder="Suhu" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" name="suhu" value="{{$periksa->suhu}}" class="form-control" placeholder="Suhu" required><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">'C</a>
                                             </span></span>
                                     </div>
@@ -180,17 +212,17 @@
                                 <div class="col-lg-6">
                                     <label>RR</label>
                                     <div class="input-group">
-                                        <input type="text" name="nafas" value="{{$datas->rr}}" class="form-control" placeholder="Jumlah Nafas" required><span class="input-group-append"><span class="input-group-text">
+                                        <input type="text" name="nafas" value="{{$periksa->rr}}" class="form-control" placeholder="Jumlah Nafas" required><span class="input-group-append"><span class="input-group-text">
                                                 <a class="text-muted">/menit</a>
                                             </span></span>
                                     </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary mt-5">Simpan</button>
+                        @endforeach
                         </form>
                 </div>
             </div>
-            @endforeach
             <div class="card">
                 <div class="card-body">
                     <div>
@@ -585,7 +617,7 @@
                     </thead>
                     <tbody>
                     <?php $no=1;?>
-                        @foreach($pemeriksaan as $pemeriksaans)
+                        @foreach($pemeriksaan2 as $pemeriksaans)
                         <tr>
                             <td>{{$no}}</td>
                             <td>{{$pemeriksaans->tinggi_badan}}</td>   
@@ -701,48 +733,7 @@
         </div>
     </div>
 </div>
-<!-- <div class="modal" id="modalPemeriksaan" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Riwayat Pemeriksaan</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
-            </div>
-            <div>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>TB</th>
-                            <th>BB</th>
-                            <th>Sistol</th>
-                            <th>Diastol</th>
-                            <th>IMT</th>
-                            <th>Suhu</th>
-                            <th>RR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    
-                        @foreach($pemeriksaan as $pemeriksaans)
-                        <tr>
-                            <td>{{$no}}</td>
-                            <td>{{$pemeriksaans->tinggi_badan}}</td>   
-                            <td>{{$pemeriksaans->berat_badan}}</td>
-                            <td>{{$pemeriksaans->sistol}}</td>
-                            <td>{{$pemeriksaans->diastol}}</td>   
-                            <td>{{$pemeriksaans->imt}}</td>
-                            <td>{{$pemeriksaans->suhu}}</td>
-                            <td>{{$pemeriksaans->rr}}<span> /Menit</span></td>
-                        </tr>
-                        
-                        @endforeach
-                    </table>
-            </div>
-        </div>
-    </div>
-</div> -->
+
 <div class="modal" id="basicModalRujukan" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
